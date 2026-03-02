@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pilotage QVT & Performance - Mémoire DEC (v187-SV203)</title>
+    <title>Pilotage QVT & Performance - Mémoire DEC (v189-SV205)</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -3070,7 +3070,7 @@ input[data-bridged], select[data-bridged] { border-color: #86efac !important; ba
         </div>
         <div style="background:#fffbeb;border-radius:8px;padding:12px;font-size:.84em;color:#334155;border-left:3px solid #f59e0b;margin-bottom:10px">
             <strong>🏢 Les 5 compétences différenciantes en cabinet EC</strong> (Hays 2026) :<br>
-            <span style="color:#64748b">1. Maîtrise outils numériques / gestion flux de données &nbsp;•&nbsp; 2. Analyse financière &nbsp;•&nbsp; 3. Compétences relationnelles &nbsp;•&nbsp; 4. Normes IFRS &nbsp;•&nbsp; 5. Langues étrangères</span>
+            <span style="color:#64748b">1. Maîtrise outils numériques / gestion flux de données &nbsp;•&nbsp; 2. Analyse financière &nbsp;•&nbsp; 3. Compétences relationnelles &nbsp;•&nbsp; 4. Langues étrangères</span>
         </div>
         <div style="background:white;border-radius:8px;padding:12px;font-size:.84em;color:#334155;border-left:3px solid #ef4444;margin-bottom:10px">
             💬 <strong>Constat Hays EC 2023 :</strong> La pénurie de candidats en audit et expertise comptable s'accroît chaque année, avec un recrutement devenu plus difficile qu'avant 2019. (Hays, <em>Étude EC</em>, 2023/2024)
@@ -3631,7 +3631,7 @@ input[data-bridged], select[data-bridged] { border-color: #86efac !important; ba
 <section id="traitement-comptable" class="content-section" style="display:none">
     <h1>📒 Traitement Comptable des Investissements QVT</h1>
     <button class="btn btn-outline btn-small mb20" onclick="showSection('investissements-enrichi')">&larr; Retour aux investissements</button>
-    <div class="alert alert-info"><span class="alert-icon">📌</span><div><strong>Objectif :</strong> Guider le traitement comptable des investissements QVT selon le PCG et les normes IFRS. Distinguer charges immédiatement déductibles, immobilisations amortissables et éventuelle valorisation au fonds de commerce. <em>&rarr; Mémoire P2 Ch3 S3 — Limites économiques (traitement comptable)</em></div></div>
+    <div class="alert alert-info"><span class="alert-icon">📌</span><div><strong>Objectif :</strong> Guider le traitement comptable des investissements QVT selon le PCG. Distinguer charges immédiatement déductibles et immobilisations amortissables. <em>&rarr; Mémoire P2 Ch3 S3 — Limites économiques (traitement comptable)</em></div></div>
 
     <!-- TABLEAU PRINCIPAL : IMPUTATION COMPTABLE -->
     <div class="card" style="border-left:4px solid #1a3d5c;margin-bottom:20px">
@@ -3737,39 +3737,6 @@ input[data-bridged], select[data-bridged] { border-color: #86efac !important; ba
         </div>
         <button class="btn btn-accent" onclick="calcAmortQVT()">📊 Calculer le plan d'amortissement</button>
         <div id="tc-amort-result" style="margin-top:16px"></div>
-    </div>
-
-    <!-- VALORISATION FONDS DE COMMERCE -->
-    <div class="card" style="border-left:4px solid #c9a84c;margin-bottom:20px">
-        <h3 style="margin-top:0;color:#c9a84c">🏢 Réflexion : Valorisation QVT au fonds de commerce</h3>
-        <div style="background:#fef9ef;border-radius:10px;padding:16px;border:1px solid #fde68a;margin-bottom:16px">
-            <p style="font-size:.85em;color:#78350f;margin-bottom:12px"><strong>Question professionnelle :</strong> Une démarche QVT structurée peut-elle être valorisée dans le fonds de commerce du cabinet lors d'une cession ou d'une association ?</p>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:.82em">
-                <div style="background:#fff;padding:12px;border-radius:8px;border:1px solid #e5e7eb">
-                    <div style="font-weight:700;color:#1a3d5c;margin-bottom:6px">Arguments POUR</div>
-                    <div style="color:#374151;line-height:1.5">
-                        &bull; Turnover bas = portefeuille clients sécurisé = valeur<br>
-                        &bull; Collaborateurs fidélisés = continuité de service<br>
-                        &bull; Marque employeur forte = capacité de recrutement<br>
-                        &bull; Méthode DCF : flux futurs plus prévisibles si QVT structurée<br>
-                        &bull; Multiples de CA majorés si climat social positif
-                    </div>
-                </div>
-                <div style="background:#fff;padding:12px;border-radius:8px;border:1px solid #e5e7eb">
-                    <div style="font-weight:700;color:#1a3d5c;margin-bottom:6px">Limites</div>
-                    <div style="color:#374151;line-height:1.5">
-                        &bull; IAS 38 : actif incorporel non identifiable s&eacute;parément<br>
-                        &bull; Pas de prix de marché observable pour la &laquo; QVT &raquo;<br>
-                        &bull; Dépend des personnes (associés, managers) = non transférable<br>
-                        &bull; PCG art. 212-3 : activation seulement si avantages futurs probables<br>
-                        &bull; En pratique : intégré dans le goodwill, pas valorisé séparément
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div style="background:#f0fdf4;border-radius:10px;padding:14px;border:1px solid #bbf7d0;font-size:.85em">
-            <strong style="color:#065f46">💡 Recommandation pour le mémoire :</strong> <span style="color:#065f46">La QVT ne constitue pas un actif incorporel identifiable au sens d'IAS 38 ni du PCG, mais elle contribue indiscutablement au <strong>goodwill</strong> du cabinet. Lors d'une cession, un cabinet avec un turnover &lt; 10%, une satisfaction collaborateurs &gt; 8/10 et un portefeuille clients stable bénéficiera d'un <strong>multiple de valorisation supérieur</strong>. Le dossier QVT structuré (diagnostic, plan d'actions, indicateurs) constitue un argument de négociation objectif.</span>
-        </div>
     </div>
 
     <!-- ═══════ V100 — AIDES & SUBVENTIONS CARSAT / ASSURANCE MALADIE ═══════ -->
