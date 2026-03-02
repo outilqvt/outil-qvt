@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pilotage QVT & Performance - Mémoire DEC (v189-SV205)</title>
+    <title>Pilotage QVT & Performance - Mémoire DEC (v196-SV212)</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
@@ -589,6 +590,7 @@ input[data-bridged], select[data-bridged] { border-color: #86efac !important; ba
         <button class="nav-btn" onclick="showSection('cas-terrain')" style="background:linear-gradient(135deg,rgba(59,130,246,.2),rgba(16,185,129,.15));border:1px solid rgba(59,130,246,.4);color:#60a5fa;font-weight:600;font-size:.85em;margin-top:2px;padding:10px 12px">📋 Cas Terrain — Données de base</button>
         <button class="nav-btn" onclick="showSection('methode')">🗺️ Feuille de route</button>
         <button class="nav-btn" onclick="startDemarcheRapide()" style="background:linear-gradient(135deg,rgba(201,168,76,.25),rgba(201,168,76,.1));border:1px solid rgba(201,168,76,.5);color:#ffd700;font-weight:700;font-size:.85em;margin-top:4px;padding:10px 12px;letter-spacing:.3px">🚀 Démarche rapide recommandée</button>
+        <button class="nav-btn" onclick="showSection('import-donnees')" style="background:linear-gradient(135deg,rgba(16,185,129,.2),rgba(59,130,246,.1));border:1px solid rgba(16,185,129,.4);color:#10b981;font-weight:600;font-size:.85em;margin-top:2px;padding:10px 12px">📥 Import données cabinet</button>
     </div>
     <div class="nav-section">
         <button class="phase-btn" onclick="showSection('diagnostic-hub');var sm=document.getElementById('p1-submenu');var v=sm.style.display==='none';sm.style.display=v?'block':'none';this.querySelector('.phase-arrow').textContent=v?'▼':'▶'" style="border-left-color:#3b82f6">
@@ -4630,6 +4632,284 @@ Jour 4-5 : Premiers travaux encadrés, point quotidien avec le parrain</textarea
         <button class="btn btn-accent" onclick="generateLivretAccueil()">📒 Télécharger le livret d'accueil</button>
     </div>
 </section>
+
+<!-- ═══════ MODULE IMPORT DONNÉES ═══════ -->
+<section id="import-donnees" class="content-section" style="display:none">
+    <button class="btn btn-outline btn-small mb20" onclick="showReactPage('gestion')">← Retour Gestion du cabinet</button>
+    <h1>📥 Import des données</h1>
+    <div class="alert alert-info mb20"><span class="alert-icon">📌</span><div><strong>Objectif :</strong> Alimenter l'outil avec les données réelles de votre cabinet depuis votre logiciel de paie ou de gestion. Exportez vos données en Excel ou CSV, puis importez-les ici. L'outil mappe automatiquement les colonnes et met à jour tous les calculs (indicateurs RH, coûts cachés, ROI QVT). <em>&rarr; Mémoire P1 Ch2 — Méthodologie de collecte des données</em></div></div>
+
+    <!-- QUELLES DONNÉES ALIMENTENT QUOI ? -->
+    <div class="card" style="border-left:4px solid #1a2744;margin-bottom:20px">
+        <h3 style="margin-top:0;color:#1a2744">📊 Quelles données alimentent quels modules ?</h3>
+        <p style="font-size:.85em;color:#475569;margin-bottom:12px">Chaque donnée importée alimente directement un ou plusieurs modules de l'outil. Plus vous renseignez de colonnes, plus les résultats seront précis.</p>
+        <table style="width:100%;border-collapse:collapse;font-size:.82em">
+            <thead><tr style="background:#1a2744;color:#fff">
+                <th style="padding:8px;text-align:left;border-radius:6px 0 0 0">Donnée importée</th>
+                <th style="padding:8px;text-align:left">Source logiciel</th>
+                <th style="padding:8px;text-align:left;border-radius:0 6px 0 0">Modules alimentés dans l'outil</th>
+            </tr></thead>
+            <tbody>
+                <tr style="background:#f8fafc"><td style="padding:6px 8px;font-weight:600;border-bottom:1px solid #e2e8f0">Nom, Prénom, Poste, Pôle</td><td style="padding:6px 8px;border-bottom:1px solid #e2e8f0;color:#64748b">Logiciel de paie</td><td style="padding:6px 8px;border-bottom:1px solid #e2e8f0">Indicateurs RH · Cartographie · Entretiens · Équipe</td></tr>
+                <tr><td style="padding:6px 8px;font-weight:600;border-bottom:1px solid #e2e8f0">Salaire brut annuel</td><td style="padding:6px 8px;border-bottom:1px solid #e2e8f0;color:#64748b">Bulletin de paie</td><td style="padding:6px 8px;border-bottom:1px solid #e2e8f0"><strong style="color:#ef4444">Coût de revient</strong> · Simulateur absence (IJSS, maintien) · Simulateur turnover · ROI QVT</td></tr>
+                <tr style="background:#f8fafc"><td style="padding:6px 8px;font-weight:600;border-bottom:1px solid #e2e8f0">Date d'entrée</td><td style="padding:6px 8px;border-bottom:1px solid #e2e8f0;color:#64748b">Logiciel de paie</td><td style="padding:6px 8px;border-bottom:1px solid #e2e8f0">Ancienneté → Maintien employeur CCN 787 · Turnover · Pyramide des âges</td></tr>
+                <tr><td style="padding:6px 8px;font-weight:600;border-bottom:1px solid #e2e8f0">Contrat (35h / 39h)</td><td style="padding:6px 8px;border-bottom:1px solid #e2e8f0;color:#64748b">Contrat de travail</td><td style="padding:6px 8px;border-bottom:1px solid #e2e8f0">Heures théoriques · Calcul HS redistribution · Alertes dépassement légal</td></tr>
+                <tr style="background:#f8fafc"><td style="padding:6px 8px;font-weight:600;border-bottom:1px solid #e2e8f0">Absences mois par mois</td><td style="padding:6px 8px;border-bottom:1px solid #e2e8f0;color:#64748b">État des absences Silae/Sage</td><td style="padding:6px 8px;border-bottom:1px solid #e2e8f0"><strong style="color:#ef4444">Taux absentéisme</strong> · Coûts cachés · Saisonnalité · Alertes individuelles</td></tr>
+                <tr><td style="padding:6px 8px;font-weight:600;border-bottom:1px solid #e2e8f0">Heures travaillées / mois</td><td style="padding:6px 8px;border-bottom:1px solid #e2e8f0;color:#64748b">GI : MEG, Agiris, RCA</td><td style="padding:6px 8px;border-bottom:1px solid #e2e8f0"><strong style="color:#ef4444">Charge réelle</strong> · Surcharge · Productivité · Heures facturables</td></tr>
+                <tr style="background:#f8fafc"><td style="padding:6px 8px;font-weight:600;border-bottom:1px solid #e2e8f0">Taux horaire facturation</td><td style="padding:6px 8px;border-bottom:1px solid #e2e8f0;color:#64748b">Grille tarifaire cabinet</td><td style="padding:6px 8px;border-bottom:1px solid #e2e8f0">Coef. facturation · CA par collaborateur · Marge · ROI</td></tr>
+                <tr><td style="padding:6px 8px;font-weight:600;border-bottom:1px solid #e2e8f0">Honoraires client HT</td><td style="padding:6px 8px;border-bottom:1px solid #e2e8f0;color:#64748b">GI / Facturation</td><td style="padding:6px 8px;border-bottom:1px solid #e2e8f0"><strong style="color:#ef4444">CA cabinet</strong> · Rentabilité par client · Risque perte portefeuille</td></tr>
+                <tr style="background:#f8fafc"><td style="padding:6px 8px;font-weight:600;border-bottom:1px solid #e2e8f0">Collaborateur référent</td><td style="padding:6px 8px;border-bottom:1px solid #e2e8f0;color:#64748b">Répartition interne</td><td style="padding:6px 8px;border-bottom:1px solid #e2e8f0">Répartition dossiers · Nb dossiers/collab · Risque concentration</td></tr>
+                <tr><td style="padding:6px 8px;font-weight:600">Heures budgétées / réalisées</td><td style="padding:6px 8px;color:#64748b">GI temps passé</td><td style="padding:6px 8px">Taux de facturation · Écarts budget · Rentabilité mission</td></tr>
+            </tbody>
+        </table>
+        <div style="background:#fef3c7;border-radius:6px;padding:10px;font-size:.8em;color:#92400e;margin-top:10px;border-left:3px solid #f59e0b">
+            ⚡ <strong>Minimum vital :</strong> Avec seulement <strong>Nom + Prénom + Salaire brut</strong> côté collaborateurs et <strong>Raison sociale + Honoraires</strong> côté clients, l'outil calcule déjà les indicateurs clés. Chaque colonne supplémentaire affine le diagnostic.
+        </div>
+    </div>
+
+    <!-- ═══ ÉTAPE 1 — TEMPLATE + GUIDE LOGICIELS ═══ -->
+    <div class="card" style="border-left:4px solid #10b981;margin-bottom:20px">
+        <h3 style="margin-top:0;color:#10b981">① Télécharger le modèle et préparer vos données</h3>
+        <p style="font-size:.88em;color:#475569;margin-bottom:12px">Le modèle contient 3 onglets : <strong>Collaborateurs</strong> (paie), <strong>Clients</strong> (portefeuille), et une <strong>Notice</strong> qui explique chaque colonne. Il est pré-rempli avec des exemples réalistes.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px">
+            <button class="btn btn-primary" onclick="downloadTemplate('xlsx')" style="font-size:13px">📄 Télécharger le modèle Excel (.xlsx)</button>
+            <button class="btn btn-outline" onclick="downloadTemplate('csv')" style="font-size:13px">📄 Télécharger le modèle CSV</button>
+        </div>
+
+        <!-- GUIDE PAR LOGICIEL -->
+        <div style="font-weight:700;color:#1e40af;font-size:.9em;margin-bottom:10px">📋 Comment exporter depuis votre logiciel :</div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;margin-bottom:14px">
+            <!-- Silae -->
+            <div style="background:#f8fafc;border-radius:8px;padding:12px;border:1px solid #e2e8f0;font-size:.82em">
+                <div style="font-weight:700;color:#1e40af;margin-bottom:6px">🔵 Silae</div>
+                <div style="color:#334155;line-height:1.5">
+                    <strong>Collaborateurs :</strong><br>
+                    Gestion du personnel → Liste des salariés → bouton <em>Exporter</em> → Format Excel<br><br>
+                    <strong>Absences :</strong><br>
+                    Gestion des absences → État des absences → Sélectionner la période (01/01 au 31/12) → <em>Exporter</em><br><br>
+                    <strong>Salaires :</strong><br>
+                    États → Récapitulatif annuel des salaires → <em>Export Excel</em>
+                </div>
+            </div>
+            <!-- Cegid -->
+            <div style="background:#f8fafc;border-radius:8px;padding:12px;border:1px solid #e2e8f0;font-size:.82em">
+                <div style="font-weight:700;color:#1e40af;margin-bottom:6px">🟢 Cegid (Loop / HR Ultimate)</div>
+                <div style="color:#334155;line-height:1.5">
+                    <strong>Collaborateurs :</strong><br>
+                    Module RH → Effectifs → Filtrer par établissement → <em>Exporter la liste</em><br><br>
+                    <strong>Absences :</strong><br>
+                    Gestion des temps → Absences → Synthèse annuelle → <em>Export Excel</em><br><br>
+                    <strong>Salaires :</strong><br>
+                    Paie → Éditions → Journal de paie → Choisir période → <em>Export</em>
+                </div>
+            </div>
+            <!-- Sage -->
+            <div style="background:#f8fafc;border-radius:8px;padding:12px;border:1px solid #e2e8f0;font-size:.82em">
+                <div style="font-weight:700;color:#1e40af;margin-bottom:6px">🟠 Sage Paie</div>
+                <div style="color:#334155;line-height:1.5">
+                    <strong>Collaborateurs :</strong><br>
+                    Listes → Salariés → <em>Imprimer</em> → Choisir <em>Export Excel</em><br><br>
+                    <strong>Absences :</strong><br>
+                    Éditions → État des absences → Sélectionner période → <em>Exporter</em><br><br>
+                    <strong>Salaires :</strong><br>
+                    Éditions → Récapitulatif des bulletins → Période annuelle → <em>Export Excel</em>
+                </div>
+            </div>
+            <!-- ACD / Quadra -->
+            <div style="background:#f8fafc;border-radius:8px;padding:12px;border:1px solid #e2e8f0;font-size:.82em">
+                <div style="font-weight:700;color:#1e40af;margin-bottom:6px">🟣 ACD / Quadra Paie</div>
+                <div style="color:#334155;line-height:1.5">
+                    <strong>Collaborateurs :</strong><br>
+                    Paie → Éditions → Liste du personnel → <em>Export</em><br><br>
+                    <strong>Absences :</strong><br>
+                    Éditions → Récapitulatif des absences → <em>Export Excel</em><br><br>
+                    <strong>Clients (Quadra GI) :</strong><br>
+                    Gestion interne → Portefeuille → <em>Export liste dossiers</em>
+                </div>
+            </div>
+            <!-- MEG -->
+            <div style="background:#f8fafc;border-radius:8px;padding:12px;border:1px solid #e2e8f0;font-size:.82em">
+                <div style="font-weight:700;color:#1e40af;margin-bottom:6px">🟡 MEG (My Expert Gestion)</div>
+                <div style="color:#334155;line-height:1.5">
+                    <strong>Clients + Honoraires :</strong><br>
+                    Dossiers → Vue liste → <em>Exporter</em> → Format Excel<br><br>
+                    <strong>Temps passé :</strong><br>
+                    Temps → Synthèse → Filtrer par période → <em>Export</em><br><br>
+                    <strong>Collaborateurs :</strong><br>
+                    Équipe → Liste → <em>Exporter</em>
+                </div>
+            </div>
+            <!-- Agiris / RCA -->
+            <div style="background:#f8fafc;border-radius:8px;padding:12px;border:1px solid #e2e8f0;font-size:.82em">
+                <div style="font-weight:700;color:#1e40af;margin-bottom:6px">🔴 Agiris / RCA / Coala</div>
+                <div style="color:#334155;line-height:1.5">
+                    <strong>Clients :</strong><br>
+                    Gestion interne → Portefeuille → <em>Exporter → Excel</em><br><br>
+                    <strong>Heures :</strong><br>
+                    GI → Temps passé → Synthèse par dossier → <em>Export</em><br><br>
+                    <strong>Conseil :</strong> Rapprochez-vous de votre intégrateur pour un export personnalisé.
+                </div>
+            </div>
+        </div>
+
+        <div style="background:#f0fdf4;border-radius:8px;padding:12px;font-size:.82em;color:#065f46;border:1px solid #bbf7d0">
+            💡 <strong>Méthode la plus simple :</strong> Exportez depuis votre logiciel en Excel, ouvrez le fichier, copiez-collez les colonnes dans le modèle téléchargé ci-dessus, puis importez-le à l'étape ②. L'outil reconnaît automatiquement les noms de colonnes même s'ils diffèrent légèrement (ex : <em>sal_brut</em>, <em>salaire brut annuel</em>, <em>rémunération</em> → tous reconnus).
+        </div>
+    </div>
+
+    <!-- ═══ ÉTAPE 2 — IMPORT ═══ -->
+    <div class="card" style="border-left:4px solid #3b82f6;margin-bottom:20px">
+        <h3 style="margin-top:0;color:#3b82f6">② Importer vos données</h3>
+        <div style="display:flex;gap:10px;margin-bottom:14px">
+            <button class="btn btn-small" onclick="document.getElementById('imp-type-collab').classList.remove('hidden');document.getElementById('imp-type-client').classList.add('hidden');document.getElementById('imp-tab-collab').style.background='#3b82f6';document.getElementById('imp-tab-collab').style.color='#fff';document.getElementById('imp-tab-client').style.background='#f1f5f9';document.getElementById('imp-tab-client').style.color='#64748b'" id="imp-tab-collab" style="background:#3b82f6;color:#fff">👤 Collaborateurs & Paie</button>
+            <button class="btn btn-small" onclick="document.getElementById('imp-type-client').classList.remove('hidden');document.getElementById('imp-type-collab').classList.add('hidden');document.getElementById('imp-tab-client').style.background='#3b82f6';document.getElementById('imp-tab-client').style.color='#fff';document.getElementById('imp-tab-collab').style.background='#f1f5f9';document.getElementById('imp-tab-collab').style.color='#64748b'" id="imp-tab-client" style="background:#f1f5f9;color:#64748b">🏢 Clients & Missions</button>
+        </div>
+
+        <!-- Zone collaborateurs -->
+        <div id="imp-type-collab">
+            <div id="drop-zone-collab" ondrop="handleDrop(event,'collab')" ondragover="event.preventDefault();this.style.borderColor='#3b82f6';this.style.background='#eff6ff'" ondragleave="this.style.borderColor='#cbd5e1';this.style.background='#f8fafc'" onclick="document.getElementById('file-input-collab').click()" style="border:2px dashed #cbd5e1;border-radius:12px;padding:40px 20px;text-align:center;cursor:pointer;background:#f8fafc;transition:all .2s">
+                <div style="font-size:2em;margin-bottom:8px">📂</div>
+                <div style="font-size:.95em;font-weight:600;color:#1e293b;margin-bottom:4px">Glissez votre fichier Excel ou CSV ici</div>
+                <div style="font-size:.8em;color:#94a3b8">ou cliquez pour parcourir — .xlsx, .xls, .csv acceptés</div>
+                <input type="file" id="file-input-collab" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleFileSelect(this,'collab')">
+            </div>
+            <p style="font-size:.78em;color:#94a3b8;margin-top:8px"><strong>Colonnes obligatoires :</strong> Nom, Prénom, Salaire brut annuel — <strong>Optionnelles :</strong> Poste, Pôle, Date d'entrée, Contrat, Taux facturation, Absences mois par mois (Jan→Déc), Heures mois par mois, Satisfaction, Commentaire</p>
+        </div>
+
+        <!-- Zone clients -->
+        <div id="imp-type-client" class="hidden">
+            <div id="drop-zone-client" ondrop="handleDrop(event,'client')" ondragover="event.preventDefault();this.style.borderColor='#3b82f6';this.style.background='#eff6ff'" ondragleave="this.style.borderColor='#cbd5e1';this.style.background='#f8fafc'" onclick="document.getElementById('file-input-client').click()" style="border:2px dashed #cbd5e1;border-radius:12px;padding:40px 20px;text-align:center;cursor:pointer;background:#f8fafc;transition:all .2s">
+                <div style="font-size:2em;margin-bottom:8px">📂</div>
+                <div style="font-size:.95em;font-weight:600;color:#1e293b;margin-bottom:4px">Glissez votre fichier Excel ou CSV ici</div>
+                <div style="font-size:.8em;color:#94a3b8">ou cliquez pour parcourir — .xlsx, .xls, .csv acceptés</div>
+                <input type="file" id="file-input-client" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleFileSelect(this,'client')">
+            </div>
+            <p style="font-size:.78em;color:#94a3b8;margin-top:8px"><strong>Colonnes obligatoires :</strong> Raison sociale, Honoraires HT — <strong>Optionnelles :</strong> Forme juridique, Activité, Collaborateur référent, Type mission, Heures budgétées, Heures réalisées, Satisfaction client, Difficulté, Commentaire</p>
+        </div>
+    </div>
+
+    <!-- ═══ ÉTAPE 3 — MAPPING & PREVIEW ═══ -->
+    <div id="import-mapping" class="card hidden" style="border-left:4px solid #f59e0b;margin-bottom:20px">
+        <h3 style="margin-top:0;color:#f59e0b">③ Vérification du mapping</h3>
+        <p style="font-size:.85em;color:#475569;margin-bottom:12px" id="import-file-info"></p>
+        <div id="mapping-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;font-size:.85em"></div>
+        <div style="overflow-x:auto;max-height:350px;overflow-y:auto;border:1px solid #e2e8f0;border-radius:8px">
+            <table id="import-preview" style="width:100%;border-collapse:collapse;font-size:.78em">
+                <thead id="import-preview-head" style="background:#1a2744;color:#fff;position:sticky;top:0"></thead>
+                <tbody id="import-preview-body"></tbody>
+            </table>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px">
+            <div style="font-size:.82em;color:#64748b" id="import-stats"></div>
+            <div style="display:flex;gap:10px">
+                <button class="btn btn-outline" onclick="resetImport()" style="font-size:13px">🗑️ Annuler</button>
+                <button class="btn btn-primary" id="btn-validate-import" onclick="validateImport()" style="font-size:13px">✅ Valider et injecter dans l'outil</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ ÉTAPE 4 — RÉSULTAT ═══ -->
+    <div id="import-result" class="card hidden" style="border-left:4px solid #10b981;margin-bottom:20px">
+        <div style="text-align:center;padding:20px">
+            <div style="font-size:2.5em;margin-bottom:10px">✅</div>
+            <h3 style="color:#10b981;margin:0 0 8px">Import réussi !</h3>
+            <p id="import-result-text" style="font-size:.9em;color:#475569"></p>
+            <div style="display:flex;gap:10px;justify-content:center;margin-top:16px">
+                <button class="btn btn-primary" onclick="showSection('diagnostic-hub')" style="font-size:13px">📊 Lancer le diagnostic →</button>
+                <button class="btn btn-outline" onclick="goF3('equipe')" style="font-size:13px">👤 Voir les collaborateurs</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ POURQUOI L'IMPORT EXCEL ET PAS UNE API ? ═══ -->
+    <div class="card" style="border-left:4px solid #8b5cf6;margin-bottom:20px">
+        <h3 style="margin-top:0;color:#8b5cf6">🔌 Pourquoi l'import Excel et pas une connexion directe aux logiciels ?</h3>
+        <p style="font-size:.88em;color:#334155;margin-bottom:16px;line-height:1.6">Question légitime. Voici une explication transparente sur les possibilités et les limites techniques.</p>
+
+        <!-- CE QUE L'OUTIL FAIT -->
+        <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:16px;margin-bottom:14px">
+            <div style="font-weight:700;color:#059669;font-size:.92em;margin-bottom:8px">✅ Ce que l'outil fait aujourd'hui</div>
+            <div style="font-size:.85em;color:#334155;line-height:1.7">
+                Vous exportez vos données depuis votre logiciel de paie ou de gestion interne (Silae, Cegid, Sage, MEG…) au format Excel ou CSV — <strong>une opération que vous faites déjà régulièrement</strong>. Vous glissez le fichier dans l'outil, il reconnaît automatiquement les colonnes et calcule instantanément tous les indicateurs : absentéisme, coûts cachés, simulateurs, ROI.<br><br>
+                C'est le même processus que lorsque vous importez un FEC dans un outil d'analyse ou un fichier d'écritures dans votre logiciel de révision. <strong>Aucune installation, aucun abonnement, aucune dépendance technique.</strong>
+            </div>
+        </div>
+
+        <!-- POURQUOI PAS D'API -->
+        <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:16px;margin-bottom:14px">
+            <div style="font-weight:700;color:#dc2626;font-size:.92em;margin-bottom:10px">⚠️ Pourquoi l'outil ne se connecte pas directement à Silae, Cegid ou Sage ?</div>
+            <div style="font-size:.85em;color:#334155;line-height:1.6;margin-bottom:12px">
+                Une synchronisation automatique (type « un bouton et les données arrivent ») est techniquement une <strong>API</strong> (interface de programmation). Pour la mettre en place, il faudrait réunir <strong>quatre prérequis</strong> :
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-bottom:14px">
+                <div style="background:white;border-radius:8px;padding:14px;border:1px solid #fecaca">
+                    <div style="font-weight:700;color:#991b1b;font-size:.85em;margin-bottom:6px">🖥️ 1. Un serveur permanent</div>
+                    <div style="font-size:.8em;color:#64748b;line-height:1.5">Un hébergement cloud (OVH, AWS, Azure…) qui tourne 24h/24 pour recevoir et traiter les données. Coût : 50 à 300 €/mois minimum, avec maintenance et supervision.</div>
+                </div>
+                <div style="background:white;border-radius:8px;padding:14px;border:1px solid #fecaca">
+                    <div style="font-weight:700;color:#991b1b;font-size:.85em;margin-bottom:6px">📝 2. Un contrat API par éditeur</div>
+                    <div style="font-size:.8em;color:#64748b;line-height:1.5">Silae, Cegid et Sage <strong>facturent l'accès à leurs API</strong>. Il faut négocier un partenariat commercial avec chaque éditeur, signer un contrat et obtenir des clés d'accès. Ce n'est pas en libre-service.</div>
+                </div>
+                <div style="background:white;border-radius:8px;padding:14px;border:1px solid #fecaca">
+                    <div style="font-weight:700;color:#991b1b;font-size:.85em;margin-bottom:6px">🔐 3. Une authentification sécurisée (OAuth)</div>
+                    <div style="font-size:.8em;color:#64748b;line-height:1.5">Chaque cabinet utilisateur devrait autoriser la connexion via un protocole sécurisé (OAuth2), avec gestion des tokens d'accès et consentement explicite.</div>
+                </div>
+                <div style="background:white;border-radius:8px;padding:14px;border:1px solid #fecaca">
+                    <div style="font-weight:700;color:#991b1b;font-size:.85em;margin-bottom:6px">⚖️ 4. Conformité RGPD</div>
+                    <div style="font-size:.8em;color:#64748b;line-height:1.5">Les données de paie sont des <strong>données personnelles sensibles</strong> au sens du RGPD (salaires, arrêts maladie). Leur traitement impose : registre des traitements, DPO, hébergement HDS pour les données de santé.</div>
+                </div>
+            </div>
+            <div style="background:#fff5f5;border-radius:8px;padding:12px;font-size:.85em;color:#991b1b;line-height:1.6;border-left:3px solid #ef4444">
+                <strong>En résumé :</strong> même en codant le connecteur, il serait impossible de le faire fonctionner sans les clés API de l'éditeur — et celles-ci se négocient commercialement. C'est un projet de développement logiciel à part entière (6 à 12 mois, budget estimé de 30 000 à 80 000 €), pas un bouton à ajouter.
+            </div>
+        </div>
+
+        <!-- POURQUOI EXCEL EST LA BONNE RÉPONSE -->
+        <div style="background:#eff6ff;border:1px solid #93c5fd;border-radius:10px;padding:16px;margin-bottom:14px">
+            <div style="font-weight:700;color:#1e40af;font-size:.92em;margin-bottom:10px">💡 Pourquoi l'import Excel est la bonne réponse pour un cabinet d'expertise comptable</div>
+            <div style="font-size:.85em;color:#334155;line-height:1.7">
+                <strong>1. Tous les logiciels savent exporter en Excel.</strong> Silae, Cegid, Sage, ACD, Quadra, MEG, Agiris, Coala — aucune exception. C'est le plus petit dénominateur commun de la profession.<br><br>
+                <strong>2. Le diagnostic QVT n'est pas un flux quotidien.</strong> On ne synchronise pas des indicateurs QVT en temps réel. Un diagnostic se fait une à deux fois par an, au moment du bilan social ou de la revue stratégique. Un import Excel ponctuel est parfaitement adapté à ce rythme.<br><br>
+                <strong>3. Vos données restent sur votre poste.</strong> Aucune donnée ne transite par un serveur tiers. Le fichier reste chez vous, l'outil tourne dans votre navigateur. Zéro risque de fuite, zéro dépendance à un prestataire.<br><br>
+                <strong>4. C'est le standard de l'industrie.</strong> PayFit, Lucca, Eurecia, Factorial — tous ont commencé par l'import Excel avant de développer des connecteurs API. C'est le chemin normal d'un outil en phase de déploiement.
+            </div>
+        </div>
+
+        <!-- FLUX CONCRET -->
+        <div style="font-weight:700;color:#1a2744;font-size:.9em;margin-bottom:10px">📊 Votre flux en pratique — 4 étapes, 5 minutes :</div>
+        <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;align-items:center;gap:0;margin-bottom:16px;font-size:.82em">
+            <div style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border:2px solid #3b82f6;border-radius:10px;padding:12px;text-align:center">
+                <div style="font-size:1.1em;margin-bottom:4px">🏢</div>
+                <div style="font-weight:700;color:#1e40af;font-size:.85em">Votre logiciel</div>
+                <div style="font-size:.75em;color:#64748b">Silae · Cegid · Sage<br>MEG · Agiris</div>
+            </div>
+            <div style="font-size:1.3em;color:#10b981;padding:0 6px;font-weight:700">→</div>
+            <div style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px solid #10b981;border-radius:10px;padding:12px;text-align:center">
+                <div style="font-size:1.1em;margin-bottom:4px">📄</div>
+                <div style="font-weight:700;color:#059669;font-size:.85em">Export Excel</div>
+                <div style="font-size:.75em;color:#64748b">2 clics dans<br>votre logiciel</div>
+            </div>
+            <div style="font-size:1.3em;color:#10b981;padding:0 6px;font-weight:700">→</div>
+            <div style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px solid #10b981;border-radius:10px;padding:12px;text-align:center">
+                <div style="font-size:1.1em;margin-bottom:4px">📥</div>
+                <div style="font-weight:700;color:#059669;font-size:.85em">Glisser-déposer</div>
+                <div style="font-size:.75em;color:#64748b">Drag & drop<br>dans l'outil</div>
+            </div>
+            <div style="font-size:1.3em;color:#10b981;padding:0 6px;font-weight:700">→</div>
+            <div style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px solid #10b981;border-radius:10px;padding:12px;text-align:center">
+                <div style="font-size:1.1em;margin-bottom:4px">📊</div>
+                <div style="font-weight:700;color:#059669;font-size:.85em">Diagnostic QVT</div>
+                <div style="font-size:.75em;color:#64748b">Calculs automatiques<br>en 3 secondes</div>
+            </div>
+        </div>
+
+        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px;font-size:.82em;color:#475569">
+            🔮 <strong>Et demain ?</strong> Si l'outil était déployé à l'échelle de plusieurs dizaines de cabinets, le développement d'un back-end avec connecteurs API deviendrait pertinent pour automatiser l'import. Mais aujourd'hui, l'import Excel couvre <strong>100 % du besoin fonctionnel</strong> sans aucune contrainte technique.
+        </div>
+    </div>
+</section>
+
 <!-- ===== DÉMARCHE GUIDÉE QVT ===== -->
 <section id="demarche-guidee" class="content-section" style="display:none">
     <h1>🏗️ Démarche QVT — Guide Pas à Pas</h1>
@@ -9547,14 +9827,14 @@ function renderCasTerrain() {
   var morinSBM = Math.round(morin.salaire / 12); // salaire brut mensuel
   var morinDureeJours = 120; // 4 mois calendaires (mars-juin)
   var morinAnc = 15; // depuis 2011
-  var SMIC_MENSUEL = 1801.80;
-  var PLAFOND_14_SMIC = SMIC_MENSUEL * 1.4; // 2 522,52 € (plafond IJSS depuis avril 2025)
+  var SMIC_MENSUEL = 1823.03; // SMIC 2026 (décret 2025-1228 du 17/12/2025)
+  var PLAFOND_14_SMIC = SMIC_MENSUEL * 1.4; // 2 552,24 € — plafond IJSS validé bulletin réel janv. 2026
 
   // ═══ IJSS (Sécurité Sociale) ═══
   var morinSalPlafonne = Math.min(morinSBM, PLAFOND_14_SMIC);
   var morinSJB = (morinSalPlafonne * 3) / 91.25; // salaire journalier de base
   var morinIJSSBrute = morinSJB * 0.50;
-  var morinIJSSMax = 53.31; // plafond 2025
+  var morinIJSSMax = 53.94; // plafond 2026
   var morinIJSSJour = Math.min(morinIJSSBrute, morinIJSSMax);
   var morinIJSSNette = morinIJSSJour * (1 - 0.067); // CSG 6.2% + CRDS 0.5%
   var morinJoursCarSS = 3;
@@ -9609,7 +9889,7 @@ function renderCasTerrain() {
     var salPlaf = Math.min(sbm, PLAFOND_14_SMIC);
     var sjb = (salPlaf * 3) / 91.25;
     var ijssBrute = sjb * 0.50;
-    var ijssJour = Math.min(ijssBrute, 53.31);
+    var ijssJour = Math.min(ijssBrute, 53.94);
     var ijssNette = ijssJour * (1 - 0.067);
     var joursCarSS = 3;
     var joursIndemSS = Math.max(0, dureePrevisJours - joursCarSS);
@@ -9992,6 +10272,548 @@ function renderCasTerrain() {
     aaEl.innerHTML = aaH;
   }
   } catch(e) { console.warn('AvantApres KPI render error:', e); }
+}
+
+// ══════════ IMPORT DONNÉES ══════════
+var _importData = null;
+var _importType = null;
+
+// ═══ COLONNES ATTENDUES ═══
+var IMPORT_COLS_COLLAB = [
+  {key:'nom',labels:['nom','name','last_name','nom_famille'],required:true},
+  {key:'prenom',labels:['prenom','prénom','first_name','prenom_usuel'],required:true},
+  {key:'poste',labels:['poste','fonction','job','emploi','intitule_poste','intitulé','titre','qualification','classification'],required:false},
+  {key:'pole',labels:['pole','pôle','service','departement','département','direction'],required:false},
+  {key:'dateEntree',labels:['date_entree','date_entrée','date_embauche','entree','entrée','embauche','anciennete','ancienneté','date_debut','début'],required:false},
+  {key:'salaire',labels:['salaire','salaire_brut','salaire_brut_annuel','brut_annuel','brut','remuneration','rémunération','sal_brut','montant_brut','salaire_base'],required:true},
+  {key:'contrat',labels:['contrat','heures','heures_hebdo','temps_travail','duree_travail','durée','horaire','39h','35h','type_contrat'],required:false},
+  {key:'tauxFactu',labels:['taux_horaire','taux_facturation','taux_horaire_facturation','tarif','tarif_horaire','prix_heure'],required:false},
+  {key:'absJan',labels:['abs_jan','absence_jan','abs_janvier','jan'],required:false},
+  {key:'absFev',labels:['abs_fev','abs_fév','absence_fev','fev','fév','fevrier','février'],required:false},
+  {key:'absMar',labels:['abs_mar','absence_mar','mar','mars'],required:false},
+  {key:'absAvr',labels:['abs_avr','absence_avr','avr','avril'],required:false},
+  {key:'absMai',labels:['abs_mai','absence_mai','mai'],required:false},
+  {key:'absJun',labels:['abs_jun','abs_juin','absence_jun','jun','juin'],required:false},
+  {key:'absJul',labels:['abs_jul','abs_juil','absence_jul','jul','juil','juillet'],required:false},
+  {key:'absAou',labels:['abs_aou','abs_aout','abs_aoû','absence_aou','aou','aout','aoû','août'],required:false},
+  {key:'absSep',labels:['abs_sep','absence_sep','sep','sept','septembre'],required:false},
+  {key:'absOct',labels:['abs_oct','absence_oct','oct','octobre'],required:false},
+  {key:'absNov',labels:['abs_nov','absence_nov','nov','novembre'],required:false},
+  {key:'absDec',labels:['abs_dec','abs_déc','absence_dec','dec','déc','decembre','décembre'],required:false},
+  {key:'hJan',labels:['h_jan','heures_jan','heures_janvier'],required:false},
+  {key:'hFev',labels:['h_fev','h_fév','heures_fev','heures_fevrier','heures_février'],required:false},
+  {key:'hMar',labels:['h_mar','heures_mar','heures_mars'],required:false},
+  {key:'hAvr',labels:['h_avr','heures_avr','heures_avril'],required:false},
+  {key:'hMai',labels:['h_mai','heures_mai'],required:false},
+  {key:'hJun',labels:['h_jun','h_juin','heures_jun','heures_juin'],required:false},
+  {key:'hJul',labels:['h_jul','h_juil','heures_jul','heures_juillet'],required:false},
+  {key:'hAou',labels:['h_aou','h_aout','h_aoû','heures_aou','heures_aout','heures_août'],required:false},
+  {key:'hSep',labels:['h_sep','heures_sep','heures_septembre'],required:false},
+  {key:'hOct',labels:['h_oct','heures_oct','heures_octobre'],required:false},
+  {key:'hNov',labels:['h_nov','heures_nov','heures_novembre'],required:false},
+  {key:'hDec',labels:['h_dec','h_déc','heures_dec','heures_decembre','heures_décembre'],required:false},
+  {key:'satisfaction',labels:['satisfaction','note','score','evaluation','évaluation','bien_etre','bien-être'],required:false},
+  {key:'commentaire',labels:['commentaire','comment','remarque','observation','note_rh'],required:false},
+  {key:'absences',labels:['absences','jours_absence','abs','absence_jours','nb_absences','total_absences','jours_abs'],required:false}
+];
+
+var IMPORT_COLS_CLIENT = [
+  {key:'nom',labels:['nom','raison_sociale','client','nom_client','société','societe','dossier','libelle','libellé'],required:true},
+  {key:'forme',labels:['forme','forme_juridique','type_societe','type_société','statut_juridique','forme_jur'],required:false},
+  {key:'activite',labels:['activite','activité','secteur','naf','code_naf','branche','description'],required:false},
+  {key:'collabRef',labels:['collaborateur','collab','referent','référent','responsable','charge_dossier','chargé','gestionnaire','manager'],required:false},
+  {key:'honoraires',labels:['honoraires','honoraires_ht','honoraires_ht_annuels','ca','chiffre_affaires','montant','prix','facturation','fees','budget'],required:true},
+  {key:'type',labels:['type','type_mission','type_de_mission','mission','nature','prestation','mandat'],required:false},
+  {key:'heuresEstim',labels:['heures','heures_estimees','heures_estimées','heures_prevues','heures_prévues','heures_budgetees','heures_budgétées','temps','budget_heures'],required:false},
+  {key:'heuresReelles',labels:['heures_reelles','heures_réelles','heures_realisees','heures_réalisées','temps_passe','temps_passé'],required:false},
+  {key:'satisfactionCli',labels:['satisfaction','satisfaction_client','note_client','evaluation_client','évaluation'],required:false},
+  {key:'difficulte',labels:['difficulte','difficulté','complexite','complexité','niveau'],required:false},
+  {key:'commentaire',labels:['commentaire','comment','remarque','observation'],required:false}
+];
+
+// ═══ TEMPLATE DOWNLOAD ═══
+function downloadTemplate(format) {
+  // ═══ ONGLET 1 : COLLABORATEURS (toutes les colonnes utiles) ═══
+  var colHeaders = [
+    'Nom','Prénom','Poste','Pôle','Date entrée','Salaire brut annuel (€)','Contrat','Taux horaire facturation (€ HT)',
+    'Abs Jan','Abs Fév','Abs Mar','Abs Avr','Abs Mai','Abs Jun','Abs Jul','Abs Aoû','Abs Sep','Abs Oct','Abs Nov','Abs Déc',
+    'H Jan','H Fév','H Mar','H Avr','H Mai','H Jun','H Jul','H Aoû','H Sep','H Oct','H Nov','H Déc',
+    'Satisfaction (1-10)','Commentaire'
+  ];
+  var colData = [
+    ['Martin','Lucas','Chef de mission','Révision','01/03/2019','42000','39h','85',
+     '0','0','1','0','2','0','0','0','1','0','0','0',
+     '159','159','149','139','131','120','102','80','125','159','145','134',
+     '7.2','Bon élément, pilier du pôle révision'],
+    ['Dupont','Marie','Collaboratrice confirmée','Expertise','15/09/2020','36000','39h','75',
+     '1','0','0','0','0','1','0','0','0','0','1','0',
+     '159','159','149','139','131','120','102','80','125','159','145','134',
+     '6.8','Compétente mais charge élevée, stress déclaré'],
+    ['Roche','Julien','Collaborateur','Audit','02/01/2022','30000','39h','70',
+     '0','2','0','0','1','0','0','0','0','0','0','0',
+     '159','155','149','139','128','120','102','80','125','159','145','134',
+     '7.0','En progression, besoin d\'accompagnement'],
+    ['Benoit','Clara','Collaboratrice junior','Saisie','01/07/2024','26000','35h','55',
+     '0','1','0','1','0','0','0','0','0','0','0','2',
+     '140','138','140','138','140','140','70','0','140','140','140','133',
+     '6.5','Recrutée récemment, en cours d\'intégration'],
+    ['Bernard','Nathalie','Manager','Direction','10/01/2012','50000','39h','95',
+     '1','0','0','0','0','1','0','0','1','0','0','0',
+     '154','154','144','135','127','117','99','80','121','154','140','130',
+     '7.2','Gère révision + saisie, en surcharge depuis 2 ans'],
+    ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','']
+  ];
+
+  // ═══ ONGLET 2 : CLIENTS ═══
+  var cliHeaders = [
+    'Raison sociale','Forme juridique','Activité / Secteur','Collaborateur référent','Honoraires HT annuels (€)',
+    'Type de mission','Heures budgétées','Heures réalisées','Satisfaction client (1-10)','Difficulté (1-10)','Commentaire'
+  ];
+  var cliData = [
+    ['Boulangerie Durand','SARL','Artisan boulanger — 8 sal.','Dupont Marie','6500','EC — Tenue + Révision','85','92','8.0','3','Client fidèle depuis 10 ans'],
+    ['SA Métallerie du Sud','SA','Industrie métallurgique — 45 sal.','Martin Lucas','32000','EC — Révision + Social','350','380','7.5','6','Dossier complexe, paie externalisée'],
+    ['SCI Les Oliviers','SCI','Gestion immobilière — 2 biens','Dupont Marie','2800','EC — Tenue simple','30','28','9.0','2','Dossier léger, bon payeur'],
+    ['SARL TechConnect','SARL','Services informatiques — 12 sal.','Roche Julien','9500','EC — Tenue + Révision + Social','130','145','7.0','5','En croissance, missions additionnelles possibles'],
+    ['SA Groupe Duval Immo','SA','Promotion immobilière — 65 sal.','Bernard Nathalie','48000','EC — Révision + Consolidation + CAC','520','555','8.5','8','Dossier majeur du cabinet, 3 filiales'],
+    ['','','','','','','','','','','']
+  ];
+
+  // ═══ ONGLET 3 : NOTICE D'UTILISATION ═══
+  var noticeData = [
+    ['═══ GUIDE D\'IMPORT — Outil QVT Cabinet EC ═══','',''],
+    ['','',''],
+    ['ONGLET COLLABORATEURS','',''],
+    ['Colonne','Obligatoire ?','Comment la remplir'],
+    ['Nom / Prénom','OUI','Identité du collaborateur'],
+    ['Poste','Non','Intitulé libre : Collaborateur, Chef de mission, Manager, Associé...'],
+    ['Pôle','Non','Service : Expertise, Révision, Audit, Saisie, Social, Direction'],
+    ['Date entrée','Non','Format JJ/MM/AAAA — sert au calcul d\'ancienneté (maintien salaire, IJSS)'],
+    ['Salaire brut annuel','OUI','En euros. Si vous avez le mensuel, multipliez par 12. Si vous avez le net, divisez par 0.77'],
+    ['Contrat','Non','35h ou 39h — si vide, 39h par défaut'],
+    ['Taux horaire facturation','Non','Taux HT facturé aux clients pour ce collaborateur'],
+    ['Abs Jan à Déc','Non','Jours d\'absence par mois. Depuis Silae : État des absences → Export Excel'],
+    ['H Jan à Déc','Non','Heures travaillées par mois. Depuis le logiciel de GI : MEG, Agiris...'],
+    ['Satisfaction','Non','Note de 1 à 10, issue de l\'entretien annuel ou du questionnaire QVT'],
+    ['','',''],
+    ['ONGLET CLIENTS','',''],
+    ['Raison sociale','OUI','Nom du client / dossier'],
+    ['Honoraires HT','OUI','Montant annuel HT facturé ou budgété'],
+    ['Collaborateur référent','Non','Nom du collaborateur en charge — doit correspondre exactement à l\'onglet Collaborateurs'],
+    ['Heures budgétées / réalisées','Non','Utile pour le calcul de rentabilité et de taux de facturation'],
+    ['','',''],
+    ['═══ OÙ TROUVER LES DONNÉES ? ═══','',''],
+    ['','',''],
+    ['LOGICIEL','EXPORT','CHEMIN'],
+    ['Silae','Collaborateurs + Salaires','Gestion du personnel → Liste des salariés → Exporter → Excel'],
+    ['Silae','Absences','Gestion des absences → État des absences → Période → Exporter'],
+    ['Silae','Bulletins synthèse','États → Récapitulatif annuel → Export Excel'],
+    ['Cegid','Collaborateurs','RH → Effectifs → Export liste salariés'],
+    ['Sage Paie','Collaborateurs','Listes → Salariés → Imprimer/Exporter → Format Excel'],
+    ['ACD / Quadra','Collaborateurs','Paie → Éditions → Liste du personnel → Export'],
+    ['MEG','Clients + Heures','Dossiers → Export → Format Excel / Temps passé → Export'],
+    ['Agiris','Clients + Heures','GI → Portefeuille → Exporter / Temps → Synthèse → Export'],
+    ['RCA','Clients','Portefeuille → Export Excel'],
+    ['','',''],
+    ['ASTUCE : Exportez depuis votre logiciel, puis copiez-collez les colonnes dans ce modèle.','',''],
+    ['L\'outil reconnaît automatiquement les noms de colonnes même s\'ils diffèrent légèrement.','','']
+  ];
+
+  if (format === 'csv') {
+    var csv = colHeaders.join(';') + '\n' + colData.map(function(r){return r.join(';');}).join('\n');
+    csv += '\n\n' + cliHeaders.join(';') + '\n' + cliData.map(function(r){return r.join(';');}).join('\n');
+    var blob = new Blob(['\ufeff' + csv], {type:'text/csv;charset=utf-8'});
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = 'modele_import_qvt.csv'; a.click();
+  } else {
+    if (typeof XLSX === 'undefined') { alert('Bibliothèque Excel non chargée. Vérifiez votre connexion internet.'); return; }
+    var wb = XLSX.utils.book_new();
+    var ws1 = XLSX.utils.aoa_to_sheet([colHeaders].concat(colData));
+    ws1['!cols'] = colHeaders.map(function(h) { return {wch: h.length < 8 ? 8 : Math.min(h.length + 4, 28)}; });
+    // Style header row background (via cell comments since xlsx doesn't support styles easily)
+    XLSX.utils.book_append_sheet(wb, ws1, 'Collaborateurs');
+    var ws2 = XLSX.utils.aoa_to_sheet([cliHeaders].concat(cliData));
+    ws2['!cols'] = cliHeaders.map(function(h) { return {wch: h.length < 10 ? 12 : Math.min(h.length + 4, 30)}; });
+    XLSX.utils.book_append_sheet(wb, ws2, 'Clients');
+    var ws3 = XLSX.utils.aoa_to_sheet(noticeData);
+    ws3['!cols'] = [{wch:50},{wch:15},{wch:60}];
+    XLSX.utils.book_append_sheet(wb, ws3, 'Notice');
+    XLSX.writeFile(wb, 'modele_import_qvt.xlsx');
+  }
+}
+
+// ═══ FILE HANDLING ═══
+function handleDrop(e, type) {
+  e.preventDefault();
+  e.currentTarget.style.borderColor = '#cbd5e1';
+  e.currentTarget.style.background = '#f8fafc';
+  var file = e.dataTransfer.files[0];
+  if (file) parseFile(file, type);
+}
+
+function handleFileSelect(input, type) {
+  if (input.files[0]) parseFile(input.files[0], type);
+}
+
+function parseFile(file, type) {
+  _importType = type;
+  var ext = file.name.split('.').pop().toLowerCase();
+
+  if (ext === 'csv') {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var lines = e.target.result.split('\n').filter(function(l){return l.trim();});
+      var sep = lines[0].indexOf(';') > -1 ? ';' : ',';
+      var rows = lines.map(function(l){ return l.split(sep).map(function(c){return c.trim().replace(/^"|"$/g,'');}); });
+      processData(rows, file.name);
+    };
+    reader.readAsText(file, 'UTF-8');
+  } else {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      if (typeof XLSX === 'undefined') { alert('Bibliothèque Excel non chargée.'); return; }
+      var wb = XLSX.read(e.target.result, {type:'array', cellDates:true});
+      var sheetName = wb.SheetNames[0];
+      // Try to find the right sheet
+      if (type === 'collab') {
+        wb.SheetNames.forEach(function(n){ if (/collab|salar|paie|rh|effectif/i.test(n)) sheetName = n; });
+      } else {
+        wb.SheetNames.forEach(function(n){ if (/client|dossier|mission|porte/i.test(n)) sheetName = n; });
+      }
+      var ws = wb.Sheets[sheetName];
+      var rows = XLSX.utils.sheet_to_json(ws, {header:1, raw:false, defval:''});
+      processData(rows, file.name + ' → onglet "' + sheetName + '"');
+    };
+    reader.readAsArrayBuffer(file);
+  }
+}
+
+function processData(rows, fileName) {
+  if (!rows || rows.length < 2) { alert('Fichier vide ou illisible.'); return; }
+
+  var headers = rows[0].map(function(h){ return (h+'').toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'_').replace(/_+/g,'_'); });
+  var cols = _importType === 'collab' ? IMPORT_COLS_COLLAB : IMPORT_COLS_CLIENT;
+
+  // Auto-mapping
+  var mapping = {};
+  cols.forEach(function(col) {
+    var found = -1;
+    for (var i = 0; i < headers.length; i++) {
+      for (var j = 0; j < col.labels.length; j++) {
+        var lbl = col.labels[j].normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+        if (headers[i].indexOf(lbl) > -1) { found = i; break; }
+      }
+      if (found > -1) break;
+    }
+    mapping[col.key] = found;
+  });
+
+  _importData = { rows: rows.slice(1).filter(function(r){ return r.some(function(c){return (c+'').trim();}); }), headers: rows[0], mapping: mapping, fileName: fileName };
+
+  showMapping();
+}
+
+function showMapping() {
+  var d = _importData;
+  var cols = _importType === 'collab' ? IMPORT_COLS_COLLAB : IMPORT_COLS_CLIENT;
+  document.getElementById('import-mapping').classList.remove('hidden');
+  document.getElementById('import-file-info').innerHTML = '📄 <strong>' + d.fileName + '</strong> — ' + d.rows.length + ' lignes détectées';
+
+  // Mapping grid
+  var grid = document.getElementById('mapping-grid');
+  grid.innerHTML = '';
+  cols.forEach(function(col) {
+    var label = document.createElement('div');
+    label.style.cssText = 'font-weight:600;font-size:.85em;padding:6px 8px;background:#f1f5f9;border-radius:6px;display:flex;align-items:center;gap:6px';
+    label.innerHTML = (col.required ? '<span style="color:#ef4444">*</span> ' : '') + col.key;
+    var sel = document.createElement('select');
+    sel.style.cssText = 'padding:6px 8px;border:1px solid #cbd5e1;border-radius:6px;font-size:.85em;background:#fff';
+    sel.setAttribute('data-map-key', col.key);
+    sel.onchange = function(){ _importData.mapping[this.getAttribute('data-map-key')] = parseInt(this.value); showPreview(); };
+    var opt0 = document.createElement('option'); opt0.value = '-1'; opt0.textContent = '— Non mappé —'; sel.appendChild(opt0);
+    d.headers.forEach(function(h, i) {
+      var opt = document.createElement('option'); opt.value = i; opt.textContent = h;
+      if (d.mapping[col.key] === i) opt.selected = true;
+      sel.appendChild(opt);
+    });
+    grid.appendChild(label);
+    grid.appendChild(sel);
+  });
+
+  showPreview();
+}
+
+function showPreview() {
+  var d = _importData;
+  var cols = _importType === 'collab' ? IMPORT_COLS_COLLAB : IMPORT_COLS_CLIENT;
+  var thead = document.getElementById('import-preview-head');
+  var tbody = document.getElementById('import-preview-body');
+
+  var mappedCols = cols.filter(function(c){ return d.mapping[c.key] > -1; });
+
+  thead.innerHTML = '<tr>' + mappedCols.map(function(c){ return '<th style="padding:6px 8px;text-align:left;font-size:.8em;white-space:nowrap">' + c.key + '</th>'; }).join('') + '</tr>';
+
+  var previewRows = d.rows.slice(0, 20);
+  tbody.innerHTML = previewRows.map(function(row, ri) {
+    return '<tr style="background:' + (ri%2===0?'#fff':'#f8fafc') + '">' + mappedCols.map(function(c) {
+      var val = (row[d.mapping[c.key]] || '').toString().trim();
+      var style = 'padding:5px 8px;border-bottom:1px solid #f1f5f9';
+      if (c.required && !val) style += ';background:#fef2f2;color:#ef4444';
+      return '<td style="' + style + '">' + val + '</td>';
+    }).join('') + '</tr>';
+  }).join('');
+
+  var valid = d.rows.filter(function(row) {
+    return cols.filter(function(c){return c.required;}).every(function(c){ return d.mapping[c.key] > -1 && (row[d.mapping[c.key]]+'').trim(); });
+  }).length;
+
+  document.getElementById('import-stats').innerHTML = '✅ <strong>' + valid + '</strong> / ' + d.rows.length + ' lignes valides' + (d.rows.length > 20 ? ' (aperçu : 20 premières)' : '');
+}
+
+function resetImport() {
+  _importData = null;
+  _importType = null;
+  document.getElementById('import-mapping').classList.add('hidden');
+  document.getElementById('import-result').classList.add('hidden');
+  ['file-input-collab','file-input-client'].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=''; });
+}
+
+function validateImport() {
+  if (!_importData || !_importData.rows.length) { alert('Aucune donnée à importer.'); return; }
+  var d = _importData;
+  var cols = _importType === 'collab' ? IMPORT_COLS_COLLAB : IMPORT_COLS_CLIENT;
+
+  // Check required columns
+  var missing = cols.filter(function(c){ return c.required && d.mapping[c.key] === -1; });
+  if (missing.length) { alert('Colonnes obligatoires non mappées : ' + missing.map(function(c){return c.key;}).join(', ')); return; }
+
+  // Ask: replace or add?
+  var existing = _importType === 'collab' ? CO.length : CL.length;
+  var mode = 'replace';
+  if (existing > 0) {
+    var choice = confirm('Le cabinet contient déjà ' + existing + (_importType === 'collab' ? ' collaborateurs' : ' clients') + '.\n\nOK = Remplacer toutes les données existantes\nAnnuler = Ajouter aux données existantes');
+    mode = choice ? 'replace' : 'add';
+  }
+
+  if (mode === 'replace') {
+    if (_importType === 'collab') { CO.length = 0; } else { CL.length = 0; }
+  }
+
+  if (_importType === 'collab') {
+    importCollabs(d);
+  } else {
+    importClients(d);
+  }
+}
+
+function parseSalaire(val) {
+  if (!val) return 0;
+  var s = (val+'').replace(/[€\s]/g,'').replace(',','.').replace(/\u00a0/g,'');
+  var n = parseFloat(s);
+  if (isNaN(n)) return 0;
+  // Si < 500 = probablement un taux horaire
+  // Si < 6000 = probablement mensuel → ×12
+  if (n > 0 && n < 500) return Math.round(n * 1820);
+  if (n >= 500 && n < 6000) return Math.round(n * 12);
+  return Math.round(n);
+}
+
+function parseDate(val) {
+  if (!val) return null;
+  var s = (val+'').trim();
+  // DD/MM/YYYY
+  var m = s.match(/^(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{4})$/);
+  if (m) return m[3]+'-'+(m[2].length<2?'0':'')+m[2]+'-'+(m[1].length<2?'0':'')+m[1];
+  // YYYY-MM-DD
+  m = s.match(/^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
+  if (m) return m[1]+'-'+(m[2].length<2?'0':'')+m[2]+'-'+(m[3].length<2?'0':'')+m[3];
+  // Excel date (number)
+  var n = parseFloat(s);
+  if (!isNaN(n) && n > 30000 && n < 50000) {
+    var d = new Date((n - 25569) * 86400 * 1000);
+    return d.toISOString().split('T')[0];
+  }
+  return null;
+}
+
+function parseContrat(val) {
+  if (!val) return '39h';
+  var s = (val+'').toLowerCase();
+  if (s.indexOf('35') > -1) return '35h';
+  return '39h';
+}
+
+function importCollabs(d) {
+  var m = d.mapping;
+  var count = 0;
+  var maxId = CO.reduce(function(mx,c){ return Math.max(mx,c.id); }, 0);
+  var absKeys = ['absJan','absFev','absMar','absAvr','absMai','absJun','absJul','absAou','absSep','absOct','absNov','absDec'];
+  var hKeys = ['hJan','hFev','hMar','hAvr','hMai','hJun','hJul','hAou','hSep','hOct','hNov','hDec'];
+  var hasMonthlyAbs = absKeys.some(function(k){ return m[k] > -1; });
+  var hasMonthlyH = hKeys.some(function(k){ return m[k] > -1; });
+
+  d.rows.forEach(function(row) {
+    var nom = (row[m.nom]||'').trim();
+    var prenom = (row[m.prenom]||'').trim();
+    if (!nom || !prenom) return;
+
+    var salaire = parseSalaire(row[m.salaire]);
+    if (salaire <= 0) return;
+
+    maxId++;
+    var contrat = m.contrat > -1 ? parseContrat(row[m.contrat]) : '39h';
+    var hSemaine = contrat === '35h' ? 35 : 39;
+
+    // Absences mensuelles
+    var absMois = [0,0,0,0,0,0,0,0,0,0,0,0];
+    if (hasMonthlyAbs) {
+      absKeys.forEach(function(k,i){ if (m[k] > -1) absMois[i] = parseInt(row[m[k]]) || 0; });
+    } else if (m.absences > -1) {
+      var absJ = parseInt(row[m.absences]) || 0;
+      var remain = absJ;
+      for (var mi = 0; mi < 12 && remain > 0; mi++) {
+        var take = Math.min(remain, Math.ceil(absJ / 12));
+        absMois[mi] = take; remain -= take;
+      }
+    }
+    var totalAbs = absMois.reduce(function(s,v){return s+v;},0);
+
+    // Heures mensuelles
+    var heuresMois;
+    if (hasMonthlyH) {
+      heuresMois = hKeys.map(function(k,i){ return m[k] > -1 ? (parseInt(row[m[k]]) || 0) : Math.round(hSemaine * 4.33); });
+    } else {
+      var mh = Math.round(hSemaine * 4.33);
+      heuresMois = [mh,mh,mh,mh,mh,mh,mh,Math.round(mh*0.5),mh,mh,mh,mh]; // août réduit par défaut
+    }
+    var heuresAn = heuresMois.reduce(function(s,v){return s+v;},0);
+
+    // Satisfaction
+    var sat = 7.0;
+    if (m.satisfaction > -1) {
+      var sv = parseFloat((row[m.satisfaction]+'').replace(',','.'));
+      if (!isNaN(sv) && sv >= 0 && sv <= 10) sat = sv;
+    }
+
+    // Commentaire
+    var comm = 'Importé depuis ' + d.fileName;
+    if (m.commentaire > -1 && (row[m.commentaire]||'').trim()) {
+      comm = (row[m.commentaire]||'').trim();
+    }
+
+    // Coef facturation
+    var coefFactu = 2.8;
+    if (m.tauxFactu > -1) {
+      var tf = parseFloat((row[m.tauxFactu]+'').replace(',','.').replace(/[€\s]/g,''));
+      if (!isNaN(tf) && tf > 0) {
+        var coutH = (salaire * 1.42) / heuresAn;
+        coefFactu = Math.round((tf / coutH) * 100) / 100;
+      }
+    }
+
+    var newCollab = {
+      id: maxId,
+      contrat: contrat,
+      nom: nom,
+      prenom: prenom,
+      poste: m.poste > -1 ? (row[m.poste]||'').trim() || 'Collaborateur' : 'Collaborateur',
+      pole: m.pole > -1 ? (row[m.pole]||'').trim() || 'Expertise' : 'Expertise',
+      dateEntree: m.dateEntree > -1 ? (parseDate(row[m.dateEntree]) || '2024-01-01') : '2024-01-01',
+      satisfaction: sat,
+      charge: 85,
+      absences: totalAbs,
+      objectifs: 80,
+      salaire: salaire,
+      heuresAn: heuresAn,
+      tauxCharge: 1.42,
+      absencesMois: absMois,
+      formNbMois: [0,0,0,0,0,0,0,0,0,0,0,0],
+      formHMois: [0,0,0,0,0,0,0,0,0,0,0,0],
+      qvtHMois: [0,0,0,0,0,0,0,0,0,0,0,0],
+      ttJMois: [0,0,0,0,0,0,0,0,0,0,0,0],
+      commentCollab: comm,
+      heuresMois: heuresMois
+    };
+    CO.push(newCollab);
+    count++;
+  });
+
+  // Recompute
+  if (typeof syncAbs === 'function') syncAbs();
+  if (typeof recalcCO === 'function') recalcCO(); if (typeof refreshAll === 'function') refreshAll();
+
+  document.getElementById('import-mapping').classList.add('hidden');
+  document.getElementById('import-result').classList.remove('hidden');
+  document.getElementById('import-result-text').innerHTML = '<strong>' + count + ' collaborateurs</strong> importés avec succès.<br>Effectif total du cabinet : <strong>' + CO.length + ' personnes</strong>.<br><span style="font-size:.85em;color:#64748b">Tous les indicateurs RH, coûts cachés et simulateurs ont été recalculés.</span>';
+}
+
+function importClients(d) {
+  var m = d.mapping;
+  var count = 0;
+  var maxId = CL.reduce(function(mx,c){ return Math.max(mx,c.id); }, 0);
+
+  d.rows.forEach(function(row) {
+    var nom = (row[m.nom]||'').trim();
+    if (!nom) return;
+    var honoraires = parseSalaire(row[m.honoraires]);
+
+    // Satisfaction client
+    var satCli = 7.0;
+    if (m.satisfactionCli > -1) {
+      var sv = parseFloat((row[m.satisfactionCli]+'').replace(',','.'));
+      if (!isNaN(sv) && sv >= 0 && sv <= 10) satCli = sv;
+    }
+    // Difficulté
+    var diff = 5;
+    if (m.difficulte > -1) {
+      var dv = parseInt(row[m.difficulte]);
+      if (!isNaN(dv) && dv >= 1 && dv <= 10) diff = dv;
+    }
+    // Commentaire
+    var comm = 'Importé depuis ' + d.fileName;
+    if (m.commentaire > -1 && (row[m.commentaire]||'').trim()) comm = (row[m.commentaire]||'').trim();
+
+    maxId++;
+    var newClient = {
+      id: maxId,
+      nom: nom,
+      forme: m.forme > -1 ? (row[m.forme]||'').trim() || 'SAS' : 'SAS',
+      activite: m.activite > -1 ? (row[m.activite]||'').trim() || '' : '',
+      collabId: 0,
+      honoraires: honoraires,
+      type: m.type > -1 ? (row[m.type]||'').trim() || 'EC — Tenue + Révision' : 'EC — Tenue + Révision',
+      heuresEstim: m.heuresEstim > -1 ? (parseInt(row[m.heuresEstim]) || 0) : 0,
+      heuresReelles: m.heuresReelles > -1 ? (parseInt(row[m.heuresReelles]) || 0) : 0,
+      satisfactionClient: satCli,
+      difficulte: diff,
+      dernierAvis: '',
+      dateAvis: '',
+      commentCollab: comm,
+      heuresMois: [0,0,0,0,0,0,0,0,0,0,0,0]
+    };
+
+    // Try to match collaborateur by name
+    if (m.collabRef > -1) {
+      var refName = (row[m.collabRef]||'').trim().toLowerCase();
+      if (refName) {
+        var match = CO.find(function(c) {
+          return (c.nom+' '+c.prenom).toLowerCase().indexOf(refName) > -1
+            || (c.prenom+' '+c.nom).toLowerCase().indexOf(refName) > -1
+            || c.nom.toLowerCase() === refName
+            || (c.prenom+' '+c.nom).toLowerCase() === refName;
+        });
+        if (match) newClient.collabId = match.id;
+      }
+    }
+
+    CL.push(newClient);
+    count++;
+  });
+
+  if (typeof recalcCO === 'function') recalcCO(); if (typeof refreshAll === 'function') refreshAll();
+
+  document.getElementById('import-mapping').classList.add('hidden');
+  document.getElementById('import-result').classList.remove('hidden');
+  document.getElementById('import-result-text').innerHTML = '<strong>' + count + ' clients</strong> importés avec succès.<br>Portefeuille total : <strong>' + CL.length + ' dossiers</strong>.<br><span style="font-size:.85em;color:#64748b">Les honoraires, répartitions et indicateurs ont été recalculés.</span>';
 }
 
 function showSection(id) {
@@ -21393,9 +22215,9 @@ function QVTApp() {
   const [clients, setClients] = useState(DEFAULT_CLIENTS);
   const [investissements, setInvestissements] = useState(DEFAULT_INVEST_QVT);
   const [qvtReponses, setQvtReponses] = useState({});
-  const [simAbsence, setSimAbsence] = useState({ collabId:3, dureeJours:15, joursFeries:0, joursChomes:4, sousTraitance:0, tauxCAPerdu:0, tauxRisquePerte:5, redistributions:[], contreVisite:false, contreVisiteCout:100, contreVisiteResultat:"positif", contreVisiteJour:5, recrutMode:"pourcentage", recrutPourcentage:15, recrutForfait:5000, recrutAnnonces:800, recrutHeuresEC:8, recrutCoutHoraireEC:65, recrutSalaireCustom:false, recrutSalaire:0, recrutTauxCharges:null, gestionECHeures:2, gestionECCoutHoraire:65, gestionRHHeures:3.75, gestionRHCoutHoraire:35, gestionExterne:false, gestionExterneForfait:150, integrationMois:3, tutoratHeures:20, tutoratCollabId:null, delaiRecrutement:3, autoFormationHeures:35, vacanceRedistributions:[], passationMois:1, passationTauxDossiers:100, indemnNegociee:0, sousTraitanceVacance:0, tauxRisquePerteDepart:10, typeDepart:"rc", preavisMois:3, modePreavis:"travaille", arretLiePreavis:false, fraisEmbauche:200 });
+  const [simAbsence, setSimAbsence] = useState({ collabId:6, dureeJours:15, joursFeries:0, joursChomes:4, sousTraitance:0, tauxCAPerdu:0, tauxRisquePerte:5, redistributions:[], contreVisite:false, contreVisiteCout:100, contreVisiteResultat:"positif", contreVisiteJour:5, recrutMode:"pourcentage", recrutPourcentage:15, recrutForfait:5000, recrutAnnonces:800, recrutHeuresEC:8, recrutCoutHoraireEC:65, recrutSalaireCustom:false, recrutSalaire:0, recrutTauxCharges:null, gestionECHeures:2, gestionECCoutHoraire:65, gestionRHHeures:3.75, gestionRHCoutHoraire:35, gestionExterne:false, gestionExterneForfait:150, integrationMois:3, tutoratHeures:20, tutoratCollabId:null, delaiRecrutement:3, autoFormationHeures:35, vacanceRedistributions:[], passationMois:1, passationTauxDossiers:100, indemnNegociee:0, sousTraitanceVacance:0, tauxRisquePerteDepart:10, typeDepart:"rc", preavisMois:3, modePreavis:"travaille", arretLiePreavis:false, fraisEmbauche:200 });
   const [simHistorique, setSimHistorique] = useState([]);
-  const [simPres, setSimPres] = useState({ collabId:3, dureeJours:20, tauxDesengagement:60, reprises:[{collabId:null,heures:12},{collabId:null,heures:20}], nbDeclaRetard:2, coutPenalite:150, nbAvoirs:3, montantAvoir:500, clientsImpactes:[], risquePerte:10 });
+  const [simPres, setSimPres] = useState({ collabId:6, dureeJours:20, tauxDesengagement:60, reprises:[{collabId:null,heures:12},{collabId:null,heures:20}], nbDeclaRetard:2, coutPenalite:150, nbAvoirs:3, montantAvoir:500, clientsImpactes:[], risquePerte:10 });
   const [objectifsQVT, setObjectifsQVT] = useState({ turnoverCible:10, absentCible:4, satisfCible:8, prodCible:90 });
   const [probaGain, setProbaGain] = useState({ turnover:100, absentéisme:100 });
   const [gainsClients, setGainsClients] = useState({ tauxRecondAvant:81, tauxRecondApres:88, coefAttribution:30 });
@@ -21446,14 +22268,14 @@ function QVTApp() {
     const dureePreavSync = isDem ? preavisM : passatM;
     const duree = simAbsence.arretLiePreavis ? Math.round(dureePreavSync * 30) : simAbsence.dureeJours; // jours calendaires d'arrêt
     const anc = getAnc(collab);
-    const SMIC_MENSUEL = 1801.80;
-    const PLAFOND_14 = SMIC_MENSUEL * 1.4; // 2 522,52 € (depuis avril 2025)
+    const SMIC_MENSUEL = 1823.03; // SMIC 2026 (décret 2025-1228 du 17/12/2025)
+    const PLAFOND_14 = SMIC_MENSUEL * 1.4; // 2 552,24 € — plafond IJSS validé bulletin réel janv. 2026
 
     // ═══ 1. CALCUL IJSS (Sécurité Sociale) ═══
     const salairePlafonne = Math.min(sbm, PLAFOND_14);
     const salaireJournalierBase = (salairePlafonne * 3) / 91.25;
     const ijssBruteJour = salaireJournalierBase * 0.50;
-    const ijssMaxJour = 53.31; // plafond IJSS 2025 = 50% × (1,8 × SMIC × 3 / 91,25) — SMIC 1 801,80€ — vérifier ameli.fr
+    const ijssMaxJour = 53.94; // plafond théorique 2026 = 50% × (1,8 × 1 823,03 × 3 / 91,25) — en pratique plafonné à ~41,95 €/j via 1.4×SMIC (validé bulletin réel janv. 2026)
     const ijssJour = Math.min(ijssBruteJour, ijssMaxJour);
     const ijssNetteJour = ijssJour * (1 - 0.067); // CSG 6.2% + CRDS 0.5%
     const joursCarenceSS = 3; // 3 jours de carence Sécu
@@ -21955,6 +22777,10 @@ function QVTApp() {
         <p style={{fontSize:15,opacity:.85,maxWidth:600,lineHeight:1.6}}>Mettre en œuvre une stratégie visant à renforcer la qualité de vie au travail, afin d'accroître la rentabilité en fidélisant ses employés et en augmentant la satisfaction de sa clientèle.</p>
         <div style={{display:"flex",gap:12,marginTop:28,flexWrap:"wrap"}}>
           <button style={{...sty.btn(c.gold,c.navy),fontSize:15,padding:"14px 28px"}} onClick={()=>{if(window.showSection)window.showSection('methode')}}>🚀 C'est parti !</button>
+          <button style={{...sty.btn("transparent","transparent"),fontSize:14,padding:"14px 24px",border:"2px solid #10b981",color:"#10b981",borderRadius:8,fontWeight:600,cursor:"pointer"}} onClick={()=>{if(window.showSection)window.showSection('import-donnees')}}>📥 Importer mes données</button>
+        </div>
+        <div style={{marginTop:16,background:"rgba(255,255,255,.1)",borderRadius:8,padding:"10px 16px",fontSize:12,color:"rgba(255,255,255,.75)",lineHeight:1.6,maxWidth:620,borderLeft:"3px solid #10b981"}}>
+          💡 <strong style={{color:"#10b981"}}>Version démonstration</strong> — L'outil est pré-chargé avec un cabinet fictif de 34 collaborateurs pour vous permettre de tester toutes les fonctionnalités. Pour l'utiliser avec <strong>vos vraies données</strong>, importez votre fichier Excel depuis votre logiciel de paie (Silae, Cegid, Sage...) via le bouton ci-dessus.
         </div>
       </div>
 
@@ -21967,10 +22793,11 @@ function QVTApp() {
             <div style={{fontSize:15,fontWeight:700,color:"#991b1b",marginBottom:6}}>⚡ Action requise — Configurez votre cabinet</div>
             <div style={{fontSize:12,color:"#78350f",lineHeight:1.6,marginBottom:12}}>
               Vous utilisez actuellement un <strong>cabinet fictif de démonstration</strong> ({collabs.length} collaborateurs, {clients.length} clients).
-              <strong> Toutes les données affichées (KPIs, ROI, coûts cachés) sont fictives.</strong> Pour obtenir des résultats réels, commencez par saisir vos collaborateurs et clients.
+              <strong> Toutes les données affichées (KPIs, ROI, coûts cachés) sont fictives.</strong> Pour obtenir des résultats réels, importez vos données depuis votre logiciel de paie ou saisissez-les manuellement.
             </div>
             <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
-              <button style={{...sty.btn("#ef4444","#fff"),fontSize:13,padding:"10px 24px",animation:"pulse 2s infinite"}} onClick={()=>setPage("gestion")}>👥 Configurer mon cabinet maintenant</button>
+              <button style={{...sty.btn("#10b981","#fff"),fontSize:13,padding:"10px 24px",animation:"pulse 2s infinite"}} onClick={()=>{if(window.showSection)window.showSection('import-donnees')}}>📥 Importer mes données (Excel / CSV)</button>
+              <button style={{...sty.btn("transparent","transparent"),fontSize:12,padding:"8px 16px",border:"1px solid #78350f",color:"#78350f",borderRadius:6,cursor:"pointer"}} onClick={()=>setPage("gestion")}>✏️ Saisir manuellement</button>
             </div>
           </div>
         </div>
@@ -23887,7 +24714,7 @@ function QVTApp() {
     // Arrêt maladie : maintien de salaire - IJSS récupérées
     const joursCalendaires = Math.round(dureePreav * 30);
     const salaireJournalierBase = sbMensuel * 3 / 91.25;
-    const plafondIJSS = 53.31; // plafond IJSS journalier 2025 = 50% × (1,8 × SMIC × 3 / 91,25) — vérifier ameli.fr
+    const plafondIJSS = 53.94; // plafond IJSS journalier 2026 = 50% × (1,8 × 1 823,03 × 3 / 91,25)
     const ijssJournaliere = Math.min(salaireJournalierBase * 0.5, plafondIJSS);
     const joursCarence = Math.min(3, joursCalendaires);
     const joursIndemnises = Math.max(0, joursCalendaires - joursCarence);
