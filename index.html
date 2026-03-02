@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pilotage QVT & Performance - Mémoire DEC (v196-SV212)</title>
+    <title>Pilotage QVT & Performance - Mémoire DEC (v199-SV215)</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -576,6 +576,21 @@ input[data-bridged], select[data-bridged] { border-color: #86efac !important; ba
     </style>
 </head>
 <body>
+<!-- ═══ BANDEAU DEMO STICKY — visible tant que données fictives ═══ -->
+<style>
+@keyframes demoFlash { 0%,100%{opacity:1} 50%{opacity:.75} }
+#demo-banner{position:sticky;top:0;z-index:9999;background:linear-gradient(90deg,#dc2626,#b91c1c);padding:8px 16px;display:none;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;box-shadow:0 2px 12px rgba(220,38,38,.5)}
+#demo-banner .demo-icon{font-size:20px;animation:demoFlash 1.5s ease-in-out infinite}
+#demo-banner .demo-text{color:#fff;font-weight:700;font-size:13px;letter-spacing:.5px}
+#demo-banner .demo-sub{color:rgba(255,255,255,.85);font-size:11.5px;font-weight:400;letter-spacing:0}
+#demo-banner .demo-btn{background:#fff;color:#dc2626;border:none;border-radius:6px;padding:6px 16px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.2);transition:all .15s}
+#demo-banner .demo-btn:hover{background:#fef2f2;transform:scale(1.03)}
+</style>
+<div id="demo-banner">
+    <span class="demo-icon">⚠️</span>
+    <span class="demo-text">DONNÉES FICTIVES <span class="demo-sub">— Tous les chiffres proviennent d'un cabinet de démonstration (34 collaborateurs)</span></span>
+    <button class="demo-btn" onclick="showSection('import-donnees')">📥 Importer mes données</button>
+</div>
 <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu">&#9776;</button>
 <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 <div class="autosave-indicator" id="autosave-indicator">&#128190; Pr&ecirc;t <button onclick="if(confirm('Vider le cache et recharger les données par défaut ?')){localStorage.clear();location.reload();}" style="margin-left:8px;background:#ef4444;color:#fff;border:none;border-radius:4px;padding:2px 8px;font-size:.85em;cursor:pointer" title="Purger le cache localStorage">🗑️ Cache</button></div>
@@ -9834,7 +9849,7 @@ function renderCasTerrain() {
   var morinSalPlafonne = Math.min(morinSBM, PLAFOND_14_SMIC);
   var morinSJB = (morinSalPlafonne * 3) / 91.25; // salaire journalier de base
   var morinIJSSBrute = morinSJB * 0.50;
-  var morinIJSSMax = 53.94; // plafond 2026
+  var morinIJSSMax = 41.95; // plafond IJSS maladie 2026 = 50% × (1,4 × 1823,03 × 3 / 91,25) — Décret 2025-160 du 20/02/2025
   var morinIJSSJour = Math.min(morinIJSSBrute, morinIJSSMax);
   var morinIJSSNette = morinIJSSJour * (1 - 0.067); // CSG 6.2% + CRDS 0.5%
   var morinJoursCarSS = 3;
@@ -9889,7 +9904,7 @@ function renderCasTerrain() {
     var salPlaf = Math.min(sbm, PLAFOND_14_SMIC);
     var sjb = (salPlaf * 3) / 91.25;
     var ijssBrute = sjb * 0.50;
-    var ijssJour = Math.min(ijssBrute, 53.94);
+    var ijssJour = Math.min(ijssBrute, 41.95); // plafond IJSS 2026 (1,4×SMIC)
     var ijssNette = ijssJour * (1 - 0.067);
     var joursCarSS = 3;
     var joursIndemSS = Math.max(0, dureePrevisJours - joursCarSS);
@@ -11391,6 +11406,12 @@ function refreshAll() {
     displayClientHistory();
     displayDashboardActions();
     displayEntretiens();
+    // Toggle demo banner
+    var db = document.getElementById('demo-banner');
+    if (db) {
+        var isDemo = (CO.length > 0 && CO[0].nom === 'Martin' && CO[0].prenom === 'Sophie');
+        db.style.display = isDemo ? 'flex' : 'none';
+    }
 }
 
 function refreshKPIs() {
@@ -15795,6 +15816,14 @@ window.addEventListener('load', function() {
   autoRestore();
   setTimeout(bridgeAllData, 200);
   setTimeout(injectVanillaStepNav, 500);
+  // Init demo banner
+  setTimeout(function() {
+    var db = document.getElementById('demo-banner');
+    if (db) {
+      var isDemo = (CO.length > 0 && CO[0].nom === 'Martin' && CO[0].prenom === 'Sophie');
+      db.style.display = isDemo ? 'flex' : 'none';
+    }
+  }, 300);
 });
 
 // ═══ QUICK NAV BAR — Accès rapide Accueil + Phases ═══
@@ -22275,7 +22304,7 @@ function QVTApp() {
     const salairePlafonne = Math.min(sbm, PLAFOND_14);
     const salaireJournalierBase = (salairePlafonne * 3) / 91.25;
     const ijssBruteJour = salaireJournalierBase * 0.50;
-    const ijssMaxJour = 53.94; // plafond théorique 2026 = 50% × (1,8 × 1 823,03 × 3 / 91,25) — en pratique plafonné à ~41,95 €/j via 1.4×SMIC (validé bulletin réel janv. 2026)
+    const ijssMaxJour = 41.95; // plafond IJSS maladie 2026 — Décret 2025-160 : 50% × (1,4 × 1 823,03 × 3 / 91,25) = 41,95 € (validé bulletin réel janv. 2026)
     const ijssJour = Math.min(ijssBruteJour, ijssMaxJour);
     const ijssNetteJour = ijssJour * (1 - 0.067); // CSG 6.2% + CRDS 0.5%
     const joursCarenceSS = 3; // 3 jours de carence Sécu
@@ -22773,32 +22802,39 @@ function QVTApp() {
       <div style={sty.hero}>
         <div style={{position:"absolute",top:0,right:0,width:300,height:300,background:`radial-gradient(circle,${c.gold}15,transparent 70%)`,borderRadius:"50%"}}/>
         <div style={{fontSize:11,textTransform:"uppercase",letterSpacing:3,color:c.gold,marginBottom:12}}>Mémoire DEC — Outil d'accompagnement</div>
-        <h1 style={{fontSize:32,fontWeight:700,lineHeight:1.2,marginBottom:12,maxWidth:700}}>Proposition d'une démarche de mise en place de votre nouvelle politique QVT</h1>
-        <p style={{fontSize:15,opacity:.85,maxWidth:600,lineHeight:1.6}}>Mettre en œuvre une stratégie visant à renforcer la qualité de vie au travail, afin d'accroître la rentabilité en fidélisant ses employés et en augmentant la satisfaction de sa clientèle.</p>
+        <h1 style={{fontSize:32,fontWeight:700,lineHeight:1.2,marginBottom:12,maxWidth:700,color:"#fff"}}>Proposition d'une démarche de mise en place de votre nouvelle politique QVT</h1>
+        <p style={{fontSize:15,maxWidth:600,lineHeight:1.6,color:"rgba(255,255,255,.85)"}}>Mettre en œuvre une stratégie visant à renforcer la qualité de vie au travail, afin d'accroître la rentabilité en fidélisant ses employés et en augmentant la satisfaction de sa clientèle.</p>
         <div style={{display:"flex",gap:12,marginTop:28,flexWrap:"wrap"}}>
           <button style={{...sty.btn(c.gold,c.navy),fontSize:15,padding:"14px 28px"}} onClick={()=>{if(window.showSection)window.showSection('methode')}}>🚀 C'est parti !</button>
           <button style={{...sty.btn("transparent","transparent"),fontSize:14,padding:"14px 24px",border:"2px solid #10b981",color:"#10b981",borderRadius:8,fontWeight:600,cursor:"pointer"}} onClick={()=>{if(window.showSection)window.showSection('import-donnees')}}>📥 Importer mes données</button>
         </div>
-        <div style={{marginTop:16,background:"rgba(255,255,255,.1)",borderRadius:8,padding:"10px 16px",fontSize:12,color:"rgba(255,255,255,.75)",lineHeight:1.6,maxWidth:620,borderLeft:"3px solid #10b981"}}>
-          💡 <strong style={{color:"#10b981"}}>Version démonstration</strong> — L'outil est pré-chargé avec un cabinet fictif de 34 collaborateurs pour vous permettre de tester toutes les fonctionnalités. Pour l'utiliser avec <strong>vos vraies données</strong>, importez votre fichier Excel depuis votre logiciel de paie (Silae, Cegid, Sage...) via le bouton ci-dessus.
+        <div style={{marginTop:20,background:"linear-gradient(135deg,#ef4444,#dc2626)",borderRadius:12,padding:"16px 20px",position:"relative",overflow:"hidden",boxShadow:"0 4px 20px rgba(239,68,68,.4)",border:"2px solid #fca5a5"}}>
+          <div style={{position:"absolute",top:0,left:0,right:0,bottom:0,background:"repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(0,0,0,.05) 10px,rgba(0,0,0,.05) 20px)",pointerEvents:"none"}}/>
+          <div style={{position:"relative",display:"flex",alignItems:"center",gap:16,flexWrap:"wrap"}}>
+            <div style={{fontSize:36,animation:"pulse 1.5s infinite",flexShrink:0}}>⚠️</div>
+            <div style={{flex:1,minWidth:220}}>
+              <div style={{fontSize:16,fontWeight:800,color:"#fff",marginBottom:4,textTransform:"uppercase",letterSpacing:1}}>Données fictives — Mode démonstration</div>
+              <div style={{fontSize:13,color:"rgba(255,255,255,.9)",lineHeight:1.5}}>Tous les chiffres affichés (KPIs, coûts, ROI) proviennent d'un <strong>cabinet fictif de 34 collaborateurs</strong>. Pour obtenir vos vrais résultats, importez vos données depuis votre logiciel de paie.</div>
+            </div>
+            <button style={{background:"#fff",color:"#dc2626",border:"none",borderRadius:8,padding:"12px 20px",fontSize:14,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap",boxShadow:"0 2px 8px rgba(0,0,0,.2)",flexShrink:0}} onClick={()=>{if(window.showSection)window.showSection('import-donnees')}}>📥 Importer mes données</button>
+          </div>
         </div>
       </div>
 
       {/* ═══ V103 — BANDEAU DONNÉES DÉMONSTRATION ═══ */}
       {cabinet.nom === "Cabinet Exemple & Associés" && (
-      <div style={{...sty.card,background:"linear-gradient(135deg,#fef2f2,#fff7ed)",borderLeft:"4px solid #ef4444",padding:20,marginBottom:20,position:"relative",boxShadow:"0 2px 8px rgba(239,68,68,.15)"}}>
-        <div style={{display:"flex",alignItems:"flex-start",gap:14}}>
-          <div style={{fontSize:32,lineHeight:1}}>⚠️</div>
-          <div style={{flex:1}}>
-            <div style={{fontSize:15,fontWeight:700,color:"#991b1b",marginBottom:6}}>⚡ Action requise — Configurez votre cabinet</div>
-            <div style={{fontSize:12,color:"#78350f",lineHeight:1.6,marginBottom:12}}>
-              Vous utilisez actuellement un <strong>cabinet fictif de démonstration</strong> ({collabs.length} collaborateurs, {clients.length} clients).
-              <strong> Toutes les données affichées (KPIs, ROI, coûts cachés) sont fictives.</strong> Pour obtenir des résultats réels, importez vos données depuis votre logiciel de paie ou saisissez-les manuellement.
-            </div>
-            <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
-              <button style={{...sty.btn("#10b981","#fff"),fontSize:13,padding:"10px 24px",animation:"pulse 2s infinite"}} onClick={()=>{if(window.showSection)window.showSection('import-donnees')}}>📥 Importer mes données (Excel / CSV)</button>
-              <button style={{...sty.btn("transparent","transparent"),fontSize:12,padding:"8px 16px",border:"1px solid #78350f",color:"#78350f",borderRadius:6,cursor:"pointer"}} onClick={()=>setPage("gestion")}>✏️ Saisir manuellement</button>
-            </div>
+      <div style={{...sty.card,background:"linear-gradient(135deg,#fef2f2,#fee2e2)",borderLeft:"none",border:"2px solid #ef4444",padding:0,marginBottom:20,position:"relative",overflow:"hidden",boxShadow:"0 4px 16px rgba(239,68,68,.2)"}}>
+        <div style={{background:"#ef4444",padding:"8px 20px",display:"flex",alignItems:"center",gap:10}}>
+          <span style={{fontSize:20,animation:"pulse 1.5s infinite"}}>⚠️</span>
+          <span style={{color:"#fff",fontWeight:800,fontSize:14,textTransform:"uppercase",letterSpacing:1}}>Données fictives — Tous les chiffres ci-dessous sont simulés</span>
+        </div>
+        <div style={{padding:"14px 20px"}}>
+          <div style={{fontSize:13,color:"#78350f",lineHeight:1.6,marginBottom:12}}>
+            Vous consultez un <strong>cabinet de démonstration</strong> ({collabs.length} collaborateurs, {clients.length} clients). Les KPIs, coûts cachés, ROI et indicateurs affichés ne reflètent pas la réalité de votre cabinet. <strong>Importez vos données pour obtenir vos vrais résultats.</strong>
+          </div>
+          <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
+            <button style={{...sty.btn("#ef4444","#fff"),fontSize:13,padding:"10px 24px",animation:"pulse 2s infinite"}} onClick={()=>{if(window.showSection)window.showSection('import-donnees')}}>📥 Importer mes données (Excel / CSV)</button>
+            <button style={{...sty.btn("transparent","transparent"),fontSize:12,padding:"8px 16px",border:"1px solid #78350f",color:"#78350f",borderRadius:6,cursor:"pointer"}} onClick={()=>setPage("gestion")}>✏️ Saisir manuellement</button>
           </div>
         </div>
       </div>
@@ -24713,8 +24749,9 @@ function QVTApp() {
     const coutDispense = Math.round(coutChargeMensuel * dureePreav);
     // Arrêt maladie : maintien de salaire - IJSS récupérées
     const joursCalendaires = Math.round(dureePreav * 30);
-    const salaireJournalierBase = sbMensuel * 3 / 91.25;
-    const plafondIJSS = 53.94; // plafond IJSS journalier 2026 = 50% × (1,8 × 1 823,03 × 3 / 91,25)
+    const sbPlafonne14 = Math.min(sbMensuel, 1823.03 * 1.4); // plafond 1,4×SMIC = 2 552,24 €
+    const salaireJournalierBase = sbPlafonne14 * 3 / 91.25;
+    const plafondIJSS = 41.95; // plafond IJSS maladie 2026 — Décret 2025-160 (1,4×SMIC)
     const ijssJournaliere = Math.min(salaireJournalierBase * 0.5, plafondIJSS);
     const joursCarence = Math.min(3, joursCalendaires);
     const joursIndemnises = Math.max(0, joursCalendaires - joursCarence);
