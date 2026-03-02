@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pilotage QVT & Performance - Mémoire DEC (v199-SV215)</title>
+    <title>Pilotage QVT & Performance - Mémoire DEC (v200-SV216)</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -22804,10 +22804,6 @@ function QVTApp() {
         <div style={{fontSize:11,textTransform:"uppercase",letterSpacing:3,color:c.gold,marginBottom:12}}>Mémoire DEC — Outil d'accompagnement</div>
         <h1 style={{fontSize:32,fontWeight:700,lineHeight:1.2,marginBottom:12,maxWidth:700,color:"#fff"}}>Proposition d'une démarche de mise en place de votre nouvelle politique QVT</h1>
         <p style={{fontSize:15,maxWidth:600,lineHeight:1.6,color:"rgba(255,255,255,.85)"}}>Mettre en œuvre une stratégie visant à renforcer la qualité de vie au travail, afin d'accroître la rentabilité en fidélisant ses employés et en augmentant la satisfaction de sa clientèle.</p>
-        <div style={{display:"flex",gap:12,marginTop:28,flexWrap:"wrap"}}>
-          <button style={{...sty.btn(c.gold,c.navy),fontSize:15,padding:"14px 28px"}} onClick={()=>{if(window.showSection)window.showSection('methode')}}>🚀 C'est parti !</button>
-          <button style={{...sty.btn("transparent","transparent"),fontSize:14,padding:"14px 24px",border:"2px solid #10b981",color:"#10b981",borderRadius:8,fontWeight:600,cursor:"pointer"}} onClick={()=>{if(window.showSection)window.showSection('import-donnees')}}>📥 Importer mes données</button>
-        </div>
         <div style={{marginTop:20,background:"linear-gradient(135deg,#ef4444,#dc2626)",borderRadius:12,padding:"16px 20px",position:"relative",overflow:"hidden",boxShadow:"0 4px 20px rgba(239,68,68,.4)",border:"2px solid #fca5a5"}}>
           <div style={{position:"absolute",top:0,left:0,right:0,bottom:0,background:"repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(0,0,0,.05) 10px,rgba(0,0,0,.05) 20px)",pointerEvents:"none"}}/>
           <div style={{position:"relative",display:"flex",alignItems:"center",gap:16,flexWrap:"wrap"}}>
@@ -22818,6 +22814,10 @@ function QVTApp() {
             </div>
             <button style={{background:"#fff",color:"#dc2626",border:"none",borderRadius:8,padding:"12px 20px",fontSize:14,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap",boxShadow:"0 2px 8px rgba(0,0,0,.2)",flexShrink:0}} onClick={()=>{if(window.showSection)window.showSection('import-donnees')}}>📥 Importer mes données</button>
           </div>
+        </div>
+        <div style={{display:"flex",gap:12,marginTop:20,flexWrap:"wrap"}}>
+          <button style={{...sty.btn(c.gold,c.navy),fontSize:15,padding:"14px 28px"}} onClick={()=>{if(window.showSection)window.showSection('methode')}}>🚀 C'est parti !</button>
+          <button style={{...sty.btn("transparent","transparent"),fontSize:14,padding:"14px 24px",border:"2px solid #10b981",color:"#10b981",borderRadius:8,fontWeight:600,cursor:"pointer"}} onClick={()=>{if(window.showSection)window.showSection('import-donnees')}}>📥 Importer mes données</button>
         </div>
       </div>
 
