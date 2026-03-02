@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pilotage QVT & Performance - Mémoire DEC (v184-SV200)</title>
+    <title>Pilotage QVT & Performance - Mémoire DEC (v187-SV203)</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -744,7 +744,7 @@ input[data-bridged], select[data-bridged] { border-color: #86efac !important; ba
         <div class="phase-dot" id="pdot-4"></div>
         <div class="phase-dot" id="pdot-5"></div>
     </div>
-    <div class="progress-label"><span class="progress-pct" id="progress-pct">0%</span> de la demarche</div>
+    <div class="progress-label"><span class="progress-pct" id="progress-pct">0%</span> de la démarche</div>
 </div>
 
 <section id="methode" class="content-section" style="display:none">
@@ -766,8 +766,8 @@ input[data-bridged], select[data-bridged] { border-color: #86efac !important; ba
 
     <!-- HERO -->
     <div style="text-align:center;margin-bottom:30px">
-        <h1 style="font-size:1.6em;margin-bottom:6px">Mettez en oeuvre la QVT dans votre cabinet</h1>
-        <p style="color:#64748b;font-size:.95em;max-width:700px;margin:0 auto">Un guide methodologique pour renforcer la qualite de vie au travail, fideliser vos collaborateurs et augmenter la satisfaction de votre clientele.</p>
+        <h1 style="font-size:1.6em;margin-bottom:6px">Mettez en œuvre la QVT dans votre cabinet</h1>
+        <p style="color:#64748b;font-size:.95em;max-width:700px;margin:0 auto">Un guide méthodologique pour renforcer la qualité de vie au travail, fidéliser vos collaborateurs et augmenter la satisfaction de votre clientèle.</p>
     </div>
 
     <!-- KPI HERO -->
@@ -775,7 +775,7 @@ input[data-bridged], select[data-bridged] { border-color: #86efac !important; ba
         <div class="kpi-hero-card" onclick="goF3('dashboard')">
             <div class="kpi-val" id="hero-collab">--</div>
             <div class="kpi-label">Collaborateurs</div>
-            <div class="kpi-trend neutral" id="hero-collab-trend">Renseignez l'equipe</div>
+            <div class="kpi-trend neutral" id="hero-collab-trend">Renseignez l'équipe</div>
         </div>
         <div class="kpi-hero-card" onclick="showSection('sat-collab')">
             <div class="kpi-val" id="hero-qvt">--</div>
@@ -785,7 +785,7 @@ input[data-bridged], select[data-bridged] { border-color: #86efac !important; ba
         <div class="kpi-hero-card" onclick="showSection('satisfaction')">
             <div class="kpi-val" id="hero-nps">--</div>
             <div class="kpi-label">NPS Client</div>
-            <div class="kpi-trend neutral" id="hero-nps-trend">Evaluez vos clients</div>
+            <div class="kpi-trend neutral" id="hero-nps-trend">Évaluez vos clients</div>
         </div>
         <div class="kpi-hero-card" onclick="showSection('roi-unifie')">
             <div class="kpi-val" id="hero-roi">--</div>
@@ -836,8 +836,8 @@ input[data-bridged], select[data-bridged] { border-color: #86efac !important; ba
 
     <!-- PHASE DETAIL PANEL -->
     <div class="phase-detail" id="phase-detail-panel">
-        <h3 id="pd-title">Phase 1 — Diagnostiquer : Etat des lieux QVT</h3>
-        <div class="phase-desc" id="pd-desc">Realisez un diagnostic complet de votre cabinet : enquetes, entretiens, indicateurs RH, cartographie des risques et couts caches.</div>
+        <h3 id="pd-title">Phase 1 — Diagnostiquer : État des lieux QVT</h3>
+        <div class="phase-desc" id="pd-desc">Réalisez un diagnostic complet de votre cabinet : enquêtes, entretiens, indicateurs RH, cartographie des risques et coûts cachés.</div>
         <div class="phase-steps" id="pd-steps"></div>
     </div>
 
@@ -1454,6 +1454,14 @@ input[data-bridged], select[data-bridged] { border-color: #86efac !important; ba
         <div id="ent-signaux-recap"></div>
     </div>
 
+
+    <!-- NAV SÉQUENTIELLE PHASE 1 -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:30px;padding:16px 20px;background:#f0f4f8;border-radius:10px;border-top:3px solid #3b82f6">
+        <button class="btn btn-outline" onclick="showSection('risques')" style="font-size:13px">← ⚠️ Cartographie des risques</button>
+        <span style="font-size:12px;color:#64748b;font-weight:600">5/6 — 💬 Entretiens & Focus groups</span>
+        <button class="btn btn-primary" onclick="showSection('diagnostic-analyse')" style="font-size:13px">🔬 Analyse & Synthèse →</button>
+    </div>
+
 </section>
 <section id="diagnostic-rh" class="content-section" style="display:none">
     <h1>📈 Indicateurs RH</h1>
@@ -1561,6 +1569,15 @@ input[data-bridged], select[data-bridged] { border-color: #86efac !important; ba
     <div class="alert alert-success" id="rh-bridge-banner" style="display:none"><span class="alert-icon">🔗</span><div><strong>Données synchronisées</strong> depuis la gestion du cabinet.</div></div>
 
     <!-- LIENS -->
+
+
+    <!-- NAV SÉQUENTIELLE PHASE 1 -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:30px;padding:16px 20px;background:#f0f4f8;border-radius:10px;border-top:3px solid #3b82f6">
+        <button class="btn btn-outline" onclick="showSection('diagnostic-hub')" style="font-size:13px">← Hub Diagnostic</button>
+        <span style="font-size:12px;color:#64748b;font-weight:600">1/6 — 📈 Indicateurs RH</span>
+        <button class="btn btn-primary" onclick="showSection('diagnostic')" style="font-size:13px">📝 Enquête récurrente →</button>
+    </div>
+
 </section>
 
 <!-- ===== ENQUÊTES ===== -->
@@ -1682,6 +1699,14 @@ input[data-bridged], select[data-bridged] { border-color: #86efac !important; ba
         </div>
     </div>
 
+
+    <!-- NAV SÉQUENTIELLE PHASE 1 -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:30px;padding:16px 20px;background:#f0f4f8;border-radius:10px;border-top:3px solid #3b82f6">
+        <button class="btn btn-outline" onclick="showSection('diagnostic-rh')" style="font-size:13px">← 📈 Indicateurs RH</button>
+        <span style="font-size:12px;color:#64748b;font-weight:600">2/6 — 📝 Enquête récurrente</span>
+        <button class="btn btn-primary" onclick="showSection('enquete-croisee')" style="font-size:13px">👥 Enquête croisée →</button>
+    </div>
+
 </section>
 
 <!-- ===== ANALYSE & SYNTHÈSE ===== -->
@@ -1728,6 +1753,14 @@ input[data-bridged], select[data-bridged] { border-color: #86efac !important; ba
             💡 <strong>Règle d'or :</strong> Ne jamais mesurer un indicateur sans croiser quanti et quali. Chaque constat doit déboucher sur au moins une recommandation d'action — la technique des petits pas (ANACT).
         </div>
     </div>
+
+    <!-- NAV SÉQUENTIELLE PHASE 1 -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:30px;padding:16px 20px;background:#f0f4f8;border-radius:10px;border-top:3px solid #3b82f6">
+        <button class="btn btn-outline" onclick="showSection('diagnostic-entretiens')" style="font-size:13px">← 💬 Entretiens & Focus groups</button>
+        <span style="font-size:12px;color:#64748b;font-weight:600">6/6 — 🔬 Analyse & Synthèse</span>
+        <button class="btn btn-primary" onclick="showDGStep(1)" style="font-size:13px">Phase 2 — Concevoir →</button>
+    </div>
+
 </section>
 
 <!-- ===== IDENTIFICATION DES BESOINS ===== -->
@@ -2252,9 +2285,16 @@ input[data-bridged], select[data-bridged] { border-color: #86efac !important; ba
                 <div style="font-weight:700;color:#1e40af;font-size:13px;margin-bottom:4px">➡️ Prochaine étape : cibler les entretiens</div>
                 <div style="font-size:12px;color:#334155;line-height:1.5">Les facteurs en rouge (niveau élevé) identifient les zones de tension prioritaires. Orientez vos entretiens individuels et focus groups vers les collaborateurs et services les plus exposés à ces risques.</div>
             </div>
-            <button class="btn btn-primary" onclick="showSection('diagnostic-entretiens')" style="white-space:nowrap;font-size:13px;padding:10px 20px">💬 Entretiens & Focus groups →</button>
         </div>
     </div>
+
+    <!-- NAV SÉQUENTIELLE PHASE 1 -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:30px;padding:16px 20px;background:#f0f4f8;border-radius:10px;border-top:3px solid #3b82f6">
+        <button class="btn btn-outline" onclick="showSection('enquete-croisee')" style="font-size:13px">← 👥 Enquête croisée</button>
+        <span style="font-size:12px;color:#64748b;font-weight:600">4/6 — ⚠️ Cartographie des risques</span>
+        <button class="btn btn-primary" onclick="showSection('diagnostic-entretiens')" style="font-size:13px">💬 Entretiens & Focus groups →</button>
+    </div>
+
 </section>
 
 <!-- ===== SATISFACTION CLIENT ===== -->
@@ -2461,7 +2501,7 @@ input[data-bridged], select[data-bridged] { border-color: #86efac !important; ba
                 ☐ Exclusions période fiscale précisées (jan-mai)<br>
                 ☐ Suivi charge de travail (entretien mensuel)<br>
                 ☐ Avenant au contrat de travail signé<br>
-                <br><strong>📊 Impact attendu :</strong> Réduction absenteisme (-20%), amélioration satisfaction (+0.5pt/4), attractivité renforcee lors des recrutements.
+                <br><strong>📊 Impact attendu :</strong> Réduction absentéisme (-20%), amélioration satisfaction (+0.5pt/4), attractivité renforcée lors des recrutements.
                 <br><br><button class="btn btn-small btn-outline" onclick="showSection('charte-teletravail')" style="font-size:.82em">🏠 Voir aussi : Charte Télétravail →</button></div>
         </div>
         <div class="card">
@@ -3579,10 +3619,13 @@ input[data-bridged], select[data-bridged] { border-color: #86efac !important; ba
         </div>
     </div>
 
-    <div style="display:flex;justify-content:space-between;margin-top:20px">
-        <button class="btn btn-outline" onclick="showSection('diagnostic-hub')">← Retour Phase 1</button>
-        <button class="btn btn-primary" onclick="showSection('diagnostic-rh')">📈 Indicateurs RH →</button>
+    <!-- NAV SÉQUENTIELLE PHASE 1 -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:30px;padding:16px 20px;background:#f0f4f8;border-radius:10px;border-top:3px solid #3b82f6">
+        <button class="btn btn-outline" onclick="showSection('diagnostic')" style="font-size:13px">← 📝 Enquête récurrente</button>
+        <span style="font-size:12px;color:#64748b;font-weight:600">3/6 — 👥 Enquête croisée</span>
+        <button class="btn btn-primary" onclick="showSection('risques')" style="font-size:13px">⚠️ Cartographie des risques →</button>
     </div>
+
 </section>
 <!-- ═══════ V99 — TRAITEMENT COMPTABLE DES INVESTISSEMENTS QVT ═══════ -->
 <section id="traitement-comptable" class="content-section" style="display:none">
@@ -3961,7 +4004,7 @@ input[data-bridged], select[data-bridged] { border-color: #86efac !important; ba
     </div>
 </section>
 
-<!-- FILE 3: Equipe & Clients containers -->
+<!-- FILE 3: Équipe & Clients containers -->
 <section id="f3-dashboard" class="content-section" style="display:none">
     <h1>📊 Tableau de Bord RH</h1>
     <div class="alert alert-success" style="margin-bottom:16px;cursor:pointer" onclick="showSection('demarche-guidee')"><span class="alert-icon">🏗️</span><div><strong>Ces données alimentent la Démarche Guidée</strong> — Les indicateurs ci-dessous sont automatiquement injectés dans le diagnostic, les objectifs et le cockpit de pilotage. <a href="#" onclick="showSection('demarche-guidee');return false" style="color:#4A6741;font-weight:600">Accéder à la démarche guidée →</a></div>
@@ -4707,7 +4750,7 @@ var CO=[
   {id:31,contrat:"39h",nom:"Petit",prenom:"Yann",poste:"Gestionnaire social",pole:"Social",dateEntree:"2018-11-01",satisfaction:7.3,charge:83,absences:4,objectifs:85,salaire:32000,heuresAn:1700,tauxCharge:1.42,absencesMois:[0,1,2,0,0,1,0,0,0,0,0,0],formNbMois:[0,0,0,1,0,0,0,0,0,0,0,0],formHMois:[0,0,0,7,0,0,0,0,0,0,0,0],qvtHMois:[0,0,0,0,0,0,0,0,0,0,0,0],ttJMois:[1, 0, 1, 0, 1, 3, 4, 4, 3, 2, 1, 1],commentCollab:"Compétent mais affecté par l'ambiance crise. Arrêts courts répétés.",heuresMois:[159,159,149,139,131,120,102,102,125,159,145,134]},
   {id:32,contrat:"39h",nom:"Costa",prenom:"Maria",poste:"Assistante social",pole:"Social",dateEntree:"2021-03-15",satisfaction:7.0,charge:80,absences:3,objectifs:82,salaire:28000,heuresAn:1700,tauxCharge:1.42,absencesMois:[1,0,0,0,0,0,0,0,1,0,1,0],formNbMois:[0,0,0,0,0,0,0,0,0,1,0,0],formHMois:[0,0,0,0,0,0,0,0,0,7,0,0],qvtHMois:[0,0,0,0,0,0,0,1,0,0,0,0],ttJMois:[0, 0, 0, 0, 1, 2, 3, 3, 2, 1, 1, 0],commentCollab:"Bonne progression. Arrêts courts = stress ponctuel, pas structurel.",heuresMois:[159,159,149,139,131,120,102,102,125,159,145,134]},
   {id:35,contrat:"39h",nom:"Renault",prenom:"Elodie",poste:"Responsable juridique (profil avocat)",pole:"Juridique",dateEntree:"2014-09-01",satisfaction:7.6,charge:80,absences:2,objectifs:91,salaire:52000,heuresAn:1650,tauxCharge:1.42,absencesMois:[0,0,0,0,1,0,0,0,1,0,0,0],formNbMois:[0,0,0,0,0,1,0,0,0,0,0,0],formHMois:[0,0,0,0,0,7,0,0,0,0,0,0],qvtHMois:[1,0,0,0,0,0,0,1,0,0,0,0],ttJMois:[0, 0, 0, 0, 1, 2, 3, 3, 2, 1, 0, 0],commentCollab:"Profil avocat. Responsable pole juridique, veille reglementaire et contentieux. Tres autonome.",heuresMois:[154,154,144,135,127,117,99,99,121,154,140,130]},
-  {id:36,contrat:"39h",nom:"Prevost",prenom:"Hugo",poste:"Juriste assistant",pole:"Juridique",dateEntree:"2019-03-15",satisfaction:7.2,charge:78,absences:3,objectifs:85,salaire:32000,heuresAn:1700,tauxCharge:1.42,absencesMois:[0,1,0,0,0,0,0,0,1,0,1,0],formNbMois:[0,0,0,0,0,0,0,0,0,1,0,0],formHMois:[0,0,0,0,0,0,0,0,0,7,0,0],qvtHMois:[0,0,0,0,0,0,0,0,0,0,0,0],ttJMois:[0, 0, 0, 0, 1, 2, 3, 3, 2, 1, 1, 0],commentCollab:"Juriste droit des societes et fiscal. Bon element, en montee en competences.",heuresMois:[159,159,149,139,131,120,102,102,125,159,145,134]},
+  {id:36,contrat:"39h",nom:"Prevost",prenom:"Hugo",poste:"Juriste assistant",pole:"Juridique",dateEntree:"2019-03-15",satisfaction:7.2,charge:78,absences:3,objectifs:85,salaire:32000,heuresAn:1700,tauxCharge:1.42,absencesMois:[0,1,0,0,0,0,0,0,1,0,1,0],formNbMois:[0,0,0,0,0,0,0,0,0,1,0,0],formHMois:[0,0,0,0,0,0,0,0,0,7,0,0],qvtHMois:[0,0,0,0,0,0,0,0,0,0,0,0],ttJMois:[0, 0, 0, 0, 1, 2, 3, 3, 2, 1, 1, 0],commentCollab:"Juriste droit des sociétés et fiscal. Bon élément, en montée en compétences.",heuresMois:[159,159,149,139,131,120,102,102,125,159,145,134]},
   {id:37,contrat:"39h",nom:"Fabre",prenom:"Camille",poste:"Juriste assistante",pole:"Juridique",dateEntree:"2020-11-01",satisfaction:7.0,charge:76,absences:4,objectifs:83,salaire:30000,heuresAn:1700,tauxCharge:1.42,absencesMois:[0,0,1,0,0,1,0,0,0,1,1,0],formNbMois:[0,0,0,1,0,0,0,0,0,0,0,0],formHMois:[0,0,0,7,0,0,0,0,0,0,0,0],qvtHMois:[0,0,0,0,0,0,0,0,0,0,0,0],ttJMois:[0, 0, 0, 0, 1, 2, 3, 3, 2, 1, 1, 0],commentCollab:"Juriste droit social et contrats. Affectee par la crise mais fidelisee par les mesures QVT.",heuresMois:[159,159,149,139,131,120,102,102,125,159,145,134]},
   {id:33,contrat:"39h",nom:"Blanchard",prenom:"Sophie",poste:"Responsable RH",pole:"Support",dateEntree:"2015-09-01",satisfaction:7.6,charge:78,absences:1,objectifs:88,salaire:42000,heuresAn:1600,tauxCharge:1.42,absencesMois:[0,0,0,0,0,1,0,0,0,0,0,0],formNbMois:[0,0,0,1,0,0,0,0,0,0,1,0],formHMois:[0,0,0,4,0,0,0,0,0,0,7,0],qvtHMois:[2,1,1,1,1,0,0,0,1,1,1,1],ttJMois:[0, 0, 0, 0, 1, 2, 3, 3, 2, 1, 1, 0],commentCollab:"Motrice de la démarche QVT. A alerté les associés sur la crise. Très impliquée.",heuresMois:[149,149,140,130,123,113,96,96,117,149,136,126]},
   {id:34,contrat:"39h",nom:"Pereira",prenom:"Julie",poste:"Secrétaire",pole:"Support",dateEntree:"2019-01-15",satisfaction:7.4,charge:70,absences:2,objectifs:85,salaire:26000,heuresAn:1550,tauxCharge:1.42,absencesMois:[1,0,0,1,0,0,0,0,0,0,0,0],formNbMois:[0,0,0,0,0,0,0,0,0,0,0,0],formHMois:[0,0,0,0,0,0,0,0,0,0,0,0],qvtHMois:[0,0,0,0,0,1,0,0,0,0,0,0],ttJMois:[0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0],commentCollab:"Secrétaire polyvalente, bonne ambiance. Apprécie les tickets restaurant.",heuresMois:[145,145,136,127,120,110,93,93,114,145,132,123]},
@@ -4716,21 +4759,21 @@ var CO=[
 var CL=[
   {id:1,nom:"Groupe Alvarez Industries",forme:"SA",activite:"Holding industrielle — 180 sal., 3 filiales",collabId:5,honoraires:123000,type:"CAC Groupe — Consolidation",heuresEstim:580,heuresReelles:593,satisfactionClient:8.5,difficulte:8,dernierAvis:"Audit rigoureux",dateAvis:"2026-01-15",commentCollab:"Faure pilote, Renaud+Perrin filiales",heuresMois:[62, 62, 57, 52, 47, 39, 31, 31, 41, 62, 57, 52]},
   {id:2,nom:"Alvarez — Filiale Logistique",forme:"SAS",activite:"Transport — 65 sal.",collabId:6,honoraires:55000,type:"CAC Filiale",heuresEstim:280,heuresReelles:259,satisfactionClient:8.0,difficulte:6,dernierAvis:"Bon suivi",dateAvis:"2026-01-15",commentCollab:"Renaud",heuresMois:[26, 27, 25, 23, 20, 17, 14, 14, 18, 27, 25, 23]},
-  {id:3,nom:"Alvarez — Filiale Negoce",forme:"SAS",activite:"Negoce materiaux — 50 sal.",collabId:7,honoraires:46500,type:"CAC Filiale",heuresEstim:240,heuresReelles:231,satisfactionClient:7.8,difficulte:5,dernierAvis:"Correct",dateAvis:"2026-01-15",commentCollab:"Perrin",heuresMois:[24, 24, 22, 20, 18, 15, 14, 12, 16, 24, 22, 20]},
-  {id:4,nom:"Groupe Betons du Sud",forme:"SA",activite:"BTP — 140 sal., 2 filiales",collabId:13,honoraires:94000,type:"CAC Groupe — Consolidation",heuresEstim:480,heuresReelles:459,satisfactionClient:8.2,difficulte:7,dernierAvis:"CDM Clement solide",dateAvis:"2026-01-15",commentCollab:"Clement pilote",heuresMois:[48, 48, 44, 40, 36, 30, 25, 24, 32, 48, 44, 40]},
-  {id:5,nom:"Betons du Sud — Filiale IDF",forme:"SAS",activite:"Gros oeuvre — 55 sal.",collabId:8,honoraires:40500,type:"CAC Filiale",heuresEstim:210,heuresReelles:218,satisfactionClient:7.5,difficulte:6,dernierAvis:"En amelioration",dateAvis:"2026-01-15",commentCollab:"Delorme",heuresMois:[23, 23, 21, 19, 17, 14, 12, 11, 15, 23, 21, 19]},
-  {id:6,nom:"Betons du Sud — Filiale Sud",forme:"SAS",activite:"Second oeuvre — 40 sal.",collabId:9,honoraires:32000,type:"CAC Filiale",heuresEstim:170,heuresReelles:175,satisfactionClient:7.0,difficulte:5,dernierAvis:"OK",dateAvis:"2026-01-15",commentCollab:"Nguyen",heuresMois:[18, 18, 17, 15, 14, 11, 11, 9, 12, 18, 17, 15]},
-  {id:7,nom:"SA MediaCom",forme:"SA",activite:"Communication — 90 sal.",collabId:5,honoraires:69500,type:"CAC",heuresEstim:360,heuresReelles:383,satisfactionClient:8.8,difficulte:7,dernierAvis:"Equipe tres pro",dateAvis:"2026-01-15",commentCollab:"Faure + Barbier",heuresMois:[40, 40, 37, 33, 30, 25, 21, 20, 27, 40, 37, 33]},
-  {id:8,nom:"SAS TechVision",forme:"SAS",activite:"Editeur logiciel — 45 sal., CIR",collabId:13,honoraires:61000,type:"CAC + Attestation CIR",heuresEstim:320,heuresReelles:299,satisfactionClient:8.5,difficulte:7,dernierAvis:"Maitrise CIR",dateAvis:"2026-01-15",commentCollab:"Clement CDM + Girard",heuresMois:[30, 31, 29, 26, 24, 20, 16, 16, 21, 31, 29, 26]},
+  {id:3,nom:"Alvarez — Filiale Négoce",forme:"SAS",activite:"Négoce matériaux — 50 sal.",collabId:7,honoraires:46500,type:"CAC Filiale",heuresEstim:240,heuresReelles:231,satisfactionClient:7.8,difficulte:5,dernierAvis:"Correct",dateAvis:"2026-01-15",commentCollab:"Perrin",heuresMois:[24, 24, 22, 20, 18, 15, 14, 12, 16, 24, 22, 20]},
+  {id:4,nom:"Groupe Bétons du Sud",forme:"SA",activite:"BTP — 140 sal., 2 filiales",collabId:13,honoraires:94000,type:"CAC Groupe — Consolidation",heuresEstim:480,heuresReelles:459,satisfactionClient:8.2,difficulte:7,dernierAvis:"CDM Clément solide",dateAvis:"2026-01-15",commentCollab:"Clément pilote",heuresMois:[48, 48, 44, 40, 36, 30, 25, 24, 32, 48, 44, 40]},
+  {id:5,nom:"Bétons du Sud — Filiale IDF",forme:"SAS",activite:"Gros œuvre — 55 sal.",collabId:8,honoraires:40500,type:"CAC Filiale",heuresEstim:210,heuresReelles:218,satisfactionClient:7.5,difficulte:6,dernierAvis:"En amélioration",dateAvis:"2026-01-15",commentCollab:"Delorme",heuresMois:[23, 23, 21, 19, 17, 14, 12, 11, 15, 23, 21, 19]},
+  {id:6,nom:"Bétons du Sud — Filiale Sud",forme:"SAS",activite:"Second œuvre — 40 sal.",collabId:9,honoraires:32000,type:"CAC Filiale",heuresEstim:170,heuresReelles:175,satisfactionClient:7.0,difficulte:5,dernierAvis:"OK",dateAvis:"2026-01-15",commentCollab:"Nguyen",heuresMois:[18, 18, 17, 15, 14, 11, 11, 9, 12, 18, 17, 15]},
+  {id:7,nom:"SA MediaCom",forme:"SA",activite:"Communication — 90 sal.",collabId:5,honoraires:69500,type:"CAC",heuresEstim:360,heuresReelles:383,satisfactionClient:8.8,difficulte:7,dernierAvis:"Équipe très pro",dateAvis:"2026-01-15",commentCollab:"Faure + Barbier",heuresMois:[40, 40, 37, 33, 30, 25, 21, 20, 27, 40, 37, 33]},
+  {id:8,nom:"SAS TechVision",forme:"SAS",activite:"Éditeur logiciel — 45 sal., CIR",collabId:13,honoraires:61000,type:"CAC + Attestation CIR",heuresEstim:320,heuresReelles:299,satisfactionClient:8.5,difficulte:7,dernierAvis:"Maîtrise CIR",dateAvis:"2026-01-15",commentCollab:"Clément CDM + Girard",heuresMois:[30, 31, 29, 26, 24, 20, 16, 16, 21, 31, 29, 26]},
   {id:9,nom:"SA PharmaSante",forme:"SA",activite:"Distribution pharma — 75 sal.",collabId:7,honoraires:51000,type:"CAC",heuresEstim:270,heuresReelles:267,satisfactionClient:8.0,difficulte:6,dernierAvis:"Solide",dateAvis:"2026-01-15",commentCollab:"Perrin lead, Vasseur support",heuresMois:[28, 28, 26, 23, 21, 17, 14, 14, 19, 28, 26, 23]},
   {id:10,nom:"SAS Immovest Patrimoine",forme:"SAS",activite:"Promotion immo — 30 sal. + SCI",collabId:6,honoraires:46500,type:"CAC + Audit SCI",heuresEstim:250,heuresReelles:231,satisfactionClient:7.8,difficulte:7,dernierAvis:"Complexe bien suivi",dateAvis:"2026-01-15",commentCollab:"Renaud",heuresMois:[24, 24, 22, 20, 18, 15, 14, 12, 16, 24, 22, 20]},
   {id:11,nom:"SAS EcoTrans",forme:"SAS",activite:"Transport frigo — 55 sal.",collabId:10,honoraires:40500,type:"CAC",heuresEstim:220,heuresReelles:210,satisfactionClient:7.5,difficulte:5,dernierAvis:"OK",dateAvis:"2026-01-15",commentCollab:"Barbier",heuresMois:[22, 22, 20, 18, 17, 14, 11, 11, 15, 22, 20, 18]},
   {id:12,nom:"SA FoodChain",forme:"SA",activite:"Agroalimentaire — 110 sal.",collabId:11,honoraires:46500,type:"CAC",heuresEstim:250,heuresReelles:250,satisfactionClient:7.8,difficulte:6,dernierAvis:"Correct",dateAvis:"2026-01-15",commentCollab:"Girard lead, Vasseur support",heuresMois:[26, 26, 24, 22, 20, 16, 14, 13, 17, 26, 24, 22]},
   {id:13,nom:"SAS Domaines Viticoles Remy",forme:"SAS",activite:"Viticulture — 35 sal.",collabId:12,honoraires:32000,type:"CAC",heuresEstim:175,heuresReelles:162,satisfactionClient:8.2,difficulte:4,dernierAvis:"Dossier propre",dateAvis:"2026-01-15",commentCollab:"Vasseur",heuresMois:[17, 17, 16, 14, 13, 11, 8, 8, 11, 17, 16, 14]},
-  {id:14,nom:"SAS Clinique Verte",forme:"SAS",activite:"Clinique veterinaire — 25 sal.",collabId:10,honoraires:26000,type:"CAC",heuresEstim:145,heuresReelles:138,satisfactionClient:7.5,difficulte:4,dernierAvis:"Simple",dateAvis:"2026-01-15",commentCollab:"Barbier",heuresMois:[14, 14, 13, 12, 11, 9, 9, 7, 10, 14, 13, 12]},
+  {id:14,nom:"SAS Clinique Verte",forme:"SAS",activite:"Clinique vétérinaire — 25 sal.",collabId:10,honoraires:26000,type:"CAC",heuresEstim:145,heuresReelles:138,satisfactionClient:7.5,difficulte:4,dernierAvis:"Simple",dateAvis:"2026-01-15",commentCollab:"Barbier",heuresMois:[14, 14, 13, 12, 11, 9, 9, 7, 10, 14, 13, 12]},
   {id:15,nom:"SAS Garage Premium",forme:"SAS",activite:"Concession auto — 20 sal.",collabId:8,honoraires:26000,type:"CAC",heuresEstim:145,heuresReelles:148,satisfactionClient:7.2,difficulte:4,dernierAvis:"En progres",dateAvis:"2026-01-15",commentCollab:"Delorme",heuresMois:[14, 16, 14, 13, 12, 10, 8, 8, 10, 16, 14, 13]},
   {id:16,nom:"SAS Menuiserie Alu",forme:"SAS",activite:"Menuiserie — 15 sal.",collabId:9,honoraires:23000,type:"CAC",heuresEstim:130,heuresReelles:131,satisfactionClient:7.5,difficulte:4,dernierAvis:"Correct",dateAvis:"2026-01-15",commentCollab:"Nguyen",heuresMois:[13, 14, 13, 11, 10, 9, 7, 7, 9, 14, 13, 11]},
-  {id:17,nom:"SARL Caves & Vins",forme:"SARL",activite:"Negoce vins — 12 sal.",collabId:11,honoraires:22000,type:"CAC",heuresEstim:120,heuresReelles:115,satisfactionClient:7.8,difficulte:3,dernierAvis:"Bien",dateAvis:"2026-01-15",commentCollab:"Girard",heuresMois:[12, 12, 11, 10, 9, 8, 6, 6, 8, 12, 11, 10]},
+  {id:17,nom:"SARL Caves & Vins",forme:"SARL",activite:"Négoce vins — 12 sal.",collabId:11,honoraires:22000,type:"CAC",heuresEstim:120,heuresReelles:115,satisfactionClient:7.8,difficulte:3,dernierAvis:"Bien",dateAvis:"2026-01-15",commentCollab:"Girard",heuresMois:[12, 12, 11, 10, 9, 8, 6, 6, 8, 12, 11, 10]},
   {id:18,nom:"SAS Labo Analyses",forme:"SAS",activite:"Laboratoire — 25 sal.",collabId:12,honoraires:26000,type:"CAC",heuresEstim:145,heuresReelles:147,satisfactionClient:8.0,difficulte:4,dernierAvis:"Efficace",dateAvis:"2026-01-15",commentCollab:"Vasseur",heuresMois:[15, 15, 14, 13, 12, 10, 8, 8, 10, 15, 14, 13]},
   {id:19,nom:"SAS Habitat Durable",forme:"SAS",activite:"Construction eco — 20 sal.",collabId:15,honoraires:59000,type:"Compta + Fiscal + Conseil",heuresEstim:340,heuresReelles:357,satisfactionClient:7.5,difficulte:6,dernierAvis:"Roche fait le job",dateAvis:"2026-01-20",commentCollab:"Roche, recupere de Morin",heuresMois:[37, 40, 37, 34, 31, 24, 17, 17, 21, 31, 34, 34]},
   {id:20,nom:"SARL Dupuis & Fils",forme:"SARL",activite:"Menuiserie — 15 sal.",collabId:15,honoraires:42000,type:"Compta + Social",heuresEstim:260,heuresReelles:239,satisfactionClient:7.8,difficulte:5,dernierAvis:"Client fidele",dateAvis:"2026-01-20",commentCollab:"Roche, 10 ans",heuresMois:[27, 27, 25, 22, 20, 16, 13, 11, 14, 20, 22, 22]},
@@ -4789,8 +4832,8 @@ var CL=[
   {id:78,nom:"Reseau Pharma (social)",forme:"SARL",activite:"Paie 3 officines — 35 bulletins/mois",collabId:29,honoraires:14500,type:"Social — Paie + DSN",heuresEstim:155,heuresReelles:154,satisfactionClient:7.8,difficulte:4,dernierAvis:"Correct",dateAvis:"2026-02-01",commentCollab:"Carpentier",heuresMois:[16, 13, 13, 13, 13, 12, 12, 11, 12, 13, 13, 13]},
   {id:79,nom:"Imprimerie + Transports (social)",forme:"SAS",activite:"Paie — 43 bulletins/mois",collabId:32,honoraires:16000,type:"Social — Paie + DSN",heuresEstim:170,heuresReelles:164,satisfactionClient:7.5,difficulte:4,dernierAvis:"OK",dateAvis:"2026-02-01",commentCollab:"Costa",heuresMois:[17, 14, 14, 14, 14, 13, 12, 11, 13, 14, 14, 14]},
   {id:80,nom:"Clients saisie — volet social (x12)",forme:"Divers",activite:"Paie petits clients — ~25 bulletins/mois (moitie sur Payfit)",collabId:32,honoraires:15000,type:"Social — Paie",heuresEstim:195,heuresReelles:187,satisfactionClient:7.5,difficulte:3,dernierAvis:"Volume",dateAvis:"2026-02-01",commentCollab:"Costa + Petit renfort",heuresMois:[19, 16, 16, 16, 16, 15, 13, 13, 15, 16, 16, 16]},
-  {id:83,nom:"PV AG — Groupes et SA",forme:"Divers",activite:"PV AG groupes + filiales — 15 AG/an",collabId:35,honoraires:42000,type:"Juridique — PV AG",heuresEstim:250,heuresReelles:253,satisfactionClient:8.5,difficulte:7,dernierAvis:"Maitrise parfaite",dateAvis:"2026-02-01",commentCollab:"Renault, AG complexes resolutions",heuresMois:[12, 14, 19, 30, 33, 35, 23, 14, 19, 21, 19, 14]},
-  {id:84,nom:"PV AG — Clients moyens",forme:"Divers",activite:"PV AG SAS/SARL moyennes — 18 AG/an",collabId:36,honoraires:33500,type:"Juridique — PV AG",heuresEstim:210,heuresReelles:223,satisfactionClient:7.8,difficulte:5,dernierAvis:"Bien",dateAvis:"2026-02-01",commentCollab:"Prevost, droit des societes",heuresMois:[10, 12, 17, 27, 29, 30, 21, 12, 17, 19, 17, 12]},
+  {id:83,nom:"PV AG — Groupes et SA",forme:"Divers",activite:"PV AG groupes + filiales — 15 AG/an",collabId:35,honoraires:42000,type:"Juridique — PV AG",heuresEstim:250,heuresReelles:253,satisfactionClient:8.5,difficulte:7,dernierAvis:"Maîtrise parfaite",dateAvis:"2026-02-01",commentCollab:"Renault, AG complexes résolutions",heuresMois:[12, 14, 19, 30, 33, 35, 23, 14, 19, 21, 19, 14]},
+  {id:84,nom:"PV AG — Clients moyens",forme:"Divers",activite:"PV AG SAS/SARL moyennes — 18 AG/an",collabId:36,honoraires:33500,type:"Juridique — PV AG",heuresEstim:210,heuresReelles:223,satisfactionClient:7.8,difficulte:5,dernierAvis:"Bien",dateAvis:"2026-02-01",commentCollab:"Prevost, droit des sociétés",heuresMois:[10, 12, 17, 27, 29, 30, 21, 12, 17, 19, 17, 12]},
   {id:85,nom:"PV AG — Petits clients",forme:"Divers",activite:"PV AG petites structures — 25 AG/an",collabId:37,honoraires:24000,type:"Juridique — PV AG",heuresEstim:160,heuresReelles:157,satisfactionClient:7.5,difficulte:3,dernierAvis:"OK volume",dateAvis:"2026-02-01",commentCollab:"Fabre, AG simples",heuresMois:[7, 9, 12, 19, 20, 20, 15, 9, 12, 13, 12, 9]},
   {id:86,nom:"IRPP — Dirigeants patrimoine",forme:"Divers",activite:"IRPP 12 dirigeants patrimoine complexe",collabId:35,honoraires:33500,type:"Juridique — IRPP",heuresEstim:200,heuresReelles:191,satisfactionClient:8.2,difficulte:7,dernierAvis:"Excellent conseil",dateAvis:"2026-02-01",commentCollab:"Renault, optimisation ISF/IFI",heuresMois:[10, 9, 11, 15, 26, 28, 13, 9, 22, 24, 15, 9]},
   {id:87,nom:"IRPP — Dirigeants PME",forme:"Divers",activite:"IRPP 20 dirigeants PME",collabId:36,honoraires:21500,type:"Juridique — IRPP",heuresEstim:140,heuresReelles:151,satisfactionClient:7.5,difficulte:4,dernierAvis:"Correct",dateAvis:"2026-02-01",commentCollab:"Prevost",heuresMois:[7, 7, 9, 12, 21, 22, 10, 7, 18, 19, 12, 7]},
@@ -4798,7 +4841,7 @@ var CL=[
   {id:89,nom:"Missions juridiques ponctuelles",forme:"Divers",activite:"Cessions, transformations, augmentations K",collabId:35,honoraires:26500,type:"Juridique — Conseil",heuresEstim:165,heuresReelles:154,satisfactionClient:8.5,difficulte:8,dernierAvis:"Tres bon conseil",dateAvis:"2026-02-01",commentCollab:"Renault, operations exceptionnelles",heuresMois:[10, 7, 9, 12, 21, 22, 10, 7, 18, 19, 12, 7]},
   {id:90,nom:"Constitutions et modifications",forme:"Divers",activite:"Creations, statuts, baux",collabId:36,honoraires:14500,type:"Juridique — Conseil",heuresEstim:95,heuresReelles:88,satisfactionClient:7.8,difficulte:5,dernierAvis:"Efficace",dateAvis:"2026-02-01",commentCollab:"Prevost",heuresMois:[5, 4, 5, 7, 12, 13, 6, 4, 10, 11, 7, 4]},
   {id:91,nom:"Veille et contentieux courant",forme:"Divers",activite:"Mises en conformite, litiges mineurs",collabId:37,honoraires:9500,type:"Juridique — Conseil",heuresEstim:65,heuresReelles:61,satisfactionClient:7.5,difficulte:3,dernierAvis:"Correct",dateAvis:"2026-02-01",commentCollab:"Fabre",heuresMois:[3, 3, 4, 5, 8, 8, 4, 3, 7, 8, 5, 3]},
-  {id:92,nom:"Missions except. — Creations (3 dossiers)",forme:"Divers",activite:"Creation SAS 2500, creation SARL 2000, creation EURL 1000",collabId:35,honoraires:5500,type:"Juridique — Creation",heuresEstim:45,heuresReelles:42,satisfactionClient:8.5,difficulte:6,dernierAvis:"Bien gere",dateAvis:"2026-02-01",commentCollab:"Renault, operations courantes",heuresMois:[2,3,4,5,5,5,3,2,3,4,3,3]},
+  {id:92,nom:"Missions except. — Créations (3 dossiers)",forme:"Divers",activite:"Création SAS 2500, création SARL 2000, création EURL 1000",collabId:35,honoraires:5500,type:"Juridique — Création",heuresEstim:45,heuresReelles:42,satisfactionClient:8.5,difficulte:6,dernierAvis:"Bien géré",dateAvis:"2026-02-01",commentCollab:"Renault, opérations courantes",heuresMois:[2,3,4,5,5,5,3,2,3,4,3,3]},
   {id:93,nom:"Missions except. — Dissolutions + liquidation + transformation",forme:"Divers",activite:"2 dissolutions (450+900), 1 liquidation (450), 1 transfo SARL (1000)",collabId:36,honoraires:2800,type:"Juridique — Restructuration",heuresEstim:25,heuresReelles:24,satisfactionClient:7.8,difficulte:5,dernierAvis:"Efficace",dateAvis:"2026-01-20",commentCollab:"Prevost",heuresMois:[1,2,3,3,3,3,2,1,2,2,1,1]},
   {id:94,nom:"Missions except. — Cession actions + evaluation + convention treso",forme:"Divers",activite:"Cession (1500), evaluation (1500), convention tresorerie (250)",collabId:35,honoraires:3250,type:"Juridique — Conseil",heuresEstim:28,heuresReelles:26,satisfactionClient:8.2,difficulte:7,dernierAvis:"Tres bon conseil",dateAvis:"2026-02-01",commentCollab:"Renault, dossiers complexes",heuresMois:[1,2,3,3,3,3,2,1,2,3,2,1]},
   {id:95,nom:"Missions except. — AG ponctuelles (5 dossiers)",forme:"Divers",activite:"AG: 100+350+400+450+1000",collabId:36,honoraires:2300,type:"Juridique — PV AG",heuresEstim:22,heuresReelles:21,satisfactionClient:7.8,difficulte:5,dernierAvis:"Bien",dateAvis:"2026-01-15",commentCollab:"Prevost",heuresMois:[1,1,2,3,4,4,2,1,1,1,1,0]},
@@ -7881,12 +7924,12 @@ function exportAnnexe(type){
   var cn=(typeof DG_STATE!=="undefined"&&DG_STATE.cabinet?DG_STATE.cabinet.name:"")||"Mon Cabinet";
   if(type==="amenagement"){
     h+='<h1>Guide amenagement des espaces de travail</h1><p style="color:#64748b"><em>Annexe P2 Ch2 - Cabinet : '+cn+'</em></p>';
-    h+='<h2>1. Normes ergonomiques</h2><table><tr><th>Critere</th><th>Norme</th><th>Statut</th></tr>';
-    h+='<tr><td>Ecran</td><td>Hauteur yeux, 50-70 cm</td><td>A verifier</td></tr>';
-    h+='<tr><td>Siege</td><td>Reglable, soutien lombaire</td><td>A verifier</td></tr>';
-    h+='<tr><td>Eclairage</td><td>300+ lux, lumiere naturelle</td><td>A verifier</td></tr>';
-    h+='<tr><td>Bruit</td><td>&lt; 55 dB</td><td>A verifier</td></tr>';
-    h+='<tr><td>Temperature</td><td>20-22 C</td><td>A verifier</td></tr></table>';
+    h+='<h2>1. Normes ergonomiques</h2><table><tr><th>Critère</th><th>Norme</th><th>Statut</th></tr>';
+    h+='<tr><td>Écran</td><td>Hauteur yeux, 50-70 cm</td><td>À vérifier</td></tr>';
+    h+='<tr><td>Siège</td><td>Réglable, soutien lombaire</td><td>À vérifier</td></tr>';
+    h+='<tr><td>Éclairage</td><td>300+ lux, lumière naturelle</td><td>À vérifier</td></tr>';
+    h+='<tr><td>Bruit</td><td>&lt; 55 dB</td><td>À vérifier</td></tr>';
+    h+='<tr><td>Température</td><td>20-22°C</td><td>À vérifier</td></tr></table>';
     h+='<h2>2. Espaces fonctionnels</h2>';
     h+='<div class="box"><strong>Travail concentre :</strong> Bureaux individuels, phone box, casques</div>';
     h+='<div class="box"><strong>Collaboration :</strong> Salle reunion visio, zone informelle</div>';
@@ -7908,10 +7951,10 @@ function exportAnnexe(type){
   } else if(type==="pilotage"){
     h+='<h1>Guide de pilotage des indicateurs QVT</h1><p style="color:#64748b"><em>Annexe P3 Ch1 S7 + P3 Ch2 S1 - Cabinet : '+cn+'</em></p>';
     h+='<h2>1. Selection des indicateurs</h2><table><tr><th>Registre</th><th>Indicateurs</th><th>Frequence</th></tr>';
-    h+='<tr><td>RH/Social</td><td>Absenteisme, turnover, heures sup.</td><td>Mensuelle</td></tr>';
+    h+='<tr><td>RH/Social</td><td>Absentéisme, turnover, heures sup.</td><td>Mensuelle</td></tr>';
     h+='<tr><td>Engagement</td><td>Satisfaction, EDT, intentions depart</td><td>Trimestrielle</td></tr>';
     h+='<tr><td>Client</td><td>NPS, reclamations, renouvellement</td><td>Trimestrielle</td></tr>';
-    h+='<tr><td>Performance</td><td>ROI QVT, productivite, rentabilite</td><td>Annuelle</td></tr></table>';
+    h+='<tr><td>Performance</td><td>ROI QVT, productivité, rentabilité</td><td>Annuelle</td></tr></table>';
     h+='<h2>2. Seuils</h2><div class="box">Objectif + seuil orange (-15%) + seuil rouge (-30%) pour chaque indicateur</div>';
     h+='<h2>3. Gouvernance</h2><table><tr><th>Instance</th><th>Frequence</th><th>Objet</th></tr>';
     h+='<tr><td>Point flash</td><td>Mensuel</td><td>MAJ indicateurs</td></tr>';
@@ -7929,7 +7972,7 @@ function generateManuelProcedure(){
   var h='<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>Manuel de Procedures</title>'+styles+'</head><body>';
   h+='<h1>MANUEL DE PROCEDURES<br><span style="font-size:16px;color:#64748b">'+v('mp-cabinet')+'</span></h1>';
   h+='<div class="meta"><strong>Version :</strong> '+v('mp-version')+' | <strong>Date :</strong> '+(v('mp-date')?new Date(v('mp-date')).toLocaleDateString('fr-FR'):'A definir')+' | <strong>Redacteur :</strong> '+v('mp-redacteur')+'</div>';
-  h+='<h2>Section 1 - Organisation generale</h2>';
+  h+='<h2>Section 1 - Organisation générale</h2>';
   h+='<h3>1.1 Presentation du cabinet</h3><div class="box">'+v('mp-presentation')+'</div>';
   h+='<h3>1.2 Organigramme et fonctions</h3><div class="box">'+v('mp-organigramme')+'</div>';
   h+='<h3>1.3 Horaires et organisation</h3><div class="box">'+v('mp-horaires')+'</div>';
@@ -7938,7 +7981,7 @@ function generateManuelProcedure(){
   h+='<h3>2.2 Revision et cloture</h3><div class="box">'+v('mp-revision')+'</div>';
   h+='<h3>2.3 Obligations fiscales</h3><div class="box">'+v('mp-fiscal')+'</div>';
   h+='<h3>2.4 Social et paie</h3><div class="box">'+v('mp-social')+'</div>';
-  h+='<h2>Section 3 - Securite et conformite</h2>';
+  h+='<h2>Section 3 - Sécurité et conformité</h2>';
   h+='<h3>3.1 Secret professionnel</h3><div class="box">'+v('mp-secret')+'</div>';
   h+='<h3>3.2 Lutte anti-blanchiment</h3><div class="box">'+v('mp-lab')+'</div>';
   h+='<h3>3.3 Archivage et conservation</h3><div class="box">'+v('mp-archivage')+'</div>';
@@ -7951,7 +7994,7 @@ function generateManuelProcedure(){
   h+='<h3>5.2 Entretiens et evaluation</h3><div class="box">'+v('mp-entretiens')+'</div>';
   h+='<h3>5.3 Formation continue</h3><div class="box">'+v('mp-formation')+'</div>';
   h+='<h3>5.4 Demarche QVT</h3><div class="box">'+v('mp-qvt')+'</div>';
-  h+='<p style="text-align:center;color:#888;font-size:11px;margin-top:50px;border-top:1px solid #e2e8f0;padding-top:15px">Manuel de procedures - '+v('mp-cabinet')+' - '+v('mp-version')+'</p>';
+  h+='<p style="text-align:center;color:#888;font-size:11px;margin-top:50px;border-top:1px solid #e2e8f0;padding-top:15px">Manuel de procédures - '+v('mp-cabinet')+' - '+v('mp-version')+'</p>';
   h+='</body></html>';
   var blob=new Blob([h],{type:'text/html'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);
   a.download='Manuel_Procedures_'+v('mp-cabinet').replace(/\s/g,'_')+'.html';a.click();
@@ -7971,7 +8014,7 @@ function generateLivretAccueil(){
   h+='<tr><td>Acces</td><td style="white-space:pre-line">'+v('la-acces')+'</td></tr>';
   h+='<tr><td>Materiel</td><td style="white-space:pre-line">'+v('la-materiel')+'</td></tr>';
   h+='<tr><td>Outils</td><td style="white-space:pre-line">'+v('la-outils')+'</td></tr></table>';
-  h+='<h2>Votre equipe</h2><div class="box">'+v('la-organigramme')+'</div>';
+  h+='<h2>Votre équipe</h2><div class="box">'+v('la-organigramme')+'</div>';
   h+='<div class="info"><strong>Contacts utiles :</strong><br>'+v('la-contacts')+'</div>';
   h+='<h2>Parcours d\'integration</h2>';
   h+='<table><tr><th>Periode</th><th>Programme</th></tr>';
@@ -7979,7 +8022,7 @@ function generateLivretAccueil(){
   h+='<tr><td><strong>Mois 1</strong></td><td style="white-space:pre-line">'+v('la-mois1')+'</td></tr>';
   h+='<tr><td><strong>Mois 2-3</strong></td><td style="white-space:pre-line">'+v('la-mois2')+'</td></tr></table>';
   h+='<h2>Chartes et engagements</h2><div class="box">'+v('la-documents')+'</div>';
-  h+='<h2>Notre demarche QVT</h2><div class="box">'+v('la-qvt')+'</div>';
+  h+='<h2>Notre démarche QVT</h2><div class="box">'+v('la-qvt')+'</div>';
   h+='<p style="text-align:center;color:#888;font-size:11px;margin-top:50px;border-top:1px solid #e2e8f0;padding-top:15px">Livret d\'accueil - '+v('la-cabinet')+'</p>';
   h+='</body></html>';
   var blob=new Blob([h],{type:'text/html'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);
@@ -10078,7 +10121,7 @@ function showReactPage(pageName) {
 var PHASES = {
   1: {
     title: 'Phase 1 — Diagnostiquer',
-    desc: 'Etat des lieux complet : indicateurs RH, enquetes, entretiens, risques et analyse.',
+    desc: 'État des lieux complet : indicateurs RH, enquêtes, entretiens, risques et analyse.',
     color: '#3b82f6',
     steps: [
       {name:'Indicateurs RH',hint:'Absentéisme, turnover, heures sup.',action:"showSection('diagnostic-rh')"},
@@ -10091,7 +10134,7 @@ var PHASES = {
   },
   2: {
     title: 'Phase 2 — Concevoir',
-    desc: 'Definir les objectifs QVT, obtenir l\'engagement de la direction et planifier les actions.',
+    desc: 'Définir les objectifs QVT, obtenir l\'engagement de la direction et planifier les actions.',
     color: '#8b5cf6',
     steps: [
       {name:'Constats & Besoins',hint:'État des lieux et problématiques identifiées',action:"showDGStep(1)"},
@@ -10105,7 +10148,7 @@ var PHASES = {
   },
   3: {
     title: 'Phase 3 — Actions prioritaires',
-    desc: 'Mettre en place les leviers concrets : chartes, procedures, outils, formation.',
+    desc: 'Mettre en place les leviers concrets : chartes, procédures, outils, formation.',
     color: '#f59e0b',
     steps: [
       {name:'Charte QVT globale',hint:'Valeurs et engagements (6 sujets QVCT (ANACT))',action:"showSection('charte-qvt')"},
@@ -10114,13 +10157,13 @@ var PHASES = {
       {name:'Charte de bonne conduite client',hint:'Engagements reciproques',action:"showSection('charte-conduite-client')"},
       {name:'Guide amenagement des espaces',hint:'Ergonomie et bien-etre physique',action:"showSection('guide-amenagement')"},
       {name:'Outils numeriques collaboratifs',hint:'Communication, GED, signature',action:"showSection('guide-numerique')"},
-      {name:'Manuel de procedures',hint:'5 sections, exportable',action:"showSection('manuel-procedure')"},
+      {name:'Manuel de procédures',hint:'5 sections, exportable',action:"showSection('manuel-procedure')"},
       {name:'Livret d\'accueil',hint:'Integration des nouveaux',action:"showSection('livret-accueil')"}
     ]
   },
   4: {
     title: 'Phase 4 — Mesure des effets',
-    desc: 'Mesurer les couts caches, comparer les scenarios et budgeter les investissements.',
+    desc: 'Mesurer les coûts cachés, comparer les scénarios et budgéter les investissements.',
     color: '#e67e22',
     steps: [
       {name:'Coûts directs — Investissements QVT',hint:'Budget et ventilation par categorie',action:"showSection('investissements-enrichi')"},
@@ -10129,26 +10172,26 @@ var PHASES = {
       {name:'Chiffrer le cout de la non-QVT',hint:'Impact financier de l\'inaction',action:"showReactPage('cout_nonqvt')"},
       {name:'ROI QVT',hint:'Couts evites vs investissements',action:"showSection('roi-unifie')"},
       {name:'Comparer avant / apres QVT',hint:'Projection des gains si on agit',action:"showReactPage('avantapres')"},
-      {name:'Scenarios d\'investissement compares',hint:'3 niveaux avec ROI respectif',action:"showReactPage('scenarios')"},
+      {name:'Scénarios d\'investissement comparés',hint:'3 niveaux avec ROI respectif',action:"showReactPage('scenarios')"},
       {name:'Rentabilité par dossier',hint:'Marge et productivité',action:"showSection('rentabilite')"},
       {name:'Traitement Comptable',hint:'Normes et écritures comptables',action:"showSection('traitement-comptable')"}
     ]
   },
   5: {
     title: 'Phase 5 — Suivi',
-    desc: 'Evaluer l\'impact economique et humain de la demarche QVT.',
+    desc: 'Évaluer l\'impact économique et humain de la démarche QVT.',
     color: '#10b981',
     steps: [
       {name:'Mesurer la satisfaction collaborateur',hint:'Barometre interne',action:"showSection('sat-collab')"},
       {name:'Mesurer la satisfaction client (NPS)',hint:'Score + tendance',action:"showSection('satisfaction')"},
       {name:'Suivi des indicateurs de fidélisation',hint:'Taux clés RH (formules DARES)',action:"showSection('taux-cles-rh')"},
       {name:'Tableau de bord RH (cockpit)',hint:'KPI en temps reel',action:"goF3('dashboard')"},
-      {name:'Systeme d\'alertes automatiques',hint:'Seuils et notifications',action:"goF3('alertes')"}
+      {name:'Système d\'alertes automatiques',hint:'Seuils et notifications',action:"goF3('alertes')"}
     ]
   },
   6: {
     title: "Phase 6 — Retour d'expérience",
-    desc: 'Piloter dans la duree, ajuster et ameliorer en continu.',
+    desc: 'Piloter dans la durée, ajuster et améliorer en continu.',
     color: '#ef4444',
     steps: [
       {name:'Analyse des résultats',hint:'Bilan de la démarche guidée',action:"showDGStep(10)"},
@@ -16364,7 +16407,7 @@ function injectVanillaStepNav() {
     depli2Content.append(besCard);
     depli2Content.append(dgCard(
       dg('h3', { className: 'dg-card-h' }, '\uD83D\uDCDD Synth\u00e8se des besoins identifies'),
-      dg('p', { style: { fontSize:'12px', color:'#888', marginBottom:'8px' } }, 'R\u00e9sumez les besoins prioritaires qui guideront la d\u00e9finition des objectifs \u00e0 l\'etape suivante.'),
+      dg('p', { style: { fontSize:'12px', color:'#888', marginBottom:'8px' } }, 'R\u00e9sumez les besoins prioritaires qui guideront la d\u00e9finition des objectifs \u00e0 l\'étape suivante.'),
       dgTextArea('besoins_synthese', 'Synth\u00e8se des besoins prioritaires identifi\u00e9s lors du diagnostic...', 5)
     ));
     depli2Content.append(dgCard(
@@ -21124,8 +21167,8 @@ const LEGISLATION = [
   { titre:"ANACT – Référentiel QVCT", url:"https://www.anact.fr/qualite-de-vie-et-des-conditions-de-travail", desc:"Ressources et méthodologie ANACT" },
   { titre:"DUERP – Obligations", url:"https://travail-emploi.gouv.fr/sante-au-travail/demarche-de-prevention/article/document-unique-d-evaluation-des-risques-professionnels", desc:"Document Unique d'Évaluation des Risques" },
   { titre:"Gallup – State of the Global Workplace", url:"https://www.gallup.com/workplace/349484/state-of-the-global-workplace.aspx", desc:"Étude mondiale engagement au travail" },
-  { titre:"WTW – Baromètre absentéisme 2024", url:"https://www.wtwco.com/fr-fr/news/2024/09/l-absenteisme-des-salaries-francais-du-secteur-prive-flechit-pour-la-premiere-fois-depuis-2016", desc:"Données absentéisme secteur privé" },
-  { titre:"Observatoire APICIL – Absentéisme 2024", url:"https://pro.apicil.com/actualites/taux-absenteisme-france/", desc:"Taux et coûts absentéisme France" },
+  { titre:"WTW – Baromètre absentéisme 2024", url:"https://www.wtwco.com/fr-fr/news/2024/09/l-absentéisme-des-salaries-francais-du-secteur-prive-flechit-pour-la-premiere-fois-depuis-2016", desc:"Données absentéisme secteur privé" },
+  { titre:"Observatoire APICIL – Absentéisme 2024", url:"https://pro.apicil.com/actualites/taux-absentéisme-france/", desc:"Taux et coûts absentéisme France" },
 ];
 
 const RECOMMANDATIONS = {
@@ -21258,7 +21301,7 @@ const RENVOIS_MEMOIRE = [
 
 const BENCHMARK_SECTEUR = {
   turnover: { label:"Turnover", cabinet:22, france:15, source:"OMECA 2025 / Atlas 2024", unit:"%" },
-  absenteisme: { label:"Absentéisme", cabinet:4.5, france:5.4, source:"OEC / Ayming 2023 (cab. EC) — WTW 2024 (France)", unit:"%" },
+  absentéisme: { label:"Absentéisme", cabinet:4.5, france:5.4, source:"OEC / Ayming 2023 (cab. EC) — WTW 2024 (France)", unit:"%" },
   satisfaction: { label:"Satisfaction", cabinet:7, france:null, source:"Pas de benchmark EC publié — à mesurer en interne", unit:"/10" },
   coutDepart: { label:"Coût d'un départ", cabinet:25000, france:null, source:"Savall & Zardet, ISEOR (6-9 mois de salaire selon poste)", unit:"€" },
   coutAbsence: { label:"Coût absentéisme/salarié", cabinet:3500, france:2800, source:"Estimations sectorielles (Institut Sapiens 2018 : 108 Mds€ total ; Malakoff Humanis 2023)", unit:"€/an" },
@@ -21387,7 +21430,7 @@ function QVTApp() {
   const [simHistorique, setSimHistorique] = useState([]);
   const [simPres, setSimPres] = useState({ collabId:3, dureeJours:20, tauxDesengagement:60, reprises:[{collabId:null,heures:12},{collabId:null,heures:20}], nbDeclaRetard:2, coutPenalite:150, nbAvoirs:3, montantAvoir:500, clientsImpactes:[], risquePerte:10 });
   const [objectifsQVT, setObjectifsQVT] = useState({ turnoverCible:10, absentCible:4, satisfCible:8, prodCible:90 });
-  const [probaGain, setProbaGain] = useState({ turnover:100, absenteisme:100 });
+  const [probaGain, setProbaGain] = useState({ turnover:100, absentéisme:100 });
   const [gainsClients, setGainsClients] = useState({ tauxRecondAvant:81, tauxRecondApres:88, coefAttribution:30 });
   // Compute real QVT hours from CO data for roiConfig defaults
   const _coAssocies = typeof CO!=='undefined' ? CO.filter(c => c.pole==='Direction') : [];
@@ -21408,9 +21451,9 @@ function QVTApp() {
   const [nbEvenementsAn, setNbEvenementsAn] = useState({ arretsAuto:true, departsAuto:true, nbArrets:null, nbDeparts:null });
   const [qualitatifs, setQualitatifs] = useState({ npsClients:"", barometre:"", verbatim1:"", verbatim2:"", verbatim3:"", tauxFacturation:"", recommandationsClients:"" });
   const [suiviAnnuel, setSuiviAnnuel] = useState({
-    "N-1": { turnover:"", absenteisme:"", satisfaction:"", ca:"", nbCollabs:"", nbDeparts:"", joursAbsence:"", nps:"" },
-    "N":   { turnover:"", absenteisme:"", satisfaction:"", ca:"", nbCollabs:"", nbDeparts:"", joursAbsence:"", nps:"" },
-    "N+1": { turnover:"", absenteisme:"", satisfaction:"", ca:"", nbCollabs:"", nbDeparts:"", joursAbsence:"", nps:"" },
+    "N-1": { turnover:"", absentéisme:"", satisfaction:"", ca:"", nbCollabs:"", nbDeparts:"", joursAbsence:"", nps:"" },
+    "N":   { turnover:"", absentéisme:"", satisfaction:"", ca:"", nbCollabs:"", nbDeparts:"", joursAbsence:"", nps:"" },
+    "N+1": { turnover:"", absentéisme:"", satisfaction:"", ca:"", nbCollabs:"", nbDeparts:"", joursAbsence:"", nps:"" },
   });
   const [pdcaPhase, setPdcaPhase] = useState("plan");
   const [scenarios, setScenarios] = useState({
@@ -21816,8 +21859,8 @@ function QVTApp() {
     
     // ═══ Économies QVT = coûts ÉVITÉS (ROI minimum) ═══
     const ecoTurnover = Math.round(coutTurnover * (probaGain.turnover / 100));
-    const ecoAbsent = Math.round(coutAbsenteisme * (probaGain.absenteisme / 100));
-    const ecoPresent = Math.round(coutPresent * (probaGain.absenteisme / 100));
+    const ecoAbsent = Math.round(coutAbsenteisme * (probaGain.absentéisme / 100));
+    const ecoPresent = Math.round(coutPresent * (probaGain.absentéisme / 100));
     const totalEcoMin = ecoTurnover + ecoAbsent + ecoPresent; // ROI minimum = coûts évités seuls
     
     // ═══ Gains clients pondérés (ROI probable) ═══
@@ -22685,7 +22728,7 @@ function QVTApp() {
             📖 <strong>Coûts cachés (Savall & Zardet, ISEOR) :</strong> 15 000 à 60 000 €/personne/an — base 1 310 organisations, 37 pays. Une fraction significative est recyclable en performance via une démarche structurée.
           </div>
           <div style={{flex:1,opacity:.8}}>
-            📖 <strong>Coût absentéisme seul :</strong> ~4 000 €/salarié/an — <a href="https://www.ayming.fr/newsroom/podcasts/cout-absenteisme-entreprise/" target="_blank" style={{color:"#93c5fd",textDecoration:"underline"}}>Ayming, 17ᵉ Baromètre, 2025</a>
+            📖 <strong>Coût absentéisme seul :</strong> ~4 000 €/salarié/an — <a href="https://www.ayming.fr/newsroom/podcasts/cout-absentéisme-entreprise/" target="_blank" style={{color:"#93c5fd",textDecoration:"underline"}}>Ayming, 17ᵉ Baromètre, 2025</a>
           </div>
         </div>
       </div>
@@ -25647,12 +25690,12 @@ function QVTApp() {
   };
 
   const PageAvantApres = () => {
-    const avant = { satisfaction: stats.satisfMoy, absenteisme: stats.tauxAbsenteisme, turnover: stats.turnoverEstime, charge: stats.chargeMoy, coutsCaches: stats.coutsCaches, coutAbs: stats.coutAbsenteisme, coutTurn: stats.coutTurnover, coutPres: stats.coutPresent, nbArrets: stats.nbAbsencesEstimees, nbDeparts: stats.nbDepartsEstimes };
-    const arretsEvites = Math.round(avant.nbArrets * probaGain.absenteisme / 100 * 10) / 10;
+    const avant = { satisfaction: stats.satisfMoy, absentéisme: stats.tauxAbsentéisme, turnover: stats.turnoverEstime, charge: stats.chargeMoy, coutsCaches: stats.coutsCaches, coutAbs: stats.coutAbsenteisme, coutTurn: stats.coutTurnover, coutPres: stats.coutPresent, nbArrets: stats.nbAbsencesEstimees, nbDeparts: stats.nbDepartsEstimes };
+    const arretsEvites = Math.round(avant.nbArrets * probaGain.absentéisme / 100 * 10) / 10;
     const departsEvites = Math.round(avant.nbDeparts * probaGain.turnover / 100 * 10) / 10;
     const apres = {
       satisfaction: Math.min(10, avant.satisfaction * 1.15),
-      absenteisme: Math.max(0, avant.absenteisme * (1 - probaGain.absenteisme/100*0.5)),
+      absentéisme: Math.max(0, avant.absentéisme * (1 - probaGain.absentéisme/100*0.5)),
       turnover: Math.max(0, avant.turnover * (1 - probaGain.turnover/100*0.6)),
       charge: Math.max(70, avant.charge * 0.92),
       coutsCaches: avant.coutsCaches - stats.totalEco,
@@ -25696,7 +25739,7 @@ function QVTApp() {
             <div style={{textAlign:"center",fontSize:14,fontWeight:700,color:c.danger,marginBottom:16}}>🔴 AVANT — Sans QVT</div>
             {[
               {l:"Satisfaction moyenne",v:avant.satisfaction.toFixed(1)+"/10"},
-              {l:"Taux d'absentéisme",v:fmtP(avant.absenteisme)},
+              {l:"Taux d'absentéisme",v:fmtP(avant.absentéisme)},
               {l:"Turnover estimé",v:fmtP(avant.turnover)},
               {l:"Charge moyenne",v:avant.charge.toFixed(0)+"%"},
               {l:"Arrêts maladie/an",v:String(avant.nbArrets)},
@@ -25715,7 +25758,7 @@ function QVTApp() {
             <div style={{textAlign:"center",fontSize:14,fontWeight:700,color:c.success,marginBottom:16}}>🟢 APRÈS — Avec QVT</div>
             {[
               {l:"Satisfaction moyenne",v:apres.satisfaction.toFixed(1)+"/10",gain:"+"+(apres.satisfaction-avant.satisfaction).toFixed(1)},
-              {l:"Taux d'absentéisme",v:fmtP(apres.absenteisme),gain:(apres.absenteisme-avant.absenteisme).toFixed(1)+"%"},
+              {l:"Taux d'absentéisme",v:fmtP(apres.absentéisme),gain:(apres.absentéisme-avant.absentéisme).toFixed(1)+"%"},
               {l:"Turnover estimé",v:fmtP(apres.turnover),gain:(apres.turnover-avant.turnover).toFixed(1)+"%"},
               {l:"Charge moyenne",v:apres.charge.toFixed(0)+"%",gain:(apres.charge-avant.charge).toFixed(0)+"%"},
               {l:"Arrêts maladie/an",v:String(apres.nbArrets),gain:`−${arretsEvites} évité${arretsEvites>1?"s":""}`},
@@ -25746,7 +25789,7 @@ function QVTApp() {
             <div style={{background:"#e8f5e9",borderRadius:8,padding:12,textAlign:"center"}}>
               <div style={{fontSize:9,color:c.textLight}}>Désengagement réduit</div>
               <div style={{fontSize:18,fontWeight:700,color:c.success}}>{fmtE(stats.ecoPresent)}</div>
-              <div style={{fontSize:9,color:c.textLight}}>50% absentéisme × {probaGain.absenteisme}%</div>
+              <div style={{fontSize:9,color:c.textLight}}>50% absentéisme × {probaGain.absentéisme}%</div>
             </div>
             <div style={{background:"#fff8e1",borderRadius:8,padding:12,textAlign:"center"}}>
               <div style={{fontSize:9,color:c.textLight}}>Fidélisation clients</div>
@@ -25905,7 +25948,7 @@ function QVTApp() {
         <div style={sty.grid2}>
           {[
             {k:"turnover",l:"Réduction turnover",eco:stats.ecoTurnover,icon:"🚪",base:`${fmtE(stats.coutTurnover)}`},
-            {k:"absenteisme",l:"Réduction absentéisme",eco:stats.ecoAbsent+stats.ecoPresent,icon:"🏥",base:`${fmtE(stats.coutAbsenteisme)} + prés. ${fmtE(stats.coutPresent)}`},
+            {k:"absentéisme",l:"Réduction absentéisme",eco:stats.ecoAbsent+stats.ecoPresent,icon:"🏥",base:`${fmtE(stats.coutAbsenteisme)} + prés. ${fmtE(stats.coutPresent)}`},
           ].map((item,i) => (
             <div key={i} style={{background:c.bg,borderRadius:10,padding:14}}>
               <div style={{display:"flex",justifyContent:"space-between",marginBottom:4}}>
@@ -26173,7 +26216,7 @@ function QVTApp() {
   // ═══════════════════════════════════════════
   const PageSuiviAnnuel = () => {
     // ═══ État local : indicateurs sélectionnés ═══
-    const [selectedKpis, setSelectedKpis] = React.useState(['satisf','engage','charge','chargeMax','turnover','absenteisme']);
+    const [selectedKpis, setSelectedKpis] = React.useState(['satisf','engage','charge','chargeMax','turnover','absentéisme']);
     const [showPicker, setShowPicker] = React.useState(false);
 
     // ═══ Agrégation automatique des données qH par année ═══
@@ -26253,7 +26296,7 @@ function QVTApp() {
         extract: ()=>String(nbCollabs), spark: null},
 
       // --- Catégorie : Absentéisme & Turnover ---
-      {id:'absenteisme', cat:'Absentéisme & Turnover', label:'Taux d\'absentéisme', unit:'%', icon:'🏥', better:'down',
+      {id:'absentéisme', cat:'Absentéisme & Turnover', label:'Taux d\'absentéisme', unit:'%', icon:'🏥', better:'down',
         extract: ()=>stats.tauxAbsenteisme.toFixed(1), spark: null},
       {id:'turnover', cat:'Absentéisme & Turnover', label:'Taux de turnover estimé', unit:'%', icon:'🚪', better:'down',
         extract: ()=>stats.turnoverEstime.toFixed(0), spark: null},
