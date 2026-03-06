@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pilotage QVT & Performance - Mémoire DEC (v209-SV225)</title>
+    <title>Pilotage QVT & Performance - Mémoire DEC (v31)</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -596,6 +596,36 @@ input[data-bridged], select[data-bridged] { border-color: #86efac !important; ba
 #demo-banner .demo-btn{background:#fff;color:#dc2626;border:none;border-radius:6px;padding:6px 16px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.2);transition:all .15s}
 #demo-banner .demo-btn:hover{background:#fef2f2;transform:scale(1.03)}
 </style>
+
+<!-- ═══ BANNIÈRE CONNEXION INTERNET ═══ -->
+<div id="offline-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:linear-gradient(90deg,#b91c1c,#dc2626);color:#fff;padding:12px 20px;text-align:center;font-size:13.5px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,.3);align-items:center;justify-content:center;gap:12px">
+    <span style="font-size:1.3em">🌐</span>
+    <span>Connexion internet requise — Les graphiques, simulateurs et le module Cabinet ne peuvent pas se charger sans accès réseau. <strong>Connectez-vous puis rechargez la page.</strong></span>
+    <button onclick="location.reload()" style="background:#fff;color:#b91c1c;border:none;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;margin-left:8px;white-space:nowrap">🔄 Recharger</button>
+    <button onclick="this.parentElement.style.display='none'" style="background:rgba(255,255,255,.2);color:#fff;border:none;border-radius:6px;padding:6px 10px;font-size:12px;cursor:pointer;white-space:nowrap">✕</button>
+</div>
+<script>
+(function() {
+    function checkLibraries() {
+        var missing = [];
+        if (typeof Chart === 'undefined') missing.push('Chart.js');
+        if (typeof React === 'undefined') missing.push('React');
+        if (typeof Babel === 'undefined') missing.push('Babel');
+        if (missing.length > 0) {
+            var banner = document.getElementById('offline-banner');
+            if (banner) { banner.style.display = 'flex'; }
+            console.warn('Bibliothèques manquantes (connexion internet requise) :', missing.join(', '));
+        }
+    }
+    // Vérifie après que le navigateur a eu le temps de charger les CDN
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() { setTimeout(checkLibraries, 1500); });
+    } else {
+        setTimeout(checkLibraries, 1500);
+    }
+})();
+</script>
+
 <div id="demo-banner">
     <span class="demo-icon">⚠️</span>
     <span class="demo-text">MODE DÉMONSTRATION <span class="demo-sub">— Tous les chiffres, graphiques et indicateurs affichés constituent un scénario pédagogique construit à partir d'observations terrain (cabinet EC, 34 collaborateurs + 3 associés). Valeurs reconstituées — importez vos données pour un diagnostic personnalisé.</span></span>
@@ -1063,7 +1093,7 @@ input[data-bridged], select[data-bridged] { border-color: #86efac !important; ba
                 <tr><td style="font-weight:600">N-1 (compensation)</td><td>Recherche précipitée de nouveaux clients</td><td>Mauvaise sélection : clients chronophages</td><td style="color:#f59e0b;font-weight:600">CA stabilisé mais rentabilité dégradée</td></tr>
             </tbody>
         </table>
-    </div>
+    </details>
 
     <!-- ═══ 5. CHRONOLOGIE DE LA DÉMARCHE ═══ -->
     <div class="card" style="border-left:5px solid var(--secondary)">
@@ -1174,7 +1204,7 @@ input[data-bridged], select[data-bridged] { border-color: #86efac !important; ba
             </div>
         </div>
 
-        </details>
+        </div>
 
 <details style="margin-bottom:16px"><summary style="cursor:pointer;font-size:13px;font-weight:600;color:#64748b;padding:8px 12px;background:#f8f6f3;border-radius:8px;list-style:none;user-select:none;border:1px solid #e2ddd5">Profils limites du teletravail</summary>
 <h3 style="font-size:.95em;margin-top:16px">⚠️ Profils limites du télétravail</h3>
@@ -2098,7 +2128,7 @@ input[data-bridged], select[data-bridged] { border-color: #86efac !important; ba
 
 <!-- ===== ÉVALUATION CROISÉE ===== -->
 
-<!-- roi-qvt removed in v13 (dead code — no navigation link) -->
+
 
 <!-- ===== INVESTISSEMENTS ENRICHI ===== -->
 <section id="investissements-enrichi" class="content-section" style="display:none">
@@ -2401,8 +2431,8 @@ input[data-bridged], select[data-bridged] { border-color: #86efac !important; ba
 <div class="wf-why" style="background:#fff;border:1px solid #f59e0b30;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:.84em;color:#475569;line-height:1.5">
     <strong style="color:#f59e0b">🎯 Pourquoi cette page ?</strong> Projetez l'impact financier sur 3 à 5 ans : point mort, VAN, TRI — les indicateurs que les associés attendent.
 </div>
-    <div class="alert alert-info" style="padding:10px 14px"><span class="alert-icon">📌</span><div><strong>Objectif :</strong> Analyser la rentabilité par collaborateur et par client, identifier les écarts entre heures estimées et réelles, et mesurer l'impact de la charge de travail sur la performance économique. <span onclick="var el=this.nextElementSibling;el.style.display=el.style.display==='none'?'inline':'none';this.textContent=el.style.display==='none'?'[+détails]':'[-]'" style="color:#3b82f6;cursor:pointer;font-size:11px">[+détails]</span><span style="display:none"> <em>→ Mémoire P3 Ch3 §1</em></div>
-    <div style="background:#eff6ff;border:1px solid #93c5fd;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:.86em">🔗 Le <a href="#" onclick="goF3('cout');return false" style="color:#2563eb;font-weight:600">Coût de Revient par collaborateur</a> détaille le calcul du taux horaire et des marges par dossier.</span></div></div>
+    <div class="alert alert-info" style="padding:10px 14px"><span class="alert-icon">📌</span><div><strong>Objectif :</strong> Analyser la rentabilité par collaborateur et par client, identifier les écarts entre heures estimées et réelles, et mesurer l'impact de la charge de travail sur la performance économique. <span onclick="var el=this.nextElementSibling;el.style.display=el.style.display==='none'?'inline':'none';this.textContent=el.style.display==='none'?'[+détails]':'[-]'" style="color:#3b82f6;cursor:pointer;font-size:11px">[+détails]</span><span style="display:none"> <em>→ Mémoire P3 Ch3 §1</em></span></div></div>
+    <div style="background:#eff6ff;border:1px solid #93c5fd;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:.86em">🔗 Le <a href="#" onclick="goF3('cout');return false" style="color:#2563eb;font-weight:600">Coût de Revient par collaborateur</a> détaille le calcul du taux horaire et des marges par dossier.</div>
     <div id="rent-recap"></div>
 
 <div class="wf-next" style="margin-top:30px;padding:20px;background:linear-gradient(135deg,#f59e0b10,#f59e0b05);border:2px solid #f59e0b30;border-radius:12px;text-align:center">
@@ -4337,103 +4367,280 @@ input[data-bridged], select[data-bridged] { border-color: #86efac !important; ba
     <span style="margin-left:auto;font-size:11px;color:#94a3b8;cursor:pointer" onclick="showReactPage('accueil')">🏠 Accueil</span>
 </div>
 <h1>🗺️ Correspondance Outil / Mémoire DEC</h1>
-    <button class="btn btn-outline btn-small mb20" onclick="showReactPage('accueil')">&larr; Retour à l'accueil</button>
+<button class="btn btn-outline btn-small mb20" onclick="showReactPage('accueil')">← Retour à l'accueil</button>
 <div class="wf-why" style="background:#fff;border:1px solid #64748b30;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:.84em;color:#475569;line-height:1.5">
-    <strong style="color:#64748b">🎯 Pourquoi cette page ?</strong> Table de correspondance entre chaque module de l'outil et les sections du mémoire DEC — pour le jury.
+    <strong style="color:#64748b">🎯 Pourquoi cette page ?</strong> Table de correspondance entre chaque module de l'outil et les sections du mémoire DEC — pour le jury. Les titres sont alignés mot pour mot sur la notice agréée.
 </div>
-    <div class="alert alert-info"><span class="alert-icon">📌</span><div><strong>Objectif :</strong> Naviguer facilement entre les modules de l'outil et les parties/chapitres/sections du mémoire. Chaque module est rattaché à la section correspondante.</div></div>
+<div class="alert alert-info"><span class="alert-icon">📌</span><div><strong>Structure du mémoire :</strong> 100 pages — P1 (25p) · P2 (36p) · P3 (34p) · Introduction (3p) · Conclusion (2p). Chaque ligne renvoie vers le module de l'outil correspondant.</div></div>
 
-    <!-- PARTIE 1 -->
-    <details style="margin-bottom:16px"><summary style="cursor:pointer;font-size:13px;font-weight:600;color:#64748b;padding:8px 12px;background:#f8f6f3;border-radius:8px;list-style:none;user-select:none;border:1px solid #e2ddd5">📘 Partie 1 La QVT</summary>
-<div class="card" style="border-left:4px solid #3b82f6;margin-bottom:20px">
-        <h3 style="margin-top:0;color:#3b82f6">📘 Partie 1 — La QVT : Origine, cadre et défis (25 pages)</h3>
-        <table style="width:100%;border-collapse:collapse;font-size:.82em">
-            <thead><tr style="background:#eff6ff">
-                <th style="padding:8px;text-align:left;border:1px solid #e2e8f0;width:35%">Section du mémoire</th>
-                <th style="padding:8px;text-align:left;border:1px solid #e2e8f0;width:30%">Module(s) de l'outil</th>
-                <th style="padding:8px;text-align:left;border:1px solid #e2e8f0;width:15%">Phase</th>
-                <th style="padding:8px;text-align:center;border:1px solid #e2e8f0;width:20%">Accès direct</th>
-            </tr></thead>
-            <tbody>
-                <tr><td class="td-cell">Ch1 S2 — Émergence QVT, cadre juridique</td><td class="td-cell">&laquo; Législation &raquo;</td><td class="td-cell">Ressources</td><td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('legislation')">Ouvrir</button></td></tr>
-                <tr><td class="td-cell">Ch2 S1 — Pratiques QVT existantes</td><td class="td-cell">&laquo; Bonnes Pratiques QVT &raquo;</td><td class="td-cell">Référentiel</td><td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('bonnes-pratiques')">Ouvrir</button></td></tr>
-                <tr><td class="td-cell">Ch2 S2 — Risques liés à l'absence de QVT</td><td class="td-cell">&laquo; Cartographie Risques &raquo;</td><td class="td-cell">Phase 1</td><td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('risques')">Ouvrir</button></td></tr>
-                <tr style="background:#fef3c7"><td class="td-cell">Ch2 S3 — Visions collaborateurs / dirigeants</td><td class="td-cell"><strong>&laquo; Enquête Croisée &raquo;</strong> <span style="color:#059669;font-size:.8em">V99</span></td><td class="td-cell">Phase 1</td><td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('enquete-croisee')">Ouvrir</button></td></tr>
-                <tr><td class="td-cell">Ch3 S3 — Coûts cachés (Savall &amp; Zardet)</td><td class="td-cell">&laquo; Simulateurs Coûts &raquo;</td><td class="td-cell">Phase 4</td><td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showReactPage('simulateurs')">Ouvrir</button></td></tr>
-            </tbody>
-        </table>
-    </div>
+<!-- PARTIE 1 -->
+<details open style="margin-bottom:16px">
+<summary style="cursor:pointer;font-size:13px;font-weight:600;color:#3b82f6;padding:10px 14px;background:#eff6ff;border-radius:8px;list-style:none;user-select:none;border:1px solid #bfdbfe">
+  📘 Première partie : La qualité de vie au travail : Origine, cadre et défis dans les cabinets d'expertise comptable — 25 pages
+</summary>
+<div class="card" style="border-left:4px solid #3b82f6;margin-top:12px;margin-bottom:4px">
+  <table style="width:100%;border-collapse:collapse;font-size:.82em">
+    <thead><tr style="background:#eff6ff">
+      <th style="padding:8px 10px;text-align:left;border:1px solid #e2e8f0;width:38%">Section du mémoire (notice)</th>
+      <th style="padding:8px 10px;text-align:left;border:1px solid #e2e8f0;width:30%">Module(s) de l'outil</th>
+      <th style="padding:8px 10px;text-align:left;border:1px solid #e2e8f0;width:12%">Phase</th>
+      <th style="padding:8px 10px;text-align:center;border:1px solid #e2e8f0;width:20%">Accès direct</th>
+    </tr></thead>
+    <tbody>
+      <tr style="background:#f8fafc">
+        <td class="td-cell" colspan="4" style="font-weight:700;color:#3b82f6;font-size:.8em;text-transform:uppercase;letter-spacing:.5px">Chapitre 1 : La qualité de vie au travail : Evolution à travers le temps — 7 pages</td>
+      </tr>
+      <tr>
+        <td class="td-cell">S1 — Evolution du travail à travers le temps<br><span style="color:#94a3b8;font-size:.85em">§1 Histoire du travail · §2 État actuel</span></td>
+        <td class="td-cell">« Données sectorielles » + « Législation »</td>
+        <td class="td-cell">Ressources</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('donnees-sectorielles')">Ouvrir</button></td>
+      </tr>
+      <tr>
+        <td class="td-cell">S2 — L'émergence du concept de QVT<br><span style="color:#94a3b8;font-size:.85em">§1 Définition actuelle · §2 Cadre légal et réglementaire</span></td>
+        <td class="td-cell">« Législation & Conformité »</td>
+        <td class="td-cell">Ressources</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('legislation')">Ouvrir</button></td>
+      </tr>
+      <tr>
+        <td class="td-cell">S3 — Spécificités dans les cabinets d'expertise comptable<br><span style="color:#94a3b8;font-size:.85em">§1 Convention collective / RSE · §2 NPMQ / ISQM 1 / ISA 220</span></td>
+        <td class="td-cell">« Données sectorielles » + « Législation »</td>
+        <td class="td-cell">Ressources</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('donnees-sectorielles')">Ouvrir</button></td>
+      </tr>
+      <tr style="background:#f8fafc">
+        <td class="td-cell" colspan="4" style="font-weight:700;color:#3b82f6;font-size:.8em;text-transform:uppercase;letter-spacing:.5px">Chapitre 2 : L'environnement actuel des cabinets face à la QVT — 8 pages</td>
+      </tr>
+      <tr>
+        <td class="td-cell">S1 — Pratiques QVT actuelles dans les cabinets<br><span style="color:#94a3b8;font-size:.85em">§1 Mesures déployées · §2 Limites persistantes</span></td>
+        <td class="td-cell">« Référentiel des bonnes pratiques QVT »</td>
+        <td class="td-cell">Ressources</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('bonnes-pratiques')">Ouvrir</button></td>
+      </tr>
+      <tr>
+        <td class="td-cell">S2 — Conséquences de l'absence de QVT : analyse des risques<br><span style="color:#94a3b8;font-size:.85em">§1 Risques opérationnels · §2 Risques réglementaires</span></td>
+        <td class="td-cell">« Cartographie des risques »</td>
+        <td class="td-cell">Phase 1</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('risques')">Ouvrir</button></td>
+      </tr>
+      <tr style="background:#fef3c7">
+        <td class="td-cell">S3 — Vision et attentes divergentes<br><span style="color:#94a3b8;font-size:.85em">§1 Point de vue collaborateur · §2 Point de vue dirigeant</span></td>
+        <td class="td-cell"><strong>« Enquête croisée »</strong></td>
+        <td class="td-cell">Phase 1</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('enquete-croisee')">Ouvrir</button></td>
+      </tr>
+      <tr style="background:#f8fafc">
+        <td class="td-cell" colspan="4" style="font-weight:700;color:#3b82f6;font-size:.8em;text-transform:uppercase;letter-spacing:.5px">Chapitre 3 : Effets vertueux de la mise en place d'une QVT dans les cabinets d'expertise comptable — 10 pages</td>
+      </tr>
+      <tr>
+        <td class="td-cell">S1 — Implication accrue des collaborateurs<br><span style="color:#94a3b8;font-size:.85em">§1 Sentiment d'appartenance · §2 Motivation et productivité</span></td>
+        <td class="td-cell">« Enquête récurrente » + « Satisfaction Collaborateur »</td>
+        <td class="td-cell">Phase 1 / Phase 5</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('diagnostic')">Ouvrir</button></td>
+      </tr>
+      <tr>
+        <td class="td-cell">S2 — Rentabilité améliorée<br><span style="color:#94a3b8;font-size:.85em">§1 Réduction des coûts cachés · §2 Performance organisationnelle</span></td>
+        <td class="td-cell">« Simulateurs Coûts » + « ROI QVT »</td>
+        <td class="td-cell">Phase 4</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showReactPage('simulateurs')">Ouvrir</button></td>
+      </tr>
+      <tr>
+        <td class="td-cell">S3 — Satisfaction client renforcée<br><span style="color:#94a3b8;font-size:.85em">§1 Qualité du service rendu · §2 Fidélisation client</span></td>
+        <td class="td-cell">« Satisfaction Client »</td>
+        <td class="td-cell">Phase 5</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('satisfaction')">Ouvrir</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 </details>
 
-    <!-- PARTIE 2 -->
-    <details style="margin-bottom:16px"><summary style="cursor:pointer;font-size:13px;font-weight:600;color:#64748b;padding:8px 12px;background:#f8f6f3;border-radius:8px;list-style:none;user-select:none;border:1px solid #e2ddd5">📙 Partie 2 Diagnostic</summary>
-<div class="card" style="border-left:4px solid #f59e0b;margin-bottom:20px">
-        <h3 style="margin-top:0;color:#f59e0b">📙 Partie 2 — Diagnostic et identification des leviers (36 pages)</h3>
-        <table style="width:100%;border-collapse:collapse;font-size:.82em">
-            <thead><tr style="background:#fffbeb">
-                <th style="padding:8px;text-align:left;border:1px solid #e2e8f0;width:35%">Section du mémoire</th>
-                <th style="padding:8px;text-align:left;border:1px solid #e2e8f0;width:30%">Module(s) de l'outil</th>
-                <th style="padding:8px;text-align:left;border:1px solid #e2e8f0;width:15%">Phase</th>
-                <th style="padding:8px;text-align:center;border:1px solid #e2e8f0;width:20%">Accès direct</th>
-            </tr></thead>
-            <tbody>
-                <tr><td class="td-cell">Ch1 S1 — Baromètre QVT</td><td class="td-cell">&laquo; Baromètre QVT &raquo; (4 outils)</td><td class="td-cell">Phase 1</td><td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('diagnostic-hub')">Ouvrir</button></td></tr>
-                <tr style="background:#fef3c7"><td class="td-cell">Ch1 S2 — Collecte, analyse & communication</td><td class="td-cell"><strong>&laquo; Analyse & Synth&egrave;se &raquo;</strong> + Taux cl&eacute;s RH + &Eacute;valuation crois&eacute;e</td><td class="td-cell">Phase 1</td><td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('diagnostic-analyse')">Ouvrir</button></td></tr>
-                <tr><td class="td-cell">Ch1 S3 — Identification des besoins</td><td class="td-cell">&laquo; Pré-diagnostic &raquo; + Résultats</td><td class="td-cell">Réflexion</td><td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showReactPage('prediag')">Ouvrir</button></td></tr>
-                <tr><td class="td-cell">Ch2 S1 — Bonnes pratiques</td><td class="td-cell">&laquo; Bonnes Pratiques QVT &raquo;</td><td class="td-cell">Référentiel</td><td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('bonnes-pratiques')">Ouvrir</button></td></tr>
-                <tr><td class="td-cell">Ch2 S2 — Organisation et management</td><td class="td-cell">&laquo; Organisation &amp; Management &raquo;</td><td class="td-cell">Référentiel</td><td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('organisation-management')">Ouvrir</button></td></tr>
-                <tr><td class="td-cell">Ch2 S3 — Environnement de travail</td><td class="td-cell">&laquo; Bien-être &raquo; + &laquo; Aménagement Espaces &raquo;</td><td class="td-cell">Référentiel + Phase 3</td><td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('bien-etre')">Ouvrir</button></td></tr>
-                <tr><td class="td-cell">Ch2 S4 — Formation et reconnaissance</td><td class="td-cell">&laquo; Formation &amp; Reconnaissance &raquo;</td><td class="td-cell">Référentiel</td><td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('formation-reconnaissance')">Ouvrir</button></td></tr>
-                <tr><td class="td-cell">Ch3 S1-S2 — Contraintes et résistances</td><td class="td-cell">&laquo; Limites &amp; Obstacles &raquo;</td><td class="td-cell">Phase 1</td><td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('limites-obstacles')">Ouvrir</button></td></tr>
-                <tr style="background:#fef3c7"><td class="td-cell">Ch3 S3 — Limites économiques (traitement comptable)</td><td class="td-cell"><strong>&laquo; Investissements &raquo;</strong></td><td class="td-cell">Phase 3</td><td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('investissements-enrichi')">Ouvrir</button></td></tr>
-            </tbody>
-        </table>
-    </div>
+<!-- PARTIE 2 -->
+<details style="margin-bottom:16px">
+<summary style="cursor:pointer;font-size:13px;font-weight:600;color:#f59e0b;padding:10px 14px;background:#fffbeb;border-radius:8px;list-style:none;user-select:none;border:1px solid #fde68a">
+  📙 Partie 2 : Diagnostic de la QVT et identification des leviers d'action : outils méthodologie et calcul des coûts — 36 pages
+</summary>
+<div class="card" style="border-left:4px solid #f59e0b;margin-top:12px;margin-bottom:4px">
+  <table style="width:100%;border-collapse:collapse;font-size:.82em">
+    <thead><tr style="background:#fffbeb">
+      <th style="padding:8px 10px;text-align:left;border:1px solid #e2e8f0;width:38%">Section du mémoire (notice)</th>
+      <th style="padding:8px 10px;text-align:left;border:1px solid #e2e8f0;width:30%">Module(s) de l'outil</th>
+      <th style="padding:8px 10px;text-align:left;border:1px solid #e2e8f0;width:12%">Phase</th>
+      <th style="padding:8px 10px;text-align:center;border:1px solid #e2e8f0;width:20%">Accès direct</th>
+    </tr></thead>
+    <tbody>
+      <tr style="background:#fffdf0">
+        <td class="td-cell" colspan="4" style="font-weight:700;color:#f59e0b;font-size:.8em;text-transform:uppercase;letter-spacing:.5px">Chapitre 1 : Méthodologie d'analyse de la QVT et impact sur la rentabilité via la satisfaction des collaborateurs et des clients — 8 pages</td>
+      </tr>
+      <tr>
+        <td class="td-cell">S1 — Baromètre QVT : Outils et indicateurs de mesure<br><span style="color:#94a3b8;font-size:.85em">§1 Enquêtes · §2 Entretiens · §3 Indicateurs RH · §4 Cartographie RPS</span></td>
+        <td class="td-cell">« Phase 1 — Diagnostiquer » (hub 4 outils)</td>
+        <td class="td-cell">Phase 1</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('diagnostic-hub')">Ouvrir</button></td>
+      </tr>
+      <tr>
+        <td class="td-cell">S2 — Analyse des données<br><span style="color:#94a3b8;font-size:.85em">§1 Quantitative · §2 Qualitative · §3 Synthèse des résultats</span></td>
+        <td class="td-cell">« Collecte, Analyse & Communication » + « Taux clés RH »</td>
+        <td class="td-cell">Phase 1</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('diagnostic-analyse')">Ouvrir</button></td>
+      </tr>
+      <tr>
+        <td class="td-cell">S3 — Identification des besoins : des attentes et des besoins différents ?<br><span style="color:#94a3b8;font-size:.85em">§1 Besoins collaborateurs/associés/clients · §2 Attentes par profil (Gén. Z)</span></td>
+        <td class="td-cell">« Pré-diagnostic » + Résultats</td>
+        <td class="td-cell">Réflexion</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showReactPage('prediag')">Ouvrir</button></td>
+      </tr>
+      <tr style="background:#fffdf0">
+        <td class="td-cell" colspan="4" style="font-weight:700;color:#f59e0b;font-size:.8em;text-transform:uppercase;letter-spacing:.5px">Chapitre 2 : Leviers d'amélioration de la QVT — 16 pages</td>
+      </tr>
+      <tr>
+        <td class="td-cell">S1 — Référencement des bonnes pratiques<br><span style="color:#94a3b8;font-size:.85em">§1 Télétravail adapté · §2 Semaine de 4 jours</span></td>
+        <td class="td-cell">« Référentiel des bonnes pratiques QVT »</td>
+        <td class="td-cell">Ressources</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('bonnes-pratiques')">Ouvrir</button></td>
+      </tr>
+      <tr>
+        <td class="td-cell">S2 — Organisation et management<br><span style="color:#94a3b8;font-size:.85em">§1 Recrutement/flexibilité · §2 Management bienveillant/participatif</span></td>
+        <td class="td-cell">« Organisation & Management »</td>
+        <td class="td-cell">Ressources</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('organisation-management')">Ouvrir</button></td>
+      </tr>
+      <tr>
+        <td class="td-cell">S3 — Environnement de travail<br><span style="color:#94a3b8;font-size:.85em">§1 Aménagement espaces · §2 Ergonomie / conciergerie / garderies</span></td>
+        <td class="td-cell">« Bien-être & Ergonomie » + « Aménagement Espaces »</td>
+        <td class="td-cell">Ressources / Phase 3</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('bien-etre')">Ouvrir</button></td>
+      </tr>
+      <tr>
+        <td class="td-cell">S4 — Formation et reconnaissance<br><span style="color:#94a3b8;font-size:.85em">§1 Programmes formation · §2 Reconnaissance/cooptation · §3 Équilibre vie perso/pro</span></td>
+        <td class="td-cell">« Formation & Reconnaissance » + « Charte Déconnexion »</td>
+        <td class="td-cell">Ressources / Phase 3</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('formation-reconnaissance')">Ouvrir</button></td>
+      </tr>
+      <tr style="background:#fffdf0">
+        <td class="td-cell" colspan="4" style="font-weight:700;color:#f59e0b;font-size:.8em;text-transform:uppercase;letter-spacing:.5px">Chapitre 3 : Limites et obstacles — 12 pages</td>
+      </tr>
+      <tr>
+        <td class="td-cell">S1 — Contraintes structurelles<br><span style="color:#94a3b8;font-size:.85em">§1 Pression délais/pics d'activité · §2 Hiérarchie rigide</span></td>
+        <td class="td-cell">« Limites & Obstacles »</td>
+        <td class="td-cell">Ressources</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('limites-obstacles')">Ouvrir</button></td>
+      </tr>
+      <tr>
+        <td class="td-cell">S2 — Résistances culturelles<br><span style="color:#94a3b8;font-size:.85em">§1 Peur du changement (outils digitaux) · §2 Culture présentéisme</span></td>
+        <td class="td-cell">« Limites & Obstacles »</td>
+        <td class="td-cell">Ressources</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('limites-obstacles')">Ouvrir</button></td>
+      </tr>
+      <tr style="background:#fef3c7">
+        <td class="td-cell">S3 — Limites économiques<br><span style="color:#94a3b8;font-size:.85em">§1 Contraintes budgétaires · §2 Allocation des ressources</span></td>
+        <td class="td-cell"><strong>« Investissements directs »</strong> + « Temps QVT »</td>
+        <td class="td-cell">Phase 4</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('investissements-enrichi')">Ouvrir</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 </details>
 
-
-    <!-- PARTIE 3 -->
-    <details style="margin-bottom:16px"><summary style="cursor:pointer;font-size:13px;font-weight:600;color:#64748b;padding:8px 12px;background:#f8f6f3;border-radius:8px;list-style:none;user-select:none;border:1px solid #e2ddd5">📗 Partie 3 Démarche QVT</summary>
-<div class="card" style="border-left:4px solid #10b981;margin-bottom:20px">
-        <h3 style="margin-top:0;color:#10b981">📗 Partie 3 — Démarche QVT adaptée aux cabinets (34 pages)</h3>
-        <table style="width:100%;border-collapse:collapse;font-size:.82em">
-            <thead><tr style="background:#f0fdf4">
-                <th style="padding:8px;text-align:left;border:1px solid #e2e8f0;width:35%">Section du mémoire</th>
-                <th style="padding:8px;text-align:left;border:1px solid #e2e8f0;width:30%">Module(s) de l'outil</th>
-                <th style="padding:8px;text-align:left;border:1px solid #e2e8f0;width:15%">Phase</th>
-                <th style="padding:8px;text-align:center;border:1px solid #e2e8f0;width:20%">Accès direct</th>
-            </tr></thead>
-            <tbody>
-                <tr><td class="td-cell">Ch1 S1 — Étapes clés de la démarche</td><td class="td-cell">&laquo; Feuille de route &raquo; + &laquo; Démarche Guidée &raquo;</td><td class="td-cell">Réflexion + Phase 2</td><td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('methode')">Ouvrir</button></td></tr>
-                <tr><td class="td-cell">Ch1 S2 — Implication direction</td><td class="td-cell">DG étapes 4 (Direction) + 5 (Mobilisation)</td><td class="td-cell">Phase 2</td><td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showDGFull();showDGStep(3)">Ouvrir</button></td></tr>
-                <tr><td class="td-cell">Ch1 S3 — Communication et pilotage</td><td class="td-cell">DG étapes 7 (Communication) + 8 (Pilotage)</td><td class="td-cell">Phase 2</td><td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showDGFull();showDGStep(6)">Ouvrir</button></td></tr>
-                <tr><td class="td-cell">Ch2 S1 — Indicateurs de suivi</td><td class="td-cell">&laquo; Tableau de Bord RH &raquo; + Historique N-3&rarr;N+1</td><td class="td-cell">Phase 5 + Mon Cabinet</td><td class="td-cellc"><button class="btn btn-outline btn-small" onclick="goF3('dashboard')">Ouvrir</button></td></tr>
-                <tr><td class="td-cell">Ch2 S2 — Actions prioritaires</td><td class="td-cell">&laquo; Plan d'Actions &raquo; + &laquo; Scénarios &raquo;</td><td class="td-cell">Phase 2</td><td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('plan-actions')">Ouvrir</button></td></tr>
-                <tr><td class="td-cell">Ch2 S3 — Accompagnement du changement</td><td class="td-cell">Chartes (QVT, Télétravail, Déconnexion, Client) + Livret d'Accueil + Manuel Procédures</td><td class="td-cell">Phase 3</td><td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('charte-qvt')">Ouvrir</button></td></tr>
-                <tr><td class="td-cell">Ch3 S1 — Mesure effets rentabilité/satisfaction</td><td class="td-cell">&laquo; Rentabilité &raquo; + &laquo; Satisfaction Client &raquo; + &laquo; Satisfaction Collaborateur &raquo;</td><td class="td-cell">Phase 5</td><td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('satisfaction')">Ouvrir</button></td></tr>
-                <tr><td class="td-cell">Ch3 S2 — Suivi indicateurs fidélisation</td><td class="td-cell">&laquo; Tableau de Bord RH &raquo; + &laquo; Alertes &raquo;</td><td class="td-cell">Phase 5</td><td class="td-cellc"><button class="btn btn-outline btn-small" onclick="goF3('alertes')">Ouvrir</button></td></tr>
-                <tr><td class="td-cell">Ch3 S3 — Retour d'expérience et bilan</td><td class="td-cell">&laquo; ROI QVT &raquo; + &laquo; Avant/Après &raquo; + &laquo; Rapport des résultats &raquo; + &laquo; Synthèse &raquo;</td><td class="td-cell">Phase 4-5</td><td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('roi-unifie')">Ouvrir</button></td></tr>
-            </tbody>
-        </table>
-    </div>
+<!-- PARTIE 3 -->
+<details style="margin-bottom:16px">
+<summary style="cursor:pointer;font-size:13px;font-weight:600;color:#10b981;padding:10px 14px;background:#f0fdf4;border-radius:8px;list-style:none;user-select:none;border:1px solid #a7f3d0">
+  📗 Partie 3 : Proposition d'une démarche QVT adaptée aux cabinets d'expertise comptable — 34 pages
+</summary>
+<div class="card" style="border-left:4px solid #10b981;margin-top:12px;margin-bottom:4px">
+  <table style="width:100%;border-collapse:collapse;font-size:.82em">
+    <thead><tr style="background:#f0fdf4">
+      <th style="padding:8px 10px;text-align:left;border:1px solid #e2e8f0;width:38%">Section du mémoire (notice)</th>
+      <th style="padding:8px 10px;text-align:left;border:1px solid #e2e8f0;width:30%">Module(s) de l'outil</th>
+      <th style="padding:8px 10px;text-align:left;border:1px solid #e2e8f0;width:12%">Phase</th>
+      <th style="padding:8px 10px;text-align:center;border:1px solid #e2e8f0;width:20%">Accès direct</th>
+    </tr></thead>
+    <tbody>
+      <tr style="background:#f0fdf4">
+        <td class="td-cell" colspan="4" style="font-weight:700;color:#10b981;font-size:.8em;text-transform:uppercase;letter-spacing:.5px">Chapitre 1 : Élaboration d'une démarche QVT — 7 pages</td>
+      </tr>
+      <tr>
+        <td class="td-cell">S1 — Étapes clés de la mise en place d'une politique QVT<br><span style="color:#94a3b8;font-size:.85em">§1 Diagnostic initial · §2 Définition des objectifs</span></td>
+        <td class="td-cell">« Feuille de route » + « Démarche Guidée »</td>
+        <td class="td-cell">Réflexion / Phase 2</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('methode')">Ouvrir</button></td>
+      </tr>
+      <tr>
+        <td class="td-cell">S2 — Implication de la direction et des parties prenantes<br><span style="color:#94a3b8;font-size:.85em">§1 Rôle direction · §2 Mobilisation employés · §3 Influence clients</span></td>
+        <td class="td-cell">Démarche Guidée étapes 3 (Direction) + 4 (Mobilisation) + « Satisfaction Client »</td>
+        <td class="td-cell">Phase 2 / Phase 5</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showDGFull();showDGStep(3)">Ouvrir</button></td>
+      </tr>
+      <tr>
+        <td class="td-cell">S3 — Communication et pilotage du projet<br><span style="color:#94a3b8;font-size:.85em">§1 Communication interne · §2 Suivi et pilotage</span></td>
+        <td class="td-cell">Démarche Guidée étapes 6 (Communication) + 7 (Pilotage)</td>
+        <td class="td-cell">Phase 2</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showDGFull();showDGStep(6)">Ouvrir</button></td>
+      </tr>
+      <tr style="background:#f0fdf4">
+        <td class="td-cell" colspan="4" style="font-weight:700;color:#10b981;font-size:.8em;text-transform:uppercase;letter-spacing:.5px">Chapitre 2 : Outils et actions concrètes à déployer — 15 pages</td>
+      </tr>
+      <tr>
+        <td class="td-cell">S1 — Mise en place d'indicateurs de suivi et d'évaluation<br><span style="color:#94a3b8;font-size:.85em">§1 Sélection indicateurs · §2 Collecte et analyse</span></td>
+        <td class="td-cell">« Tableau de Bord RH » + « Historique N-3→N+1 » + « Indicateurs fidélisation »</td>
+        <td class="td-cell">Phase 5 / Mon Cabinet</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="goF3('dashboard')">Ouvrir</button></td>
+      </tr>
+      <tr>
+        <td class="td-cell">S2 — Actions prioritaires : flexibilité, télétravail, espaces collaboratifs<br><span style="color:#94a3b8;font-size:.85em">§1 Flexibilité · §2 Charte télétravail · §3 Espaces collaboratifs</span></td>
+        <td class="td-cell">« Plan d'Actions » + « Charte Télétravail » + « Aménagement Espaces »</td>
+        <td class="td-cell">Phase 2 / Phase 3</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('plan-actions')">Ouvrir</button></td>
+      </tr>
+      <tr>
+        <td class="td-cell">S3 — Accompagnement du changement et formation des managers<br><span style="color:#94a3b8;font-size:.85em">§1 Formation managers · §2 Accompagnement équipes · §3 Charte conduite client</span></td>
+        <td class="td-cell">Chartes (QVT · Télétravail · Déconnexion · Client) + « Livret d'Accueil » + « Manuel Procédures »</td>
+        <td class="td-cell">Phase 3</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('charte-qvt')">Ouvrir</button></td>
+      </tr>
+      <tr style="background:#f0fdf4">
+        <td class="td-cell" colspan="4" style="font-weight:700;color:#10b981;font-size:.8em;text-transform:uppercase;letter-spacing:.5px">Chapitre 3 : Évaluation de l'impact de la démarche QVT — 12 pages</td>
+      </tr>
+      <tr>
+        <td class="td-cell">S1 — Mesure des effets sur la rentabilité et la satisfaction client<br><span style="color:#94a3b8;font-size:.85em">§1 Coûts directs · §2 Coûts indirects · §3 ROI · §4 Satisfaction client</span></td>
+        <td class="td-cell">« Analyse de Rentabilité » + « Simulateurs Coûts » + « ROI QVT — Vue unifiée »</td>
+        <td class="td-cell">Phase 4</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('rentabilite')">Ouvrir</button></td>
+      </tr>
+      <tr>
+        <td class="td-cell">S2 — Suivi des indicateurs de fidélisation des équipes<br><span style="color:#94a3b8;font-size:.85em">§1 Analyse du taux de turnover · §2 Suivi de l'absentéisme</span></td>
+        <td class="td-cell">« Tableau de Bord RH » + « Alertes » + « Indicateurs fidélisation »</td>
+        <td class="td-cell">Phase 5</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="goF3('alertes')">Ouvrir</button></td>
+      </tr>
+      <tr style="background:#fef3c7">
+        <td class="td-cell">S3 — Retour d'expérience et identification des axes d'amélioration continue<br><span style="color:#94a3b8;font-size:.85em">§1 Analyse résultats obtenus · §2 Axes d'amélioration</span></td>
+        <td class="td-cell"><strong>« Cas Terrain »</strong> + « Avant/Après » + « Rapport des résultats » + « Synthèse »</td>
+        <td class="td-cell">Phase 4-5</td>
+        <td class="td-cellc"><button class="btn btn-outline btn-small" onclick="showSection('cas-terrain')">Ouvrir</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 </details>
 
-
-    <div class="card" style="background:#f8f6f3;border:2px solid #e8e4df">
-        <div style="text-align:center;padding:12px">
-            <div style="font-size:1.1em;font-weight:700;color:#1a3d5c;margin-bottom:8px">Couverture globale de l'outil</div>
-            <div style="font-size:.85em;color:#64748b;margin-bottom:12px">27 sections du mémoire &rarr; 27 modules correspondants dans l'outil</div>
-            <div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap">
-                <div><span style="font-size:1.8em;font-weight:700;color:#3b82f6">25p</span><div class="hint2">Partie 1</div></div>
-                <div><span style="font-size:1.8em;font-weight:700;color:#f59e0b">36p</span><div class="hint2">Partie 2</div></div>
-                <div><span style="font-size:1.8em;font-weight:700;color:#10b981">34p</span><div class="hint2">Partie 3</div></div>
-                <div><span style="font-size:1.8em;font-weight:700;color:#1a3d5c">=100p</span><div class="hint2">Total mémoire</div></div>
-            </div>
-        </div>
+<!-- BILAN -->
+<div class="card" style="background:#f8f6f3;border:2px solid #e8e4df;margin-top:8px">
+  <div style="text-align:center;padding:12px">
+    <div style="font-size:1.1em;font-weight:700;color:#1a3d5c;margin-bottom:8px">Couverture globale de l'outil</div>
+    <div style="font-size:.85em;color:#64748b;margin-bottom:16px">30 sections du mémoire → modules correspondants dans l'outil · Titres alignés sur la notice agréée</div>
+    <div style="display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:12px">
+      <div><span style="font-size:1.8em;font-weight:700;color:#3b82f6">25p</span><div class="hint2">Partie 1 · 9 sections</div></div>
+      <div><span style="font-size:1.8em;font-weight:700;color:#f59e0b">36p</span><div class="hint2">Partie 2 · 10 sections</div></div>
+      <div><span style="font-size:1.8em;font-weight:700;color:#10b981">34p</span><div class="hint2">Partie 3 · 9 sections</div></div>
+      <div><span style="font-size:1.8em;font-weight:700;color:#1a3d5c">=100p</span><div class="hint2">Total mémoire</div></div>
     </div>
+    <div style="font-size:.8em;color:#94a3b8">Introduction 3p · Conclusion 2p · non incluses (pas de module dédié)</div>
+  </div>
+</div>
 </section>
 
-<!-- FILE 3: Équipe & Clients containers -->
 <section id="f3-dashboard" class="content-section" style="display:none">
     <div class="disclaimer-scenario"><span class="d-icon">📋</span><span>Scénario pédagogique construit à partir d'observations terrain (cabinet EC, 34 collaborateurs + 3 associés). Valeurs reconstituées à des fins d'illustration — <strong>saisissez vos propres données</strong> pour un diagnostic personnalisé.</span></div>
     <h1>📊 Tableau de Bord RH</h1>
@@ -7017,6 +7224,9 @@ function rD(){
   const qvtScoreN=parseFloat(qvtScore)||0;
   const qvtCol=qvtScoreN>=7.5?'#27ae60':qvtScoreN>=6?'#e67e22':'#c0392b';
 
+  // Effectif hors associés (fix v32 — variable utilisée dans noteMethodo)
+  var nbCollabsHA = CO.filter(function(c){ return !c.poste || c.poste.toLowerCase().indexOf('associ') === -1; }).length;
+
   // Note méthodologique
   var noteMethodo='<div style="background:#eff6ff;border:1px solid #93c5fd;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:.78em;color:#1e40af;line-height:1.5">';
   noteMethodo+='<strong>📌 Conventions du tableau de bord :</strong><br>';
@@ -7945,7 +8155,7 @@ function resetData(){
 // ══════════ INIT ══════════
 // File 3 init deferred to window.onload
 if(!loadData()) initCoHeuresMois();
-// rT();rD(); // deferred - handled by merged init
+
 // ===== FILE 3 NAVIGATION BRIDGE =====
 var f3Sections = ['f3-dashboard','f3-equipe','f3-cout','f3-repart','f3-histo','f3-clients','f3-alertes','f3-params'];
 
@@ -10756,7 +10966,7 @@ function renderCasTerrain() {
   var nbCabinetFactures = nbProfilsCabinet - nbRupturesPE; // 5 facturés
   var nbCandidaturesSpontanees = nbDepartsCrise - nbProfilsCabinet - nbAlternants; // 9
 
-  // (coutIntegUnit supprimé — remplacé par calcul détaillé simulateur ci-dessous)
+  
 
   // Salaire moyen par pôle (calculé dynamiquement depuis CO)
   var salMoyParPole = {};
@@ -11057,7 +11267,7 @@ function renderCasTerrain() {
   arretPrevDetail += '</table>';
   arretPrevDetail += '<span style="font-size:.78em;color:#64748b">IJSS (↩) = remboursé par la Sécu, pas à charge employeur · Complément CCN 787 max 27j (30j – 3 carence) · Au-delà J30 : prévoyance assureur · <em>Cf. Simulateur d\'absence</em></span>';
   criseH += '<tr style="background:#fef9f0"><td>⏸️ <strong>3 arrêts maladie pendant préavis</strong> (~' + dureePrevisMois + ' mois) <em style="font-size:.8em;color:#3b82f6">cf. Simulateur d\'absence</em><br><span style="font-size:.82em;color:#64748b">' + arretPrevDetail + '</span></td><td style="text-align:right;font-weight:600;color:#f59e0b">' + fE(coutArretsPrevis) + '</td></tr>';
-  // Perte transfert — supprimée du tableau (déjà dans arrêts préavis), mentionnée en qualitatif
+  
   criseH += '<tr style="background:#f8fafc"><td colspan="2" style="font-size:.88em;color:#64748b;padding:10px"><strong>Coûts non chiffrés mais réels :</strong> 📋 Perte de transfert de connaissances (passation impossible — les 3 démissionnaires étaient en arrêt, coût déjà intégré ci-dessus) · ⚠️ Surcoût des 5 « mauvais clients » chronophages recrutés dans l\'urgence (temps déjà comptabilisé dans les heures sup des collaborateurs) · 😰 Surcharge des équipes restantes (heures sup, erreurs, reprises dossiers) · 📉 Perte de productivité (dossiers traités en 10j au lieu de 3j) · 🏷️ Dégradation de l\'image employeur (difficulté de recrutement accrue). <em>Chiffrage difficile mais impact majeur sur le fonctionnement du cabinet.</em></td></tr>';
   criseH += '<tr style="background:#fef2f2;font-weight:700;font-size:1.05em"><td>💥 TOTAL CHIFFRÉ — Coût de la crise</td><td style="text-align:right;color:#ef4444">' + fE(totalCriseBas) + '</td></tr>';
   criseH += '</tbody></table>';
@@ -12361,7 +12571,7 @@ function updateHeroKPIs() {
 }
 
 // ═══════ MODAL ═══════
-// Modal removed - assistant integrated in accueil
+
 
 // ═══════ NEXT STEP BANNER (contextuel — v120 aligné sidebar) ═══════
 // Parcours linéaire : chaque section/page pointe vers la suivante
@@ -12433,18 +12643,7 @@ function getContextualNext(currentSectionId) {
   return null;
 }
 
-function getNextStep() {
-  // Fallback : première étape non visitée (ancien comportement)
-  for (var p = 1; p <= 6; p++) {
-    var steps = PHASES[p].steps;
-    for (var s = 0; s < steps.length; s++) {
-      if (!visitedSections[p + '-' + s]) {
-        return { phase: p, step: s, name: steps[s].name, action: steps[s].action };
-      }
-    }
-  }
-  return null;
-}
+/* getNextStep supprimé v31 — jamais appelé */
 
 function insertNextStepBanner(containerId) {
   var existing = document.querySelector('#' + containerId + ' .next-step-banner');
@@ -12982,7 +13181,7 @@ function editEval(i){
 
 // ===== RENTABILITÉ =====
 function updateRentabilite(){
-    // Old static form removed - now handled by renderRentabilite()
+    
     try { renderRentabilite(); } catch(e) {}
 }
 
@@ -14815,49 +15014,7 @@ function updateLegisScore(){
     }
 }
 
-function checkAidesEligibilite(){
-    var effectif=document.getElementById('aide-effectif').value;
-    var regime=document.getElementById('aide-regime').value;
-    var duerp=document.getElementById('aide-duerp').value;
-    var atmp=document.getElementById('aide-atmp').value;
-    if(!effectif||!regime||!duerp||!atmp){alert('Veuillez répondre à toutes les questions.');return;}
-
-    var aides=[
-        {nom:'OPCO — Formation',desc:'Prise en charge des formations management, gestion du stress, QVT',
-         montant:'Variable selon OPCO et branche',taux:'Jusqu\'à 100% selon le dispositif',
-         eligible:true,
-         conditions:[],icon:'🎓'}
-    ];
-    // Conditions manquantes
-    aides.forEach(function(a){
-        if(regime==='non') a.conditions.push('Régime général Sécurité sociale requis');
-        if(duerp==='non'&&a.nom.indexOf('FIPU')!==-1) a.conditions.push('DUERP à jour requis — mettez-le à jour pour débloquer cette aide');
-        if(atmp==='non') a.conditions.push('Cotisations URSSAF — AT/MP à jour requises');
-        if(a.nom.indexOf('Contrat')!==-1&&effectif!=='50-199') a.conditions.push('Réservé aux entreprises de 50 à 199 salariés');
-        if(a.nom.indexOf('RPS')!==-1&&effectif==='200+') a.conditions.push('Réservé aux entreprises de moins de 200 salariés');
-    });
-
-    var html='';var nbEligible=0;
-    aides.forEach(function(a){
-        var ok=a.eligible&&a.conditions.length===0;
-        var partial=!ok&&a.conditions.length<=1&&regime==='oui';
-        var color=ok?'#10b981':partial?'#f59e0b':'#ef4444';
-        var icon=ok?'✅':partial?'⚠️':'❌';
-        var bg=ok?'#f0fdf4':partial?'#fffbeb':'#fef2f2';
-        if(ok)nbEligible++;
-        html+='<div style="background:'+bg+';border:1px solid '+color+'30;border-left:4px solid '+color+';border-radius:8px;padding:14px">';
-        html+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><div style="font-weight:700;color:#1a2744;font-size:.95em">'+a.icon+' '+a.nom+'</div><span style="font-size:1.1em">'+icon+'</span></div>';
-        html+='<div style="font-size:.82em;color:#64748b;margin-bottom:8px">'+a.desc+'</div>';
-        html+='<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:6px"><span style="background:'+color+'15;color:'+color+';padding:3px 8px;border-radius:4px;font-size:.8em;font-weight:600">'+a.montant+'</span><span style="font-size:.8em;color:#64748b">'+a.taux+'</span></div>';
-        if(a.conditions.length>0){
-            a.conditions.forEach(function(c){html+='<div style="font-size:.78em;color:#92400e;margin-top:4px">⚠️ '+c+'</div>';});
-        }
-        html+='</div>';
-    });
-    document.getElementById('aides-cards').innerHTML=html;
-    document.getElementById('aides-total').innerHTML='<div style="font-size:1.1em;font-weight:700;color:#065f46">🏥 '+nbEligible+' aide(s) potentielle(s) sur 4</div><div style="font-size:.85em;color:#10b981;margin-top:4px">'+(nbEligible>=2?'Vous pouvez potentiellement cumuler plusieurs dispositifs pour réduire significativement le coût de vos investissements QVT.':'Explorez les conditions manquantes ci-dessus pour maximiser vos aides.')+'</div>';
-    document.getElementById('aides-resultat').style.display='';
-}
+/* checkAidesEligibilite supprimé v31 — jamais appelé */
 
 function renderROIUnifie(){
   var el=document.getElementById('roi-unifie-content');if(!el)return;
@@ -14884,7 +15041,7 @@ function renderROIUnifie(){
   var gainAbs=SC.ecoAbsent||Math.round(nbC*3*(masseSal/nbC/218));
   var gainTurn=SC.ecoTurnover||Math.round(2*6000);
   var gainPres=SC.ecoPresent||Math.round(gainAbs*0.5);
-  // gainHS supprimé v14 : déjà inclus dans gainAbs via coutUnitaireAbsence (simAbs.heuresSup)
+  
   // Gains capacité libérée — heures libérées → dossiers supplémentaires → CA
   var gainClients=SC.ecoClients||0;
   var totalGains=gainAbs+gainTurn+gainPres+gainClients;
@@ -16567,7 +16724,7 @@ function bridgeAllData() {
   }
 
   // ════════════════════════════════════════════════
-  // DIAGNOSTIC-OUTILS section removed (redirects to TdB RH)
+  
   // ════════════════════════════════════════════════
   var el;
 
@@ -16757,7 +16914,7 @@ var _origInit = window.onload;
 window.addEventListener('load', function() {
   autoRestore();
   setTimeout(bridgeAllData, 200);
-  setTimeout(injectVanillaStepNav, 500);
+  // injectVanillaStepNav supprimé v32
   // Init demo banner
   setTimeout(function() {
     var db = document.getElementById('demo-banner');
@@ -16793,149 +16950,7 @@ function quickNavBar(currentPhase) {
 }
 
 // ═══ NAVIGATION ÉTAPE PAR ÉTAPE — Sections vanilla ═══
-function injectVanillaStepNav() {
-  // === DIAGNOSTIC SUB-MODULE NAVIGATION ===
-  var diagModules = [
-    {id:'diagnostic-rh', label:'📈 Indicateurs RH', color:'#3b82f6'},
-    {id:'diagnostic', label:'📝 Enquêtes', color:'#3b82f6'},
-    {id:'enquete-croisee', label:'👥 Enquête croisée', color:'#3b82f6'},
-    {id:'risques', label:'⚠️ Risques', color:'#3b82f6'},
-    {id:'diagnostic-entretiens', label:'💬 Entretiens', color:'#3b82f6'},
-    {id:'diagnostic-analyse', label:'🔬 Analyse', color:'#2563eb'},
-  ];
-  // Track visited modules
-  if (!window._diagVisited) window._diagVisited = {};
-  var origShowSection = window._origShowSection || showSection;
-  window._origShowSection = origShowSection;
-  var _updateDiagProgress = function() {
-    var fill = document.getElementById('diag-progress-fill');
-    var text = document.getElementById('diag-progress-text');
-    var dots = document.getElementById('diag-progress-dots');
-    if (!fill || !dots) return;
-    var visited = Object.keys(window._diagVisited).length;
-    var total = diagModules.length;
-    fill.style.width = Math.round(visited/total*100) + '%';
-    if(text) text.textContent = visited + '/' + total;
-    dots.innerHTML = diagModules.map(function(m) {
-      var done = window._diagVisited[m.id];
-      return '<span onclick="showSection(\''+m.id+'\')" style="cursor:pointer;background:'+(done?m.color:'#e2e8f0')+';color:'+(done?'#fff':'#94a3b8')+';font-size:10px;padding:4px 8px;border-radius:12px;font-weight:600;transition:all .3s">'+m.label+'</span>';
-    }).join('');
-  };
-  // Hook into showSection to track visits
-  diagModules.forEach(function(m) {
-    var sec = document.getElementById(m.id);
-    if (sec) {
-      var obs = new MutationObserver(function(mutations) {
-        if (sec.style.display !== 'none') {
-          window._diagVisited[m.id] = true;
-          _updateDiagProgress();
-        }
-      });
-      obs.observe(sec, {attributes:true, attributeFilter:['style']});
-    }
-  });
-  setTimeout(_updateDiagProgress, 100);
-
-  // Phase 1 diagnostic flow — 6 items, follows sidebar order
-  var diagFlow = [
-    {id:'diagnostic-rh', next:'diagnostic', nextLabel:'📝 Enquête récurrente'},
-    {id:'diagnostic', prev:'diagnostic-rh', prevLabel:'📈 Indicateurs RH', next:'enquete-croisee', nextLabel:'👥 Enquête croisée'},
-    {id:'enquete-croisee', prev:'diagnostic', prevLabel:'📝 Enquêtes', next:'risques', nextLabel:'⚠️ Cartographie Risques'},
-    {id:'risques', prev:'enquete-croisee', prevLabel:'👥 Enquête croisée', next:'diagnostic-entretiens', nextLabel:'💬 Entretiens & Focus groups'},
-    {id:'diagnostic-entretiens', prev:'risques', prevLabel:'⚠️ Risques', next:'diagnostic-analyse', nextLabel:'🔬 Analyse & Synthèse'},
-    {id:'diagnostic-analyse', prev:'diagnostic-entretiens', prevLabel:'💬 Entretiens', nextCustom:"showDGStep(1)", nextLabel:'🏗️ Phase 2 — Constats & Besoins'},
-  ];
-  diagFlow.forEach(function(step) {
-    var sec = document.getElementById(step.id);
-    if (!sec) return;
-    var nav = document.createElement('div');
-    nav.style.cssText = 'margin-top:25px;padding:20px;background:linear-gradient(135deg,#f8fafc,#eff6ff);border-radius:12px;border:1px solid #e2e8f0';
-    var inner = quickNavBar(1);
-    inner += '<div onclick="showSection(\'diagnostic-hub\')" style="text-align:center;font-size:11px;color:#3b82f6;font-weight:600;margin-bottom:12px;cursor:pointer" onmouseover="this.style.textDecoration=\'underline\'" onmouseout="this.style.textDecoration=\'none\'">🔍 Phase 1 — Diagnostiquer</div>';
-    inner += '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">';
-    if (step.prevCustom) {
-      inner += '<button onclick="'+step.prevCustom+'" style="background:transparent;border:1px solid #e2e8f0;border-radius:10px;padding:10px 16px;cursor:pointer;font-size:12px;color:#64748b;text-align:left">← '+step.prevLabel+'</button>';
-    } else if (step.prev) {
-      inner += '<button onclick="showSection(\''+step.prev+'\')" style="background:transparent;border:1px solid #e2e8f0;border-radius:10px;padding:10px 16px;cursor:pointer;font-size:12px;color:#64748b;text-align:left">← '+step.prevLabel+'</button>';
-    } else {
-      inner += '<button onclick="showSection(\'diagnostic-hub\')" style="background:transparent;border:1px solid #e2e8f0;border-radius:10px;padding:10px 16px;cursor:pointer;font-size:12px;color:#64748b">← Retour Phase 1 — Diagnostic</button>';
-    }
-    if (step.nextCustom) {
-      inner += '<button onclick="'+step.nextCustom+'" style="background:linear-gradient(135deg,#1a2744,#2c5f8a);border:none;border-radius:10px;padding:10px 20px;cursor:pointer;font-size:12px;color:#fff;font-weight:600;box-shadow:0 2px 6px rgba(26,61,92,.3)">'+step.nextLabel+' →</button>';
-    } else if (step.next) {
-      inner += '<button onclick="showSection(\''+step.next+'\')" style="background:linear-gradient(135deg,#1a2744,#2c5f8a);border:none;border-radius:10px;padding:10px 20px;cursor:pointer;font-size:12px;color:#fff;font-weight:600;box-shadow:0 2px 6px rgba(26,61,92,.3)">'+step.nextLabel+' →</button>';
-    }
-    inner += '</div>';
-    nav.innerHTML = inner;
-    sec.appendChild(nav);
-  });
-
-  // === FIX: Add interconnection banners to diagnostic sub-modules ===
-  // diagnostic-rh: auto-refresh on show
-  var rhSec = document.getElementById('diagnostic-rh');
-  if (rhSec) {
-    var rhObs = new MutationObserver(function(muts) {
-      if (rhSec.style.display !== 'none' && typeof updateRHIndicators === 'function') updateRHIndicators();
-    });
-    rhObs.observe(rhSec, {attributes:true, attributeFilter:['style']});
-  }
-
-  // === MAIN FLOW STEP NAVIGATION — Follows sidebar order P2→P6 ===
-  var vanillaFlow = [
-    // Phase 2 — fin (plan-actions)
-    {id:'plan-actions', prev:{type:'custom',action:"showDGStep(2)",label:'🎯 Objectifs'}, phase:'🏗️ Phase 2 — Concevoir'},
-    // Phase 3 — Actions prioritaires
-    {id:'charte-qvt', prev:{type:'custom',action:"showDGStep(7)",label:'Suivi et pilotage'}, next:{type:'vanilla',id:'charte-teletravail',label:'Charte Télétravail'}, phase:'🚀 Phase 3 — Actions prioritaires', skip:{action:"showSection('investissements-enrichi')",label:'⏭️ Passer à Phase 4'}},
-    {id:'charte-teletravail', prev:{type:'vanilla',id:'charte-qvt',label:'Charte QVT'}, next:{type:'vanilla',id:'charte-deconnexion',label:'Charte Déconnexion'}, phase:'🚀 Phase 3 — Actions prioritaires', skip:{action:"showSection('investissements-enrichi')",label:'⏭️ Passer à Phase 4'}},
-    {id:'charte-deconnexion', prev:{type:'vanilla',id:'charte-teletravail',label:'Charte Télétravail'}, next:{type:'vanilla',id:'charte-conduite-client',label:'Charte Client'}, phase:'🚀 Phase 3 — Actions prioritaires', skip:{action:"showSection('investissements-enrichi')",label:'⏭️ Passer à Phase 4'}},
-    {id:'charte-conduite-client', prev:{type:'vanilla',id:'charte-deconnexion',label:'Charte Déconnexion'}, next:{type:'vanilla',id:'guide-amenagement',label:'Aménagement Espaces'}, phase:'🚀 Phase 3 — Actions prioritaires', skip:{action:"showSection('investissements-enrichi')",label:'⏭️ Passer à Phase 4'}},
-    {id:'guide-amenagement', prev:{type:'vanilla',id:'charte-conduite-client',label:'Charte Client'}, next:{type:'vanilla',id:'guide-numerique',label:'Outils Numériques'}, phase:'🚀 Phase 3 — Actions prioritaires', skip:{action:"showSection('investissements-enrichi')",label:'⏭️ Passer à Phase 4'}},
-    {id:'guide-numerique', prev:{type:'vanilla',id:'guide-amenagement',label:'Aménagement Espaces'}, next:{type:'vanilla',id:'manuel-procedure',label:'Manuel Procédures'}, phase:'🚀 Phase 3 — Actions prioritaires', skip:{action:"showSection('investissements-enrichi')",label:'⏭️ Passer à Phase 4'}},
-    {id:'manuel-procedure', prev:{type:'vanilla',id:'guide-numerique',label:'Outils Numériques'}, next:{type:'vanilla',id:'livret-accueil',label:"Livret d'Accueil"}, phase:'🚀 Phase 3 — Actions prioritaires', skip:{action:"showSection('investissements-enrichi')",label:'⏭️ Passer à Phase 4'}},
-    {id:'livret-accueil', prev:{type:'vanilla',id:'manuel-procedure',label:'Manuel Procédures'}, next:{type:'vanilla',id:'investissements-enrichi',label:'💰 Coûts directs'}, phase:'🚀 Phase 3 — Actions prioritaires'},
-    // Phase 4 — Mesure des effets
-    {id:'investissements-enrichi', prev:{type:'vanilla',id:'livret-accueil',label:"Livret d'Accueil"}, next:{type:'vanilla',id:'temps-qvt',label:'⏱️ Coûts directs — Temps QVT'}, phase:'💰 Phase 4 — Mesure des effets'},
-    {id:'temps-qvt', prev:{type:'vanilla',id:'investissements-enrichi',label:'💰 Coûts directs'}, next:{type:'react',id:'simulateurs',label:'🧮 Évaluation coûts indirects'}, phase:'💰 Phase 4 — Mesure des effets'},
-    {id:'roi-unifie', prev:{type:'react',id:'simulateurs',label:'Simulateurs'}, next:{type:'react',id:'avantapres',label:'⚖️ Avant / Après'}, phase:'💰 Phase 4 — Mesure des effets'},
-    {id:'rentabilite', prev:{type:'react',id:'avantapres',label:'Avant / Après'}, next:{type:'vanilla',id:'sat-collab',label:'😊 Satisfaction Collaborateur'}, phase:'💰 Phase 4 — Mesure des effets'},
-    // Phase 5 — Suivi
-    {id:'sat-collab', prev:{type:'react',id:'rentabilite',label:'Rentabilité'}, next:{type:'vanilla',id:'satisfaction',label:'⭐ Satisfaction Client'}, phase:'📊 Phase 5 — Suivi'},
-    {id:'satisfaction', prev:{type:'vanilla',id:'sat-collab',label:'Satisfaction Collaborateur'}, next:{type:'vanilla',id:'taux-cles-rh',label:'📐 Indicateurs de fidélisation'}, phase:'📊 Phase 5 — Suivi'},
-    {id:'taux-cles-rh', prev:{type:'vanilla',id:'satisfaction',label:'Satisfaction Client'}, next:{type:'custom',action:"goF3('dashboard')",label:'📊 Tableau de Bord RH'}, phase:'📊 Phase 5 — Suivi'},
-  ];
-  vanillaFlow.forEach(function(step) {
-    var sec = document.getElementById(step.id);
-    if (!sec) return;
-    var nav = document.createElement('div');
-    nav.className = 'step-nav-bar';
-    nav.style.cssText = 'margin-top:30px;padding:20px 0;border-top:2px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px';
-    var prevBtn = '', nextBtn = '';
-    if (step.prev) {
-      var prevAction;
-      if(step.prev.type==='custom') prevAction=step.prev.action;
-      else if(step.prev.type==='react') prevAction="showReactPage('"+step.prev.id+"')";
-      else prevAction="showSection('"+step.prev.id+"')";
-      prevBtn = '<button onclick="'+prevAction+'" style="background:transparent;border:1px solid #e2e8f0;border-radius:10px;padding:12px 20px;cursor:pointer;font-size:13px;color:#64748b;display:flex;align-items:center;gap:8px">← <span><div style=font-size:10px;color:#94a3b8>Étape précédente</div><div style=font-weight:600;color:#1a3d5c>'+step.prev.label+'</div></span></button>';
-    }
-    if (step.next) {
-      var nextAction;
-      if(step.next.type==='custom') nextAction=step.next.action;
-      else if(step.next.type==='react') nextAction="showReactPage('"+step.next.id+"')";
-      else nextAction="showSection('"+step.next.id+"')";
-      nextBtn = '<button onclick="'+nextAction+'" style="background:linear-gradient(135deg,#1a3d5c,#2c5f8a);border:none;border-radius:10px;padding:12px 24px;cursor:pointer;font-size:13px;color:#fff;display:flex;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(26,61,92,.3)"><span style=text-align:right><div style=font-size:10px;opacity:.7>Étape suivante</div><div style=font-weight:600>'+step.next.label+'</div></span> →</button>';
-    }
-    var skipBtn = '';
-    if (step.skip) {
-      skipBtn = '<div style="text-align:center;width:100%;margin-top:8px"><button onclick="'+step.skip.action+'" style="background:transparent;border:1px dashed #e11d48;border-radius:8px;padding:8px 20px;cursor:pointer;font-size:12px;color:#e11d48;font-weight:600;transition:all .2s" onmouseover="this.style.background=\'#fef2f2\'" onmouseout="this.style.background=\'transparent\'">'+step.skip.label+' →</button></div>';
-    }
-    // Detect phase number from phase string
-    var phaseNum = 0;
-    var pm = step.phase.match(/Phase (\d)/);
-    if (pm) phaseNum = parseInt(pm[1]);
-    nav.innerHTML = quickNavBar(phaseNum) + '<div style="text-align:center;width:100%;margin-bottom:8px"><span style="font-size:11px;color:#94a3b8;font-weight:600">'+step.phase+'</span></div>' + (prevBtn||'<div></div>') + nextBtn + skipBtn;
-    sec.appendChild(nav);
-  });
-}
+// injectVanillaStepNav supprimé v32 (doublon navigation — remplacé par Démarche Express)
 
 // ============================================================
 // DÉMARCHE GUIDÉE QVT - Integrated Guide
@@ -17826,13 +17841,7 @@ function injectVanillaStepNav() {
     return ta;
   }
 
-  function dgRing(pct, color, size) {
-    size = size || 64;
-    var r = (size - 8) / 2;
-    var circ = 2 * Math.PI * r;
-    var off = circ - (pct / 100) * circ;
-    return dg('div', { innerHTML: '<svg width="'+size+'" height="'+size+'" class="dg-ring-svg"><circle cx="'+size/2+'" cy="'+size/2+'" r="'+r+'" fill="none" stroke="#efeadf" stroke-width="5"/><circle cx="'+size/2+'" cy="'+size/2+'" r="'+r+'" fill="none" stroke="'+color+'" stroke-width="5" stroke-dasharray="'+circ+'" stroke-dashoffset="'+off+'" stroke-linecap="round" style="transform:rotate(-90deg);transform-origin:center;transition:all 0.7s"/><text x="'+size/2+'" y="'+size/2+'" text-anchor="middle" dominant-baseline="central" fill="#2a2a2a" font-size="'+(size > 70 ? 18 : 13)+'" font-weight="700">'+pct+'%</text></svg>' });
-  }
+/* dgRing supprimé v31 — jamais appelé */
 
   // Data bridge indicator
   function dgDataBridge(text) {
@@ -23312,7 +23321,7 @@ function QVTApp() {
     "N":   { turnover:"", absentéisme:"", satisfaction:"", ca:"", nbCollabs:"", nbDeparts:"", joursAbsence:"", nps:"" },
     "N+1": { turnover:"", absentéisme:"", satisfaction:"", ca:"", nbCollabs:"", nbDeparts:"", joursAbsence:"", nps:"" },
   });
-  // Phase widget removed
+  
 
   
   const fmt = (n) => new Intl.NumberFormat('fr-FR', {maximumFractionDigits:0}).format(n);
@@ -26903,8 +26912,8 @@ function QVTApp() {
   const PageDashboard = () => {
     const now = new Date();
     const dateStr = now.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
-    // Phase widget removed
-    // Phase labels removed
+    
+    
     
     // Calculs financiers
     const masseSal = collabs.reduce((s,c)=>s+Math.round(c.salaire*(c.tauxCharge||1.42)),0);
@@ -28149,13 +28158,11 @@ function QVTApp() {
     resultats_prediag: PageResultatsPrediag,
     gestion: PageGestion,
     simulateurs: PageSimulateurs,
-    sim_clients: PageSimTurnover,
     sim_arret: PageSimArret,
-    sim_admin: PageSimArret,
     sim_turnover: PageSimTurnover,
     sim_presenteisme: PageSimPresenteisme,
-    // investissements: supprimé v18 — redirigé vers vanilla investissements-enrichi
-    // plan: supprimé v18 — redirigé vers vanilla plan-actions
+    
+    
     dashboard: PageDashboard,
     avantapres: PageAvantApres,
     roi: PageROI,
